@@ -27,6 +27,6 @@ CSSBSParser['_m_nl'] = function(x) {
 
 // [ \t\r\n\f]*
 CSSBSParser['_m_w'] = function(x) {
-    return /[ \t\r\n\f]*/.test(x);
+    return /[ \t\r\n\f]/.test(x);
 };
 

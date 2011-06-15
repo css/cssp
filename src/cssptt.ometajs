@@ -20,7 +20,7 @@ ometa CSSBSParser {
 
     CDC = seq('-->') -> [#cdc],
 
-    S = (' ' | '\t' | '\r' | '\n' | '\f')+:x -> [#white, x.join('')],
+    S = ((:x m_w(x)) -> x)+:xx -> [#white, xx.join('')],
 
     ATTR_SELECTOR = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
 
@@ -28,7 +28,7 @@ ometa CSSBSParser {
 
     // Macros
 
-    m_ident = '-'*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz -> (x.join('') + y + zz.join('')),
+    m_ident = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz -> (x.join('') + y + zz.join('')),
 
     m_name = ((:x m_nmchar(x)) -> x)+:xx -> xx.join(''),
 
