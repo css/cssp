@@ -20,11 +20,9 @@ ometa CSSBSParser {
 
     CDC = seq('-->') -> [#cdc],
 
-    S = (' ' | '\t' | '\r' | '\n' | '\f')+:x -> [#white, x.join()],
+    S = (' ' | '\t' | '\r' | '\n' | '\f')+:x -> [#white, x.join('')],
 
     ATTR_SELECTOR = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
-
-//    FUNCTION = m_ident:x '(' -> x,
 
     DELIM = ',' S* -> [#delim, ','],
 
@@ -66,20 +64,24 @@ ometa CSSParser <: CSSBSParser {
     atrule_part = (any | operator | S),
 
     atrule = seq('@media') S* atrule_part*:ap '{' S* ruleset*:r S* '}' -> [#atrulem].concat(ap).concat(r) // media
-           | ATKEYWORD:ak S* atrule_part*:ap block:b -> [#atruleb, ak].concat(ap).concat(b) // block
+           | ATKEYWORD:ak atrule_part*:ap block:b -> [#atruleb, ak].concat(ap).concat([b]) // block
            | ATKEYWORD:ak S* atrule_part*:ap ';' S*  -> [#atrules, ak].concat(ap), // single
 
-    block = '{' S* (any | block | ATKEYWORD | ';' | S)*:x '}' S* -> [#block].concat(x),
+    block = '{' S* declaration*:x '}' -> [#block].concat(x),
 
-    ruleset = selector*:x '{' S* declaration*:y '}' S* -> [#ruleset].concat(x).concat(y),
+    ruleset = selector*:x block:y S* -> [#ruleset].concat(x).concat([y]),
 
-    combinator = ('+' | '>'):x -> [#combinator, x],
+    combinator = ('+' | '>' | '~'):x -> [#combinator, x],
 
-    space_selector = S* any:x -> [[#combinator, ' '], x],
+    space_selector = S:x any:y -> [x, y],
 
     combi_selector = S* combinator:c S* any:x -> [c, x],
 
-    simple_selector = any:x (combi_selector | space_selector)*:y S* -> this.concatElements([#simpleselector, x], y),
+    attrib = '[' S*:s0 IDENT:x S*:s1 ATTR_SELECTOR:a S*:s2 (IDENT | STRING):y S*:s3 ']' -> [[#attrib].concat(s0).concat([x]).concat(s1).concat([a]).concat(s2).concat([y]).concat(s3)],
+
+    class = '.' IDENT:i -> [#class, i],
+
+    simple_selector = any:x (combi_selector | space_selector | attrib)*:y S* -> this.concatElements([#simpleselector, x], y),
 
     selector = (simple_selector | DELIM)+:x -> [#selector].concat(x),
 
@@ -91,15 +93,15 @@ ometa CSSParser <: CSSBSParser {
 
     unary_operator = ('-' | '+'):x -> [#unary, x],
 
-    operator = ('/' | ','):x S* -> [#operator, x],
+    operator = ('/' | ','):x -> [#operator, x],
 
     value = (any | block | ATKEYWORD | operator | S)+:x -> [#value].concat(x),
 
     func = IDENT:x '(' (any | S)*:y ')' -> [#function, x].concat(y),
 
-    any = unary_operator*:x (STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | ATTR_SELECTOR | func | IDENT | operator):y -> x.concat(y)
-        | '(' S* any*:x ')' S* -> ['(', x, ')']
-        | '[' S* any*:x ']' S* -> ['[', x, ']']
+    any = unary_operator*:x (class | STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | func | IDENT | operator):y -> x.concat(y)
+        | '(' S* any*:x ')' S* -> [#braces, '(', ')'].concat(x)
+        | '[' S* any*:x ']' S* -> [#braces, '[', ']'].concat(x)
 }
 
 CSSParser.concatElements = function(x, y) {
@@ -111,7 +113,7 @@ CSSParser.concatElements = function(x, y) {
 };
 
 ometa CSSTranslator {
-    trans = [:t apply(t):ans] -> ans,
+    trans = [:t apply(t):x] -> x,
 
     ident :x -> x,
     atkeyword :x -> ('@' + x),
@@ -119,25 +121,29 @@ ometa CSSTranslator {
     hash :x -> ('#' + x),
     num :x -> x,
     percentage :x -> (x + '%'),
-    dimension :x -> (x + y),
+    dimension :x :y -> (x + y),
     cdo -> '<!--',
     cdc -> '-->',
     white :x -> x,
     attrselector :x -> x,
+    attrib trans*:x -> ('[' + x.join('') + ']'),
+    class trans:x -> ('.' + x),
     delim :x -> x,
-//    stylesheet
-//    atruleb
+    stylesheet :x trans*:y -> y.join(''),
+//    atrulem
+    atruleb trans*:x -> x.join(''),
     atrules trans:x -> x,
-//    block
-//    ruleset
+    block trans*:x -> ('{' + x.join(';') + '}'),
+    ruleset trans*:x -> x.join(''),
     combinator :x -> x,
-//    simpleselector
-//    selector
-//    declaration
-    property :x -> x,
+    simpleselector trans*:x -> x.join(''),
+    selector trans*:x -> x.join(''),
+    declaration trans:p trans*:v -> (p + ':' + v.join('')),
+    property trans:x -> x,
     important -> '!important',
     unary :x -> x,
-    operator :x -> x
-//    value
+    operator :x -> x,
+    braces :x :y trans*:z -> (x + z.join('') + y),
+    value trans*:x -> x.join('')
 //    function
 }
