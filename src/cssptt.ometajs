@@ -24,7 +24,7 @@ ometa CSSBSParser {
 
     ATTR_SELECTOR = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
 
-    FUNCTION = m_ident:x '(' -> x,
+//    FUNCTION = m_ident:x '(' -> x,
 
     DELIM = ',' S* -> [#delim, ','],
 
@@ -66,9 +66,10 @@ ometa CSSParser <: CSSBSParser {
     atrule = (ATKEYWORD:ak S* any*:aq block:b) -> [#atruleb, aq, b] // block
            | (ATKEYWORD:ak S* any*:aq ';' S*) -> [#atrules, aq], // single
 
-    block = '{' S* ( any | block | (ATKEYWORD S*) | ';' S* )*:x '}' S* -> [#block].concat(x),
+//    block = '{' S* (any | block | ATKEYWORD | ';' | S)*:x '}' S* -> [#block].concat(x),
+    block = '{' S* (any | block | ATKEYWORD | ';' | S)*:x '}' S* -> [#block].concat(x),
 
-    ruleset = selector*:x '{' S* declaration*:y (';' S* declaration)*:z '}' S* -> [#ruleset].concat(x).concat(y).concat(z),
+    ruleset = selector*:x '{' S* declaration*:y '}' S* -> [#ruleset].concat(x).concat(y),
 
     combinator = ('+' | '>'):x -> [#combinator, x],
 
@@ -80,7 +81,7 @@ ometa CSSParser <: CSSBSParser {
 
     selector = (simple_selector | DELIM)+:x -> [#selector].concat(x),
 
-    declaration = property:x S* ':' S* value:y -> [#declaration, x, y],
+    declaration = property:x S* ':' S* value:y S* ';'* -> [#declaration, x, y],
 
     property = IDENT:x -> [#property, x],
 
@@ -90,11 +91,11 @@ ometa CSSParser <: CSSBSParser {
 
     operator = ('/' | ','):x S* -> [#operator, x],
 
-    value = (any | block | ATKEYWORD | operator)+:x -> [#value].concat(x),
+    value = (any | block | ATKEYWORD | operator | S)+:x -> [#value].concat(x),
 
     func = IDENT:x '(' S* any*:y ')' -> [#function, x, y],
 
-    any = unary_operator*:x (STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | ATTR_SELECTOR | func | IDENT):y S* -> x.concat(y)
+    any = unary_operator*:x (STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | ATTR_SELECTOR | func | IDENT):y -> x.concat(y)
         | '(' S* any*:x ')' S* -> ['(', x, ')']
         | '[' S* any*:x ']' S* -> ['[', x, ']']
 }
@@ -106,3 +107,35 @@ CSSParser.concatElements = function(x, y) {
 
     return x;
 };
+
+ometa CSSTranslator {
+    trans = [:t apply(t):ans] -> ans,
+
+    ident :x -> x,
+    atkeyword :x -> ('@' + x),
+    string :x -> x,
+    hash :x -> ('#' + x),
+    num :x -> x,
+    percentage :x -> (x + '%'),
+    dimension :x -> (x + y),
+    cdo -> '<!--',
+    cdc -> '-->',
+    white :x -> x,
+    attrselector :x -> x,
+    delim :x -> x,
+//    stylesheet
+//    atruleb
+//    atrules
+//    block
+//    ruleset
+    combinator :x -> x,
+//    simpleselector
+//    selector
+//    declaration
+    property :x -> x,
+    important -> '!important',
+    unary :x -> x,
+    operator :x -> x
+//    value
+//    function
+}
