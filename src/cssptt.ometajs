@@ -95,9 +95,9 @@ ometa CSSParser <: CSSBSParser {
 
     value = (any | block | ATKEYWORD | operator | S)+:x -> [#value].concat(x),
 
-    func = IDENT:x '(' S* any*:y ')' -> [#function, x, y],
+    func = IDENT:x '(' (any | S)*:y ')' -> [#function, x].concat(y),
 
-    any = unary_operator*:x (STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | ATTR_SELECTOR | func | IDENT):y -> x.concat(y)
+    any = unary_operator*:x (STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | ATTR_SELECTOR | func | IDENT | operator):y -> x.concat(y)
         | '(' S* any*:x ')' S* -> ['(', x, ')']
         | '[' S* any*:x ']' S* -> ['[', x, ']']
 }
