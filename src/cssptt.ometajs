@@ -63,10 +63,12 @@ ometa CSSParser <: CSSBSParser {
 
     statement = (ruleset | atrule),
 
-    atrule = (ATKEYWORD:ak S* any*:aq block:b) -> [#atruleb, aq, b] // block
-           | (ATKEYWORD:ak S* any*:aq ';' S*) -> [#atrules, aq], // single
+    atrule_part = (any | operator | S),
 
-//    block = '{' S* (any | block | ATKEYWORD | ';' | S)*:x '}' S* -> [#block].concat(x),
+    atrule = seq('@media') S* atrule_part*:ap '{' S* ruleset*:r S* '}' -> [#atrulem].concat(ap).concat(r) // media
+           | ATKEYWORD:ak S* atrule_part*:ap block:b -> [#atruleb, ak].concat(ap).concat(b) // block
+           | ATKEYWORD:ak S* atrule_part*:ap ';' S*  -> [#atrules, ak].concat(ap), // single
+
     block = '{' S* (any | block | ATKEYWORD | ';' | S)*:x '}' S* -> [#block].concat(x),
 
     ruleset = selector*:x '{' S* declaration*:y '}' S* -> [#ruleset].concat(x).concat(y),
@@ -125,7 +127,7 @@ ometa CSSTranslator {
     delim :x -> x,
 //    stylesheet
 //    atruleb
-//    atrules
+    atrules trans:x -> x,
 //    block
 //    ruleset
     combinator :x -> x,
