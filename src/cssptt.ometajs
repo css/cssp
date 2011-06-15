@@ -1,0 +1,108 @@
+ometa CSSBSParser {
+
+    // Tokens
+
+    IDENT = m_ident:x -> [#ident, x],
+
+    ATKEYWORD = '@' m_ident:x -> [#atkeyword, x],
+
+    STRING = m_string:x -> [#string, x],
+
+    HASH = '#' m_name:x -> [#hash, x],
+
+    NUMBER = m_num:x -> [#num, x],
+
+    PERCENTAGE = m_num:x '%' -> [#percentage, x],
+
+    DIMENSION = m_num:x m_ident:y -> [#dimension, x, y],
+
+    CDO = seq('<!--') -> [#cdo],
+
+    CDC = seq('-->') -> [#cdc],
+
+    S = (' ' | '\t' | '\r' | '\n' | '\f')+:x -> [#white, x.join()],
+
+    ATTR_SELECTOR = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
+
+    FUNCTION = m_ident:x '(' -> x,
+
+    DELIM = ',' S* -> [#delim, ','],
+
+    // Macros
+
+    m_ident = '-'*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz -> (x.join('') + y + zz.join('')),
+
+    m_name = ((:x m_nmchar(x)) -> x)+:xx -> xx.join(''),
+
+    m_nmstart :x = ?CSSBSParser._m_nmstart(x),
+
+    m_unicode :x = ?CSSBSParser._m_unicode(x),
+
+    m_escape :x = ?CSSBSParser._m_escape(x),
+
+    m_nmchar :x = ?CSSBSParser._m_nmchar(x),
+
+    m_num = digit+:x '.' digit+:y -> (x.join('') + '.' + y.join(''))
+          | '.' digit+:x -> ('.' + x.join(''))
+          | digit+:x -> x.join(''),
+
+    m_string = '"' (m_string_nl1 | ~'"' char)*:s '"' -> ('"' + s.join('') + '"')
+             | '\'' (m_string_nl2 | ~'\'' char)*:s '\'' -> ('\'' + s.join('') + '\''),
+
+    m_string_nl1 = ('\n' | '\r' | '\f' | seq('\\"')):x -> x,
+
+    m_string_nl2 = ('\n' | '\r' | '\f' | seq('\\\'')):x -> x,
+
+    m_nl :x = ?CSSBSParser._m_nl(x),
+
+    m_w :x = ?CSSBSParser._m_w(x)
+}
+
+ometa CSSParser <: CSSBSParser {
+    stylesheet = (CDO | CDC | S | statement)*:x -> [#stylesheet].concat(x),
+
+    statement = (ruleset | atrule),
+
+    atrule = (ATKEYWORD:ak S* any*:aq block:b) -> [#atruleb, aq, b] // block
+           | (ATKEYWORD:ak S* any*:aq ';' S*) -> [#atrules, aq], // single
+
+    block = '{' S* ( any | block | (ATKEYWORD S*) | ';' S* )*:x '}' S* -> [#block].concat(x),
+
+    ruleset = selector*:x '{' S* declaration*:y (';' S* declaration)*:z '}' S* -> [#ruleset].concat(x).concat(y).concat(z),
+
+    combinator = ('+' | '>'):x -> [#combinator, x],
+
+    space_selector = S* any:x -> [[#combinator, ' '], x],
+
+    combi_selector = S* combinator:c S* any:x -> [c, x],
+
+    simple_selector = any:x (combi_selector | space_selector)*:y S* -> this.concatElements([#simpleselector, x], y),
+
+    selector = (simple_selector | DELIM)+:x -> [#selector].concat(x),
+
+    declaration = property:x S* ':' S* value:y -> [#declaration, x, y],
+
+    property = IDENT:x -> [#property, x],
+
+    prio = '!' S* seq('important') S* -> [#important],
+
+    unary_operator = ('-' | '+'):x -> [#unary, x],
+
+    operator = ('/' | ','):x S* -> [#operator, x],
+
+    value = (any | block | ATKEYWORD | operator)+:x -> [#value].concat(x),
+
+    func = IDENT:x '(' S* any*:y ')' -> [#function, x, y],
+
+    any = unary_operator*:x (STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | ATTR_SELECTOR | func | IDENT):y S* -> x.concat(y)
+        | '(' S* any*:x ')' S* -> ['(', x, ')']
+        | '[' S* any*:x ']' S* -> ['[', x, ']']
+}
+
+CSSParser.concatElements = function(x, y) {
+    y.forEach(function(e) {
+        x = x.concat(e);
+    });
+
+    return x;
+};
