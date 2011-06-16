@@ -45,7 +45,7 @@ ometa CSSParser <: CSSBSParser {
     atrule_part     = (any | operator | sc),
     atrule          = seq('@media') atrule_part*:ap '{' sc*:s0 ruleset*:r sc*:s1 '}'                    -> this.concat([#atrulem], ap, s0, r, s1) // media
                     | ATKEYWORD:ak atrule_part*:ap block:b                                              -> this.concat([#atruleb, ak], ap, [b]) // block
-                    | ATKEYWORD:ak atrule_part*:ap ';' sc*:s0                                           -> this.concat([#atrules, ak], ap, s0), // single
+                    | ATKEYWORD:ak atrule_part*:ap ';'                                                  -> this.concat([#atrules, ak], ap), // single
     block_decl      = sc*:s0 declaration:x decl_delim:y sc*:s1                                          -> this.concat(s0, [x], [y], s1)
                     | sc*:s0 declaration:x sc*:s1                                                       -> this.concat(s0, [x], s1)
                     | sc*:s0 decl_delim:x sc*:sc1                                                       -> this.concat(s0, [x], s1),
@@ -54,24 +54,24 @@ ometa CSSParser <: CSSBSParser {
     ruleset         = selector*:x block:y                                                               -> this.concat([#ruleset], x, [y]),
     combinator      = ('+' | '>' | '~'):x                                                               -> [#combinator, x],
     space_selector  = S:x any:y                                                                         -> [x, y],
-    combi_selector  = sc*:s0 combinator:c sc*:s1 any:x                                                  -> [this.concat(s0, c, s1, x)],
+    combi_selector  = combinator:c sc*:s0 any:x                                                         -> [this.concat([c], s0, [x])],
     attrib          = '[' sc*:s0 IDENT:x sc*:s1 ATTR_SELECTOR:a sc*:s2 (IDENT | STRING):y sc*:s3 ']'    -> [this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3)],
     class           = '.' IDENT:i                                                                       -> [#class, i],
-    simple_selector = any:x (combi_selector | space_selector | attrib)*:y sc*:s0                        -> this.concatContent([#simpleselector, x], y, s0),
-    selector        = (simple_selector | DELIM)+:x                                                      -> this.concat([#selector], x),
-    declaration     = property:x ':' value:y                                                            -> this.concat([#declaration], [x], [y]),
-    property        = IDENT:x sc*:s0                                                                    -> this.concat([#property], [x], s0),
-    prio            = '!' S* seq('important') S*                                                    -> [#important],
-    unary_operator  = ('-' | '+'):x                                                                 -> [#unary, x],
-    operator        = ('/' | ',' | ':'):x                                                           -> [#operator, x],
-    uri             = seq('url') '(' STRING:x ')'                                                   -> [#uri, x]
-                    | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                 -> [#uri, [#raw, xx.join('')]],
-    value           = (any | block | ATKEYWORD | operator | sc)+:x                                  -> this.concat([#value], x),
-    func            = IDENT:x '(' (any | S)*:y ')'                                                  -> this.concat([#function, x], y),
+    simple_selector = any:x (combi_selector | space_selector | attrib)*:y                               -> this.concatContent([#simpleselector, x], y),
+    selector        = (simple_selector | DELIM | sc)+:x                                                 -> this.concat([#selector], x),
+    declaration     = property:x ':' value:y                                                            -> [#declaration, x, y],
+    property        = IDENT:x sc*:s0                                                                    -> this.concat([#property, x], s0),
+    prio            = '!' sc*:s0 seq('important')                                                       -> [#important].concat(s0),
+    unary_operator  = ('-' | '+'):x                                                                     -> [#unary, x],
+    operator        = ('/' | ',' | ':'):x                                                               -> [#operator, x],
+    uri             = seq('url') '(' sc*:s0 STRING:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
+                    | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                     -> [#uri, [#raw, xx.join('')]],
+    value           = (any | block | ATKEYWORD | operator | sc | prio)+:x                               -> this.concat([#value], x),
+    func            = IDENT:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
     any             = unary_operator*:x (class | STRING | PERCENTAGE | DIMENSION |
-                        HASH | NUMBER | uri | func | IDENT | operator):y                            -> x.concat(y)
-                    | '(' S* any*:x ')' S*                                                          -> this.concat([#braces, '(', ')'], x)
-                    | '[' S* any*:x ']' S*                                                          -> this.concat([#braces, '[', ']'], x)
+                        HASH | NUMBER | uri | func | IDENT | operator):y                                -> x.concat(y)
+                    | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
+                    | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
 }
 
 CSSParser.concatContent = function(x, y) {
@@ -120,7 +120,7 @@ ometa CSSTransformer {
     selector        trans*:x            -> [#selector].concat(x),
     declaration     trans:p trans:v     -> [#declaration, p, v],
     property        trans*:x            -> [#property].concat(x),
-    important                           -> [#important],
+    important       trans*:x            -> [#important].concat(x),
     unary           :x                  -> [#unary, x],
     operator        :x                  -> [#operator, x],
     braces          :x :y trans*:z      -> [#braces, x, y].concat(z),
@@ -160,7 +160,7 @@ ometa CSSTranslator {
     selector        trans*:x            -> x.join(''),
     declaration     trans:p trans:v     -> (p + ':' + v),
     property        trans*:x            -> x.join(''),
-    important                           -> '!important',
+    important       trans*:x            -> ('!' + x.join('') + 'important'),
     unary           :x                  -> x,
     operator        :x                  -> x,
     braces          :x :y trans*:z      -> (x + z.join('') + y),
