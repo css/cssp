@@ -2,113 +2,70 @@ ometa CSSBSParser {
 
     // Tokens
 
-    IDENT = m_ident:x -> [#ident, x],
-
-    ATKEYWORD = '@' m_ident:x -> [#atkeyword, x],
-
-    STRING = m_string:x -> [#string, x],
-
-    HASH = '#' m_name:x -> [#hash, x],
-
-    NUMBER = m_num:x -> [#num, x],
-
-    PERCENTAGE = m_num:x '%' -> [#percentage, x],
-
-    DIMENSION = m_num:x m_ident:y -> [#dimension, x, y],
-
-    CDO = seq('<!--') -> [#cdo],
-
-    CDC = seq('-->') -> [#cdc],
-
-    S = ((:x m_w(x)) -> x)+:xx -> [#white, xx.join('')],
-
-    ATTR_SELECTOR = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
-
-    DELIM = ',' S* -> [#delim, ','],
-
-    COMMENT = (anything*:x -> x.join('')):y m_comment(y) -> [#comment, y],
+    IDENT           = m_ident:x                                                     -> [#ident, x],
+    ATKEYWORD       = '@' m_ident:x                                                 -> [#atkeyword, x],
+    STRING          = m_string:x                                                    -> [#string, x],
+    HASH            = '#' m_name:x                                                  -> [#hash, x],
+    NUMBER          = m_num:x                                                       -> [#num, x],
+    PERCENTAGE      = m_num:x '%'                                                   -> [#percentage, x],
+    DIMENSION       = m_num:x m_ident:y                                             -> [#dimension, x, y],
+    CDO             = seq('<!--')                                                   -> [#cdo],
+    CDC             = seq('-->')                                                    -> [#cdc],
+    S               = ((:x m_w(x)) -> x)+:xx                                        -> [#white, xx.join('')],
+    ATTR_SELECTOR   = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x  -> [#attrselector, x],
+    DELIM           = ',' S*                                                        -> [#delim, ','],
+    COMMENT         = (anything*:x -> x.join('')):y m_comment(y)                    -> [#comment, y],
 
     // Macros
 
-    m_ident = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz -> (x.join('') + y + zz.join('')),
+    m_ident         = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz  -> (x.join('') + y + zz.join('')),
+    m_name          = ((:x m_nmchar(x)) -> x)+:xx                                   -> xx.join(''),
+    m_num           = digit+:x '.' digit+:y                                         -> (x.join('') + '.' + y.join(''))
+                    | '.' digit+:x                                                  -> ('.' + x.join(''))
+                    | digit+:x                                                      -> x.join(''),
+    m_string        = '"' (m_string_nl1 | ~'"' char)*:s '"'                         -> ('"' + s.join('') + '"')
+                    | '\'' (m_string_nl2 | ~'\'' char)*:s '\''                      -> ('\'' + s.join('') + '\''),
+    m_string_nl1    = ('\n' | '\r' | '\f' | seq('\\"')):x                           -> x,
+    m_string_nl2    = ('\n' | '\r' | '\f' | seq('\\\'')):x                          -> x,
 
-    m_name = ((:x m_nmchar(x)) -> x)+:xx -> xx.join(''),
-
-    m_nmstart :x = ?CSSBSParser._m_nmstart(x),
-
-    m_unicode :x = ?CSSBSParser._m_unicode(x),
-
-    m_escape :x = ?CSSBSParser._m_escape(x),
-
-    m_nmchar :x = ?CSSBSParser._m_nmchar(x),
-
-    m_num = digit+:x '.' digit+:y -> (x.join('') + '.' + y.join(''))
-          | '.' digit+:x -> ('.' + x.join(''))
-          | digit+:x -> x.join(''),
-
-    m_string = '"' (m_string_nl1 | ~'"' char)*:s '"' -> ('"' + s.join('') + '"')
-             | '\'' (m_string_nl2 | ~'\'' char)*:s '\'' -> ('\'' + s.join('') + '\''),
-
-    m_string_nl1 = ('\n' | '\r' | '\f' | seq('\\"')):x -> x,
-
-    m_string_nl2 = ('\n' | '\r' | '\f' | seq('\\\'')):x -> x,
-
-    m_nl :x = ?CSSBSParser._m_nl(x),
-
-    m_w :x = ?CSSBSParser._m_w(x),
-
-    m_comment :x = ?CSSBSParser._m_comment(x)
+    m_nmstart :x    = ?CSSBSParser._m_nmstart(x),
+    m_unicode :x    = ?CSSBSParser._m_unicode(x),
+    m_escape :x     = ?CSSBSParser._m_escape(x),
+    m_nmchar :x     = ?CSSBSParser._m_nmchar(x),
+    m_nl :x         = ?CSSBSParser._m_nl(x),
+    m_w :x          = ?CSSBSParser._m_w(x),
+    m_comment :x    = ?CSSBSParser._m_comment(x)
 }
 
 ometa CSSParser <: CSSBSParser {
-    stylesheet = (CDO | CDC | S | statement)*:x -> [#stylesheet].concat(x),
-
-    statement = (ruleset | atrule),
-
-    atrule_part = (any | operator | S),
-
-    atrule = seq('@media') atrule_part*:ap '{' S* ruleset*:r S* '}' -> [#atrulem].concat(ap).concat(r) // media
-           | ATKEYWORD:ak atrule_part*:ap block:b -> [#atruleb, ak].concat(ap).concat([b]) // block
-           | ATKEYWORD:ak atrule_part*:ap ';' S*  -> [#atrules, ak].concat(ap), // single
-
-    block = '{' S* declaration*:x '}' -> [#block].concat(x),
-
-    ruleset = selector*:x block:y S* -> [#ruleset].concat(x).concat([y]),
-
-    combinator = ('+' | '>' | '~'):x -> [#combinator, x],
-
-    space_selector = S:x any:y -> [x, y],
-
-    combi_selector = S* combinator:c S* any:x -> [c, x],
-
-    attrib = '[' S*:s0 IDENT:x S*:s1 ATTR_SELECTOR:a S*:s2 (IDENT | STRING):y S*:s3 ']' -> [[#attrib].concat(s0).concat([x]).concat(s1).concat([a]).concat(s2).concat([y]).concat(s3)],
-
-    class = '.' IDENT:i -> [#class, i],
-
-    simple_selector = any:x (combi_selector | space_selector | attrib)*:y S* -> this.concatElements([#simpleselector, x], y),
-
-    selector = (simple_selector | DELIM)+:x -> [#selector].concat(x),
-
-    declaration = property:x S* ':' S* value:y S* ';'* -> [#declaration, x, y],
-
-    property = IDENT:x -> [#property, x],
-
-    prio = '!' S* seq('important') S* -> [#important],
-
-    unary_operator = ('-' | '+'):x -> [#unary, x],
-
-    operator = ('/' | ','):x -> [#operator, x],
-
-    uri = seq('url') '(' STRING:x ')' -> [#uri, x]
-        | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')' -> [#uri, [#raw, xx.join('')]],
-
-    value = (any | block | ATKEYWORD | operator | S)+:x -> [#value].concat(x),
-
-    func = IDENT:x '(' (any | S)*:y ')' -> [#function, x].concat(y),
-
-    any = unary_operator*:x (class | STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | uri | func | IDENT | operator):y -> x.concat(y)
-        | '(' S* any*:x ')' S* -> [#braces, '(', ')'].concat(x)
-        | '[' S* any*:x ']' S* -> [#braces, '[', ']'].concat(x)
+    stylesheet      = (CDO | CDC | S | statement)*:x                                                -> [#stylesheet].concat(x),
+    statement       = (ruleset | atrule),
+    atrule_part     = (any | operator | S),
+    atrule          = seq('@media') atrule_part*:ap '{' S* ruleset*:r S* '}'                        -> [#atrulem].concat(ap).concat(r) // media
+                    | ATKEYWORD:ak atrule_part*:ap block:b                                          -> [#atruleb, ak].concat(ap).concat([b]) // block
+                    | ATKEYWORD:ak atrule_part*:ap ';' S*                                           -> [#atrules, ak].concat(ap), // single
+    block           = '{' S* declaration*:x '}'                                                     -> [#block].concat(x),
+    ruleset         = selector*:x block:y S*                                                        -> [#ruleset].concat(x).concat([y]),
+    combinator      = ('+' | '>' | '~'):x                                                           -> [#combinator, x],
+    space_selector  = S:x any:y                                                                     -> [x, y],
+    combi_selector  = S* combinator:c S* any:x                                                      -> [c, x],
+    attrib          = '[' S*:s0 IDENT:x S*:s1 ATTR_SELECTOR:a S*:s2 (IDENT | STRING):y S*:s3 ']'    -> [[#attrib].concat(s0).concat([x]).concat(s1).concat([a]).concat(s2).concat([y]).concat(s3)],
+    class           = '.' IDENT:i                                                                   -> [#class, i],
+    simple_selector = any:x (combi_selector | space_selector | attrib)*:y S*                        -> this.concatElements([#simpleselector, x], y),
+    selector        = (simple_selector | DELIM)+:x                                                  -> [#selector].concat(x),
+    declaration     = property:x S* ':' S* value:y S* ';'*                                          -> [#declaration, x, y],
+    property        = IDENT:x                                                                       -> [#property, x],
+    prio            = '!' S* seq('important') S*                                                    -> [#important],
+    unary_operator  = ('-' | '+'):x                                                                 -> [#unary, x],
+    operator        = ('/' | ','):x                                                                 -> [#operator, x],
+    uri             = seq('url') '(' STRING:x ')'                                                   -> [#uri, x]
+                    | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                 -> [#uri, [#raw, xx.join('')]],
+    value           = (any | block | ATKEYWORD | operator | S)+:x                                   -> [#value].concat(x),
+    func            = IDENT:x '(' (any | S)*:y ')'                                                  -> [#function, x].concat(y),
+    any             = unary_operator*:x (class | STRING | PERCENTAGE | DIMENSION |
+                        HASH | NUMBER | uri | func | IDENT | operator):y                            -> x.concat(y)
+                    | '(' S* any*:x ')' S*                                                          -> [#braces, '(', ')'].concat(x)
+                    | '[' S* any*:x ']' S*                                                          -> [#braces, '[', ']'].concat(x)
 }
 
 CSSParser.concatElements = function(x, y) {
