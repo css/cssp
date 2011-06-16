@@ -2,20 +2,19 @@ ometa CSSBSParser {
 
     // Tokens
 
-    IDENT           = m_ident:x                                                     -> [#ident, x],
-    ATKEYWORD       = '@' m_ident:x                                                 -> [#atkeyword, x],
-    STRING          = m_string:x                                                    -> [#string, x],
-    HASH            = '#' m_name:x                                                  -> [#hash, x],
-    NUMBER          = m_num:x                                                       -> [#num, x],
-    PERCENTAGE      = m_num:x '%'                                                   -> [#percentage, x],
-    DIMENSION       = m_num:x m_ident:y                                             -> [#dimension, x, y],
-    CDO             = seq('<!--')                                                   -> [#cdo],
-    CDC             = seq('-->')                                                    -> [#cdc],
-    S               = ((:x m_w(x)) -> x)+:xx                                        -> [#white, xx.join('')],
-    ATTR_SELECTOR   = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x  -> [#attrselector, x],
-    DELIM           = ','                                                           -> [#delim, ','],
-//    COMMENT         = (anything*:x -> x.join('')):y m_comment(y)                    -> [#comment, y],
-    COMMENT         = seq('/*') anything*:x seq('*/')                               -> [#comment, x.join('')],
+    ident           = m_ident:x                                                     -> [#ident, x],
+    atkeyword       = '@' m_ident:x                                                 -> [#atkeyword, x],
+    string          = m_string:x                                                    -> [#string, x],
+    hash            = '#' m_name:x                                                  -> [#hash, x],
+    number          = m_num:x                                                       -> [#number, x],
+    percentage      = m_num:x '%'                                                   -> [#percentage, x],
+    dimension       = m_num:x m_ident:y                                             -> [#dimension, x, y],
+    cdo             = seq('<!--')                                                   -> [#cdo],
+    cdc             = seq('-->')                                                    -> [#cdc],
+    s               = ((:x m_w(x)) -> x)+:xx                                        -> [#s, xx.join('')],
+    attrselector    = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x  -> [#attrselector, x],
+    delim           = ','                                                           -> [#delim, ','],
+    comment         = seq('/*') anything*:x seq('*/')                               -> [#comment, x.join('')],
 
     // Macros
 
@@ -39,37 +38,37 @@ ometa CSSBSParser {
 }
 
 ometa CSSParser <: CSSBSParser {
-    sc              = (S | COMMENT),
-    stylesheet      = (CDO | CDC | sc | statement)*:x                                                   -> this.concat([#stylesheet], x),
+    sc              = (s | comment),
+    stylesheet      = (cdo | cdc | sc | statement)*:x                                                   -> this.concat([#stylesheet], x),
     statement       = (ruleset | atrule),
-    atrule_part     = (any | operator | sc),
-    atrule          = seq('@media') atrule_part*:ap '{' sc*:s0 ruleset*:r sc*:s1 '}'                    -> this.concat([#atrulem], ap, s0, r, s1) // media
-                    | ATKEYWORD:ak atrule_part*:ap block:b                                              -> this.concat([#atruleb, ak], ap, [b]) // block
-                    | ATKEYWORD:ak atrule_part*:ap ';'                                                  -> this.concat([#atrules, ak], ap), // single
-    block_decl      = sc*:s0 declaration:x decl_delim:y sc*:s1                                          -> this.concat(s0, [x], [y], s1)
+    atrulepart      = (any | operator | sc),
+    atrule          = seq('@media') atrulepart*:ap '{' sc*:s0 ruleset*:r sc*:s1 '}'                     -> this.concat([#atrulem], ap, s0, r, s1) // media
+                    | atkeyword:ak atrulepart*:ap block:b                                               -> this.concat([#atruleb, ak], ap, [b]) // block
+                    | atkeyword:ak atrulepart*:ap ';'                                                   -> this.concat([#atrules, ak], ap), // single
+    blockdecl      = sc*:s0 declaration:x decldelim:y sc*:s1                                            -> this.concat(s0, [x], [y], s1)
                     | sc*:s0 declaration:x sc*:s1                                                       -> this.concat(s0, [x], s1)
-                    | sc*:s0 decl_delim:x sc*:sc1                                                       -> this.concat(s0, [x], s1),
-    decl_delim      = ';'                                                                               -> [#decldelim],
-    block           = '{' block_decl*:x '}'                                                             -> this.concatContent([#block], x),
+                    | sc*:s0 decldelim:x sc*:sc1                                                        -> this.concat(s0, [x], s1),
+    decldelim      = ';'                                                                                -> [#decldelim],
+    block           = '{' blockdecl*:x '}'                                                              -> this.concatContent([#block], x),
     ruleset         = selector*:x block:y                                                               -> this.concat([#ruleset], x, [y]),
     combinator      = ('+' | '>' | '~'):x                                                               -> [#combinator, x],
-    space_selector  = S:x any:y                                                                         -> [x, y],
-    combi_selector  = sc*:s0 combinator:x sc*:s1 any:y                                                  -> this.concat(s0, [x], s1, [y]),
-    attrib          = '[' sc*:s0 IDENT:x sc*:s1 ATTR_SELECTOR:a sc*:s2 (IDENT | STRING):y sc*:s3 ']'    -> [this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3)],
-    class           = '.' IDENT:i                                                                       -> [#class, i],
-    simple_selector = any:x (combi_selector | space_selector | attrib)*:y                               -> this.concatContent([#simpleselector, x], y),
-    selector        = (simple_selector | DELIM | sc)+:x                                                 -> this.concat([#selector], x),
+    spaceselector  = S:x any:y                                                                          -> [x, y],
+    combiselector  = sc*:s0 combinator:x sc*:s1 any:y                                                   -> this.concat(s0, [x], s1, [y]),
+    attrib          = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']'     -> [this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3)],
+    class           = '.' ident:i                                                                       -> [#class, i],
+    simpleselector = any:x (combiselector | spaceselector | attrib)*:y                                  -> this.concatContent([#simpleselector, x], y),
+    selector        = (simpleselector | delim | sc)+:x                                                  -> this.concat([#selector], x),
     declaration     = property:x ':' value:y                                                            -> [#declaration, x, y],
-    property        = IDENT:x sc*:s0                                                                    -> this.concat([#property, x], s0),
+    property        = ident:x sc*:s0                                                                    -> this.concat([#property, x], s0),
     prio            = '!' sc*:s0 seq('important')                                                       -> [#important].concat(s0),
-    unary_operator  = ('-' | '+'):x                                                                     -> [#unary, x],
+    unary           = ('-' | '+'):x                                                                     -> [#unary, x],
     operator        = ('/' | ',' | ':'):x                                                               -> [#operator, x],
-    uri             = seq('url') '(' sc*:s0 STRING:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
+    uri             = seq('url') '(' sc*:s0 string:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
                     | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                     -> [#uri, [#raw, xx.join('')]],
-    value           = (any | block | ATKEYWORD | operator | sc | prio)+:x                               -> this.concat([#value], x),
-    func            = IDENT:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
-    any             = (class | STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | uri | func | IDENT):x  -> x
-                    | unary_operator*:x (PERCENTAGE | DIMENSION | NUMBER):y                             -> x.concat(y)
+    value           = (any | block | atkeyword | operator | sc | prio)+:x                               -> this.concat([#value], x),
+    func            = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
+    any             = (class | string | percentage | dimension | hash | number | uri | func | ident):x  -> x
+                    | unaryoperator*:x (percentage | dimension | number):y                              -> x.concat(y)
                     | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
 }
@@ -98,13 +97,13 @@ ometa CSSTransformer {
     atkeyword       :x                  -> [#atkeyword, x],
     string          :x                  -> [#string, x],
     hash            :x                  -> [#hash, x],
-    num             :x                  -> [#num, x],
+    number          :x                  -> [#number, x],
     percentage      :x                  -> [#percentage, x],
     dimension       :x :y               -> [#dimension, x, y],
     cdo                                 -> [#cdo],
     cdc                                 -> [#cdc],
     decldelim                           -> [#decldelim],
-    white           :x                  -> [#white, x],
+    s               :x                  -> [#s, x],
     attrselector    :x                  -> [#attrselector, x],
     attrib          trans*:x            -> [#attrib].concat(x),
     class           trans:x             -> [#class, x],
@@ -144,7 +143,7 @@ ometa CSSTranslator {
     cdo                                 -> '<!--',
     cdc                                 -> '-->',
     decldelim                           -> ';',
-    white           :x                  -> x,
+    s               :x                  -> x,
     attrselector    :x                  -> x,
     attrib          trans*:x            -> ('[' + x.join('') + ']'),
     class           trans:x             -> ('.' + x),
