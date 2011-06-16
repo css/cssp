@@ -154,6 +154,6 @@ ometa CSSTranslator {
     value trans*:x -> x.join(''),
     comment :x -> x,
     uri trans:x -> ('url(' + x + ')'),
-    raw :x -> x
-//    function
+    raw :x -> x,
+    function trans:x trans*:y -> (x + '(' + y.join('') + ')')
 }

@@ -82,7 +82,8 @@ var ometajs = require('ometajs'),
 "value":function(){var $elf=this,_fromIdx=this.input.idx,x;return (function(){x=this._many((function(){return this._apply("trans")}));return x.join("")}).call(this)},
 "comment":function(){var $elf=this,_fromIdx=this.input.idx,x;return (function(){x=this._apply("anything");return x}).call(this)},
 "uri":function(){var $elf=this,_fromIdx=this.input.idx,x;return (function(){x=this._apply("trans");return (("url(" + x) + ")")}).call(this)},
-"raw":function(){var $elf=this,_fromIdx=this.input.idx,x;return (function(){x=this._apply("anything");return x}).call(this)}})}
+"raw":function(){var $elf=this,_fromIdx=this.input.idx,x;return (function(){x=this._apply("anything");return x}).call(this)},
+"function":function(){var $elf=this,_fromIdx=this.input.idx,x,y;return (function(){x=this._apply("trans");y=this._many((function(){return this._apply("trans")}));return (((x + "(") + y.join("")) + ")")}).call(this)}})}
 // CSS 2.1 / 4.1.1 Tokenization / macro section
 
 // [_a-z]|{nonascii}|{escape}
