@@ -54,7 +54,7 @@ ometa CSSParser <: CSSBSParser {
     ruleset         = selector*:x block:y                                                               -> this.concat([#ruleset], x, [y]),
     combinator      = ('+' | '>' | '~'):x                                                               -> [#combinator, x],
     space_selector  = S:x any:y                                                                         -> [x, y],
-    combi_selector  = combinator:c sc*:s0 any:x                                                         -> [this.concat([c], s0, [x])],
+    combi_selector  = sc*:s0 combinator:x sc*:s1 any:y                                                  -> this.concat(s0, [x], s1, [y]),
     attrib          = '[' sc*:s0 IDENT:x sc*:s1 ATTR_SELECTOR:a sc*:s2 (IDENT | STRING):y sc*:s3 ']'    -> [this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3)],
     class           = '.' IDENT:i                                                                       -> [#class, i],
     simple_selector = any:x (combi_selector | space_selector | attrib)*:y                               -> this.concatContent([#simpleselector, x], y),
@@ -68,8 +68,8 @@ ometa CSSParser <: CSSBSParser {
                     | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                     -> [#uri, [#raw, xx.join('')]],
     value           = (any | block | ATKEYWORD | operator | sc | prio)+:x                               -> this.concat([#value], x),
     func            = IDENT:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
-    any             = unary_operator*:x (class | STRING | PERCENTAGE | DIMENSION |
-                        HASH | NUMBER | uri | func | IDENT | operator):y                                -> x.concat(y)
+    any             = (class | STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | uri | func | IDENT):x  -> x
+                    | unary_operator*:x (PERCENTAGE | DIMENSION | NUMBER):y                             -> x.concat(y)
                     | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
 }
