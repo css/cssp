@@ -6,9 +6,9 @@ ometa CSSBSParser {
     atkeyword       = '@' m_ident:x                                                 -> [#atkeyword, x],
     string          = m_string:x                                                    -> [#string, x],
     hash            = '#' m_name:x                                                  -> [#hash, x],
-    number          = m_num:x                                                       -> [#number, x],
-    percentage      = m_num:x '%'                                                   -> [#percentage, x],
-    dimension       = m_num:x m_ident:y                                             -> [#dimension, x, y],
+    number          = m_number:x                                                    -> [#number, x],
+    percentage      = m_number:x '%'                                                -> [#percentage, x],
+    dimension       = m_number:x m_ident:y                                          -> [#dimension, x, y],
     cdo             = seq('<!--')                                                   -> [#cdo],
     cdc             = seq('-->')                                                    -> [#cdc],
     s               = ((:x m_w(x)) -> x)+:xx                                        -> [#s, xx.join('')],
@@ -20,7 +20,7 @@ ometa CSSBSParser {
 
     m_ident         = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz  -> (x.join('') + y + zz.join('')),
     m_name          = ((:x m_nmchar(x)) -> x)+:xx                                   -> xx.join(''),
-    m_num           = digit+:x '.' digit+:y                                         -> (x.join('') + '.' + y.join(''))
+    m_number        = digit+:x '.' digit+:y                                         -> (x.join('') + '.' + y.join(''))
                     | '.' digit+:x                                                  -> ('.' + x.join(''))
                     | digit+:x                                                      -> x.join(''),
     m_string        = '"' (m_string_nl1 | ~'"' char)*:s '"'                         -> ('"' + s.join('') + '"')
@@ -52,7 +52,7 @@ ometa CSSParser <: CSSBSParser {
     block           = '{' blockdecl*:x '}'                                                              -> this.concatContent([#block], x),
     ruleset         = selector*:x block:y                                                               -> this.concat([#ruleset], x, [y]),
     combinator      = ('+' | '>' | '~'):x                                                               -> [#combinator, x],
-    spaceselector  = S:x any:y                                                                          -> [x, y],
+    spaceselector  = s:x any:y                                                                          -> [x, y],
     combiselector  = sc*:s0 combinator:x sc*:s1 any:y                                                   -> this.concat(s0, [x], s1, [y]),
     attrib          = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']'     -> [this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3)],
     class           = '.' ident:i                                                                       -> [#class, i],
@@ -68,7 +68,7 @@ ometa CSSParser <: CSSBSParser {
     value           = (any | block | atkeyword | operator | sc | prio)+:x                               -> this.concat([#value], x),
     func            = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
     any             = (class | string | percentage | dimension | hash | number | uri | func | ident):x  -> x
-                    | unaryoperator*:x (percentage | dimension | number):y                              -> x.concat(y)
+                    | unary*:x (percentage | dimension | number):y                              -> x.concat(y)
                     | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
 }
@@ -137,7 +137,7 @@ ometa CSSTranslator {
     atkeyword       :x                  -> ('@' + x),
     string          :x                  -> x,
     hash            :x                  -> ('#' + x),
-    num             :x                  -> x,
+    number             :x                  -> x,
     percentage      :x                  -> (x + '%'),
     dimension       :x :y               -> (x + y),
     cdo                                 -> '<!--',
