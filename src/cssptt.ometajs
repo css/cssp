@@ -26,6 +26,8 @@ ometa CSSBSParser {
 
     DELIM = ',' S* -> [#delim, ','],
 
+    COMMENT = (anything*:x -> x.join('')):y m_comment(y) -> [#comment, y],
+
     // Macros
 
     m_ident = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz -> (x.join('') + y + zz.join('')),
@@ -53,7 +55,9 @@ ometa CSSBSParser {
 
     m_nl :x = ?CSSBSParser._m_nl(x),
 
-    m_w :x = ?CSSBSParser._m_w(x)
+    m_w :x = ?CSSBSParser._m_w(x),
+
+    m_comment :x = ?CSSBSParser._m_comment(x)
 }
 
 ometa CSSParser <: CSSBSParser {
@@ -65,7 +69,7 @@ ometa CSSParser <: CSSBSParser {
 
     atrule = seq('@media') S* atrule_part*:ap '{' S* ruleset*:r S* '}' -> [#atrulem].concat(ap).concat(r) // media
            | ATKEYWORD:ak atrule_part*:ap block:b -> [#atruleb, ak].concat(ap).concat([b]) // block
-           | ATKEYWORD:ak S* atrule_part*:ap ';' S*  -> [#atrules, ak].concat(ap), // single
+           | ATKEYWORD:ak atrule_part*:ap ';' S*  -> [#atrules, ak].concat(ap), // single
 
     block = '{' S* declaration*:x '}' -> [#block].concat(x),
 
@@ -95,11 +99,14 @@ ometa CSSParser <: CSSBSParser {
 
     operator = ('/' | ','):x -> [#operator, x],
 
+    uri = seq('url') '(' STRING:x ')' -> [#uri, x]
+        | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')' -> [#uri, [#raw, xx.join('')]],
+
     value = (any | block | ATKEYWORD | operator | S)+:x -> [#value].concat(x),
 
     func = IDENT:x '(' (any | S)*:y ')' -> [#function, x].concat(y),
 
-    any = unary_operator*:x (class | STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | func | IDENT | operator):y -> x.concat(y)
+    any = unary_operator*:x (class | STRING | PERCENTAGE | DIMENSION | HASH | NUMBER | uri | func | IDENT | operator):y -> x.concat(y)
         | '(' S* any*:x ')' S* -> [#braces, '(', ')'].concat(x)
         | '[' S* any*:x ']' S* -> [#braces, '[', ']'].concat(x)
 }
@@ -132,7 +139,7 @@ ometa CSSTranslator {
     stylesheet :x trans*:y -> y.join(''),
 //    atrulem
     atruleb trans*:x -> x.join(''),
-    atrules trans:x -> x,
+    atrules trans*:x -> (x.join('') + ';'),
     block trans*:x -> ('{' + x.join(';') + '}'),
     ruleset trans*:x -> x.join(''),
     combinator :x -> x,
@@ -144,6 +151,9 @@ ometa CSSTranslator {
     unary :x -> x,
     operator :x -> x,
     braces :x :y trans*:z -> (x + z.join('') + y),
-    value trans*:x -> x.join('')
+    value trans*:x -> x.join(''),
+    comment :x -> x,
+    uri trans:x -> ('url(' + x + ')'),
+    raw :x -> x
 //    function
 }

@@ -30,3 +30,8 @@ CSSBSParser['_m_w'] = function(x) {
     return /[ \t\r\n\f]/.test(x);
 };
 
+// \/\*[^*]*\*+([^/*][^*]*\*+)*\/
+CSSBSParser['_m_comment'] = function(x) {
+    return new RegExp('\/\*[^*]*\*+([^/*][^*]*\*+)*\/').test(x);
+};
+
