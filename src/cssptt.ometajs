@@ -91,81 +91,81 @@ CSSParser.concat = function() {
 };
 
 ometa CSSTransformer {
-    anys            = anything*,
+    anys = any*,
 
-    ident           :t :x           -> [t, x],
-    atkeyword       :t :x           -> [t, x],
-    string          :t :x           -> [t, x],
-    hash            :t :x           -> [t, x],
-    number          :t :x           -> [t, x],
-    percentage      :t :x           -> [t, x],
-    dimension       :t anys:x       -> [t].concat(x),
-    cdo             :t              -> [t],
-    cdc             :t              -> [t],
-    decldelim       :t              -> [t],
-    s               :t :x           -> [t, x],
-    attrselector    :t :x           -> [t, x],
-    attrib          :t anys:x       -> [t].concat(x),
-    class           :t :x           -> [t, x],
-    delim           :t :x           -> [t, x],
-    stylesheet      :t anys:x       -> [t].concat(x),
-    atrulem         :t anys:x       -> [t].concat(x),
-    atruleb         :t anys:x       -> [t].concat(x),
-    atrules         :t anys:x       -> [t].concat(x),
-    block           :t anys:x       -> [t].concat(x),
-    ruleset         :t anys:x       -> [t].concat(x),
-    combinator      :t :x           -> [t, x],
-    simpleselector  :t anys:x       -> [t].concat(x),
-    selector        :t anys:x       -> [t].concat(x),
-    declaration     :t :p :v        -> [t, p, v],
-    property        :t anys:x       -> [t].concat(x),
-    important       :t anys:x       -> [t].concat(x),
-    unary           :t :x           -> [t, x],
-    operator        :t :x           -> [t, x],
-    braces          :t :x :y anys:z -> [t, x, y].concat(z),
-    value           :t anys:x       -> [t].concat(x),
-    comment         :t :x           -> [t, x],
-    uri             :t :x           -> [t, x],
-    raw             :t :x           -> [t, x],
-    function        :t :x anys*:y   -> [t, x].concat(y)
+    any = ['ident':t :x]                -> [t, x]
+        | ['atkeyword':t :x]            -> [t, x]
+        | ['string':t :x]               -> [t, x]
+        | ['hash':t :x]                 -> [t, x]
+        | ['number':t :x]               -> [t, x]
+        | ['percentage':t :x]           -> [t, x]
+        | ['dimension':t anys:x]        -> [t].concat(x)
+        | ['cdo':t]                     -> [t]
+        | ['cdc':t]                     -> [t]
+        | ['decldelim':t]               -> [t]
+        | ['s':t :x]                    -> [t, x]
+        | ['attrselector':t :x]         -> [t, x]
+        | ['attrib':t anys:x]           -> [t].concat(x)
+        | ['class':t :x]                -> [t, x]
+        | ['delim':t :x]                -> [t, x]
+        | ['stylesheet':t anys:x]       -> [t].concat(x)
+        | ['atrulem':t anys:x]          -> [t].concat(x)
+        | ['atruleb':t anys:x]          -> [t].concat(x)
+        | ['atrules':t anys:x]          -> [t].concat(x)
+        | ['block':t anys:x]            -> [t].concat(x)
+        | ['ruleset':t anys:x]          -> [t].concat(x)
+        | ['combinator':t :x]           -> [t, x]
+        | ['simpleselector':t anys:x]   -> [t].concat(x)
+        | ['selector':t anys:x]         -> [t].concat(x)
+        | ['declaration':t any:p any:v] -> [t, p, v]
+        | ['property':t anys:x]         -> [t].concat(x)
+        | ['important':t anys:x]        -> [t].concat(x)
+        | ['unary':t :x]                -> [t, x]
+        | ['operator':t :x]             -> [t, x]
+        | ['braces':t :x :y anys:z]     -> [t, x, y].concat(z)
+        | ['value':t anys:x]            -> [t].concat(x)
+        | ['comment':t :x]              -> [t, x]
+        | ['uri':t :x]                  -> [t, x]
+        | ['raw':t :x]                  -> [t, x]
+        | ['function':t :x anys*:y]     -> [t, x].concat(y)
 }
 
 ometa CSSTranslator {
-    trans = [:t apply(t):x] -> x,
+    anys = any*,
 
-    ident           :x                  -> x,
-    atkeyword       :x                  -> ('@' + x),
-    string          :x                  -> x,
-    hash            :x                  -> ('#' + x),
-    number          :x                  -> x,
-    percentage      :x                  -> (x + '%'),
-    dimension       :x :y               -> (x + y),
-    cdo                                 -> '<!--',
-    cdc                                 -> '-->',
-    decldelim                           -> ';',
-    s               :x                  -> x,
-    attrselector    :x                  -> x,
-    attrib          trans*:x            -> ('[' + x.join('') + ']'),
-    class           trans:x             -> ('.' + x),
-    delim           :x                  -> x,
-    stylesheet      :x trans*:y         -> y.join(''),
-    atrulem         trans*:x            -> ('@media' + x.join('')),
-    atruleb         trans*:x            -> x.join(''),
-    atrules         trans*:x            -> (x.join('') + ';'),
-    block           trans*:x            -> ('{' + x.join('') + '}'),
-    ruleset         trans*:x            -> x.join(''),
-    combinator      :x                  -> x,
-    simpleselector  trans*:x            -> x.join(''),
-    selector        trans*:x            -> x.join(''),
-    declaration     trans:p trans:v     -> (p + ':' + v),
-    property        trans*:x            -> x.join(''),
-    important       trans*:x            -> ('!' + x.join('') + 'important'),
-    unary           :x                  -> x,
-    operator        :x                  -> x,
-    braces          :x :y trans*:z      -> (x + z.join('') + y),
-    value           trans*:x            -> x.join(''),
-    comment         :x                  -> x,
-    uri             trans:x             -> ('url(' + x + ')'),
-    raw             :x                  -> x,
-    function        trans:x trans*:y    -> (x + '(' + y.join('') + ')')
+    any = ['ident' :x]                  -> x
+        | ['atkeyword' :x]              -> ('@' + x)
+        | ['string' :x]                 -> x
+        | ['hash' :x]                   -> ('#' + x)
+        | ['number' :x]                 -> x
+        | ['percentage' :x]             -> (x + '%')
+        | ['dimension' :x :y]           -> (x + y)
+        | ['cdo']                       -> '<!--'
+        | ['cdc']                       -> '-->'
+        | ['decldelim']                 -> ';'
+        | ['s' :x]                      -> x
+        | ['attrselector' :x]           -> x
+        | ['attrib' anys:x]             -> ('[' + x.join('') + ']')
+        | ['class' :x]                  -> ('.' + x)
+        | ['delim' :x]                  -> x
+        | ['stylesheet' anys:x]         -> x.join('')
+        | ['atrulem' anys:x]            -> ('@media' + x.join(''))
+        | ['atruleb' anys:x]            -> x.join('')
+        | ['atrules' anys:x]            -> (x.join('') + ';')
+        | ['block' anys:x]              -> ('{' + x.join('') + '}')
+        | ['ruleset' anys:x]            -> x.join('')
+        | ['combinator' :x]             -> x
+        | ['simpleselector' anys:x]     -> x.join('')
+        | ['selector' anys:x]           -> x.join('')
+        | ['declaration' any:p any:v]   -> (p + ':' + v)
+        | ['property' anys:x]           -> x.join('')
+        | ['important' anys:x]          -> ('!' + x.join('') + 'important')
+        | ['unary' :x]                  -> x
+        | ['operator' :x]               -> x
+        | ['braces' :x :y anys:z]       -> (x + z.join('') + y)
+        | ['value' anys:x]              -> x.join('')
+        | ['comment' :x]                -> x
+        | ['uri' :x]                    -> ('url(' + x + ')')
+        | ['raw' :x]                    -> x
+        | ['function' :x anys:y]        -> (x + '(' + y.join('') + ')')
 }
