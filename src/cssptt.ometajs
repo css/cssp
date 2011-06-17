@@ -68,7 +68,7 @@ ometa CSSParser <: CSSBSParser {
     value           = (any | block | atkeyword | operator | sc | prio)+:x                               -> this.concat([#value], x),
     func            = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
     any             = (class | string | percentage | dimension | hash | number | uri | func | ident):x  -> x
-                    | unary*:x (percentage | dimension | number):y                              -> x.concat(y)
+                    | unary*:x (percentage | dimension | number):y                                      -> x.concat(y)
                     | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
 }
@@ -137,7 +137,7 @@ ometa CSSTranslator {
     atkeyword       :x                  -> ('@' + x),
     string          :x                  -> x,
     hash            :x                  -> ('#' + x),
-    number             :x                  -> x,
+    number          :x                  -> x,
     percentage      :x                  -> (x + '%'),
     dimension       :x :y               -> (x + y),
     cdo                                 -> '<!--',
