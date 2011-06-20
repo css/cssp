@@ -5,7 +5,7 @@ var fs = require('fs'),
     translator = cssptt.CSSTranslator,
     d_dir = __dirname + '/data',
     d_list = fs.readdirSync(d_dir),
-    fail = 0;
+    okn = 0, total = 0;
 
 var funcs = {
     'p': function parse(src, match) {
@@ -15,7 +15,7 @@ var funcs = {
             return array2string(transformer.matchAll(parser.matchAll(src, match), match), 0);
          },
     'l': function translate(src, match) {
-            return translator.matchAll(transformer.matchAll(parser.matchAll(src, match), match), match);
+            return translator.match(transformer.match(parser.matchAll(src, match), match), match);
          }
 };
 
@@ -25,7 +25,7 @@ d_list.forEach(function(rule_dir) {
         list = fs.readdirSync(path),
         ext,
         files = {},
-        k, a, b, c, src, t;
+        k, a, b, c, src, t, r;
 
     list.forEach(function(f) {
         var i = f.lastIndexOf('.');
@@ -40,16 +40,24 @@ d_list.forEach(function(rule_dir) {
 
     for (k in files) {
         if (files[k].css) {
-            src = readFile(path + k + '.css');
+            src = readFile(path + k + '.css').trim();
             t = '\'' + rule + '\' / \'' + k + '.';
             for (a in funcs) {
                 if (a in files[k]) {
-                    console.log('Test ' + t + a + ': ' + ((b = funcs[a](src, rule)) !== (c = readFile(path + k + '.' + a))));
+                    total++;
+                    r = (((b = funcs[a](src, rule)) == (c = readFile(path + k + '.' + a).trim())));
+                    r && okn++;
+                    if (!r) {
+                        console.log('FAIL: ' + t + a);
+                        console.log('IN:\n' + c + '\nOUT:\n' + b);
+                    }
                 }
             }
         }
     }
 });
+
+console.log('Total: ' + total + '. Ok: ' + okn + '. Fail: ' + (total - okn));
 
 // Utils
 

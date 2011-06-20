@@ -8,7 +8,7 @@ ometa CSSBSParser {
     hash            = '#' m_name:x                                                  -> [#hash, x],
     number          = m_number:x                                                    -> [#number, x],
     percentage      = m_number:x '%'                                                -> [#percentage, x],
-    dimension       = m_number:x m_ident:y                                          -> [#dimension, x, y],
+    dimension       = number:x m_ident:y                                            -> [#dimension, x, y],
     cdo             = seq('<!--')                                                   -> [#cdo],
     cdc             = seq('-->')                                                    -> [#cdc],
     s               = ((:x m_w(x)) -> x)+:xx                                        -> [#s, xx.join('')],
@@ -18,7 +18,7 @@ ometa CSSBSParser {
 
     // Macros
 
-    m_ident         = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z)) -> z)*:zz  -> (x.join('') + y + zz.join('')),
+    m_ident         = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z) | '-') -> z)*:zz  -> (x.join('') + y + zz.join('')),
     m_name          = ((:x m_nmchar(x)) -> x)+:xx                                   -> xx.join(''),
     m_number        = digit+:x '.' digit+:y                                         -> (x.join('') + '.' + y.join(''))
                     | '.' digit+:x                                                  -> ('.' + x.join(''))
@@ -139,7 +139,7 @@ ometa CSSTransformer {
     hash            = ['hash':t :x]                 -> [t, x],
     number          = ['number':t :x]               -> [t, x],
     percentage      = ['percentage':t :x]           -> [t, x],
-    dimension       = ['dimension':t anys:x]        -> [t].concat(x),
+    dimension       = ['dimension':t any:x :y]      -> [t, x, y],
     cdo             = ['cdo':t]                     -> [t],
     cdc             = ['cdc':t]                     -> [t],
     decldelim       = ['decldelim':t]               -> [t],
@@ -219,7 +219,7 @@ ometa CSSTranslator {
     hash            = ['hash' :x]                   -> ('#' + x),
     number          = ['number' :x]                 -> x,
     percentage      = ['percentage' :x]             -> (x + '%'),
-    dimension       = ['dimension' :x :y]           -> (x + y),
+    dimension       = ['dimension' any:x :y]        -> (x + y),
     cdo             = ['cdo']                       -> '<!--',
     cdc             = ['cdc']                       -> '-->',
     decldelim       = ['decldelim']                 -> ';',
