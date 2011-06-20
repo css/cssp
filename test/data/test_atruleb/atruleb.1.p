@@ -1,0 +1,13 @@
+['atruleb', 
+  ['atkeyword', 'test'], 
+  ['s', ' '], 
+  ['ident', 'x'], 
+  ['s', ' '], 
+  ['ident', 'y'], 
+  ['s', ' '], 
+  ['block', 
+    ['declaration', 
+      ['property', 
+        ['ident', 'p']], 
+      ['value', 
+        ['ident', 'v']]]]]

@@ -42,9 +42,12 @@ ometa CSSParser <: CSSBSParser {
     stylesheet      = (cdo | cdc | sc | statement)*:x                                                   -> this.concat([#stylesheet], x),
     statement       = (ruleset | atrule),
     atrulepart      = (any | operator | sc),
-    atrule          = seq('@media') atrulepart*:ap '{' sc*:s0 ruleset*:r sc*:s1 '}'                     -> this.concat([#atrulem], ap, s0, r, s1) // media
-                    | atkeyword:ak atrulepart*:ap block:b                                               -> this.concat([#atruleb, ak], ap, [b]) // block
-                    | atkeyword:ak atrulepart*:ap ';'                                                   -> this.concat([#atrules, ak], ap), // single
+    mediaq          = atrulepart*:ap                                                                    -> [#mediaq].concat(ap),
+    medias          = sc*:s0 ruleset*:r sc*:s1                                                          -> this.concat([#medias], s0, r, s1),
+    atrulem         = seq('@media') mediaq:x '{' medias:y '}'                                           -> [#atrulem, x, y],
+    atruleb         = atkeyword:ak atrulepart*:ap block:b                                               -> this.concat([#atruleb, ak], ap, [b]),
+    atrules         = atkeyword:ak atrulepart*:ap ';'                                                   -> this.concat([#atrules, ak], ap),
+    atrule          = (atrulem | atruleb | atrules),
     blockdecl       = sc*:s0 declaration:x decldelim:y sc*:s1                                           -> this.concat(s0, [x], [y], s1)
                     | sc*:s0 declaration:x sc*:s1                                                       -> this.concat(s0, [x], s1)
                     | sc*:s0 decldelim:x sc*:sc1                                                        -> this.concat(s0, [x], s1),
@@ -69,7 +72,6 @@ ometa CSSParser <: CSSBSParser {
     value           = (any | block | atkeyword | operator | sc | prio)+:x                               -> this.concat([#value], x),
     function        = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
     any             = (class | string | percentage | dimension | hash | number | uri | function | ident | unary):x  -> x
-//                    | unary:x (percentage | dimension | number | any):y                                 -> x.concat(y)
                     | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
 }
@@ -115,6 +117,8 @@ ometa CSSTransformer {
         | pseudoc
         | delim
         | stylesheet
+        | mediaq
+        | medias
         | atrulem
         | atruleb
         | atrules
@@ -154,6 +158,8 @@ ometa CSSTransformer {
     pseudoc         = ['pseudoc':t :x]              -> [t, x],
     delim           = ['delim':t :x]                -> [t, x],
     stylesheet      = ['stylesheet':t anys:x]       -> [t].concat(x),
+    mediaq          = ['mediaq':t anys:x]           -> [t].concat(x),
+    medias          = ['medias':t anys:x]           -> [t].concat(x),
     atrulem         = ['atrulem':t anys:x]          -> [t].concat(x),
     atruleb         = ['atruleb':t anys:x]          -> [t].concat(x),
     atrules         = ['atrules':t anys:x]          -> [t].concat(x),
@@ -199,6 +205,8 @@ ometa CSSTranslator {
         | pseudoc
         | delim
         | stylesheet
+        | mediaq
+        | medias
         | atrulem
         | atruleb
         | atrules
@@ -238,7 +246,9 @@ ometa CSSTranslator {
     pseudoc         = ['pseudoc' anys:x]            -> (':' + x.join('')),
     delim           = ['delim' :x]                  -> x,
     stylesheet      = ['stylesheet' anys:x]         -> x.join(''),
-    atrulem         = ['atrulem' anys:x]            -> ('@media' + x.join('')),
+    mediaq          = ['mediaq' anys:x]             -> x.join(''),
+    medias          = ['medias' anys:x]             -> x.join(''),
+    atrulem         = ['atrulem' any:x any:y]       -> ('@media' + x + '{' + y + '}'),
     atruleb         = ['atruleb' anys:x]            -> x.join(''),
     atrules         = ['atrules' anys:x]            -> (x.join('') + ';'),
     block           = ['block' anys:x]              -> ('{' + x.join('') + '}'),
