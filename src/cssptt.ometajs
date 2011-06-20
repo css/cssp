@@ -71,9 +71,12 @@ ometa CSSParser <: CSSBSParser {
                     | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                     -> [#uri, [#raw, xx.join('')]],
     value           = (any | block | atkeyword | operator | sc | prio)+:x                               -> this.concat([#value], x),
     function        = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
+    braces          = '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
+                    | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1),
     any             = (class | string | percentage | dimension | hash | number | uri | function | ident | unary):x  -> x
-                    | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
-                    | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
+                    | braces
+//                    | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
+//                    | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
 }
 
 CSSParser.concatContent = function(x, y) {
