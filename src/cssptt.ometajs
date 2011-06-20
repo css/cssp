@@ -50,7 +50,7 @@ ometa CSSParser <: CSSBSParser {
     atrule          = (atrulem | atruleb | atrules),
     blockdecl       = sc*:s0 declaration:x decldelim:y sc*:s1                                           -> this.concat(s0, [x], [y], s1)
                     | sc*:s0 declaration:x sc*:s1                                                       -> this.concat(s0, [x], s1)
-                    | sc*:s0 decldelim:x sc*:sc1                                                        -> this.concat(s0, [x], s1),
+                    | sc*:s0 decldelim:x sc*:s1                                                         -> this.concat(s0, [x], s1),
     decldelim       = ';'                                                                               -> [#decldelim],
     block           = '{' blockdecl*:x '}'                                                              -> this.concatContent([#block], x),
     ruleset         = selector*:x block:y                                                               -> this.concat([#ruleset], x, [y]),
