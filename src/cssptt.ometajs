@@ -45,18 +45,18 @@ ometa CSSParser <: CSSBSParser {
     atrule          = seq('@media') atrulepart*:ap '{' sc*:s0 ruleset*:r sc*:s1 '}'                     -> this.concat([#atrulem], ap, s0, r, s1) // media
                     | atkeyword:ak atrulepart*:ap block:b                                               -> this.concat([#atruleb, ak], ap, [b]) // block
                     | atkeyword:ak atrulepart*:ap ';'                                                   -> this.concat([#atrules, ak], ap), // single
-    blockdecl      = sc*:s0 declaration:x decldelim:y sc*:s1                                            -> this.concat(s0, [x], [y], s1)
+    blockdecl       = sc*:s0 declaration:x decldelim:y sc*:s1                                           -> this.concat(s0, [x], [y], s1)
                     | sc*:s0 declaration:x sc*:s1                                                       -> this.concat(s0, [x], s1)
                     | sc*:s0 decldelim:x sc*:sc1                                                        -> this.concat(s0, [x], s1),
-    decldelim      = ';'                                                                                -> [#decldelim],
+    decldelim       = ';'                                                                               -> [#decldelim],
     block           = '{' blockdecl*:x '}'                                                              -> this.concatContent([#block], x),
     ruleset         = selector*:x block:y                                                               -> this.concat([#ruleset], x, [y]),
     combinator      = ('+' | '>' | '~'):x                                                               -> [#combinator, x],
-    spaceselector  = s:x any:y                                                                          -> [x, y],
-    combiselector  = sc*:s0 combinator:x sc*:s1 any:y                                                   -> this.concat(s0, [x], s1, [y]),
-    attrib          = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']'     -> [this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3)],
+//    combiselector   = sc*:s0 combinator:x sc*:s1 any:y                                                   -> this.concat(s0, [x], s1, [y]),
+    attrib          = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']'     -> this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3),
     class           = '.' ident:i                                                                       -> [#class, i],
-    simpleselector = any:x (combiselector | spaceselector | attrib)*:y                                  -> this.concatContent([#simpleselector, x], y),
+//    simpleselector  = (any | combiselector | attrib | spaceselector | sc)+:x                            -> this.concatContent([#simpleselector], [x]),
+    simpleselector  = (combinator | attrib | any | sc)+:x                                               -> this.concatContent([#simpleselector], [x]),
     selector        = (simpleselector | delim | sc)+:x                                                  -> this.concat([#selector], x),
     declaration     = property:x ':' value:y                                                            -> [#declaration, x, y],
     property        = ident:x sc*:s0                                                                    -> this.concat([#property, x], s0),
@@ -226,7 +226,7 @@ ometa CSSTranslator {
     s               = ['s' :x]                      -> x,
     attrselector    = ['attrselector' :x]           -> x,
     attrib          = ['attrib' anys:x]             -> ('[' + x.join('') + ']'),
-    class           = ['class' :x]                  -> ('.' + x),
+    class           = ['class' any:x]               -> ('.' + x),
     delim           = ['delim' :x]                  -> x,
     stylesheet      = ['stylesheet' anys:x]         -> x.join(''),
     atrulem         = ['atrulem' anys:x]            -> ('@media' + x.join('')),
