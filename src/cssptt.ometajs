@@ -52,11 +52,12 @@ ometa CSSParser <: CSSBSParser {
     block           = '{' blockdecl*:x '}'                                                              -> this.concatContent([#block], x),
     ruleset         = selector*:x block:y                                                               -> this.concat([#ruleset], x, [y]),
     combinator      = ('+' | '>' | '~'):x                                                               -> [#combinator, x],
-//    combiselector   = sc*:s0 combinator:x sc*:s1 any:y                                                   -> this.concat(s0, [x], s1, [y]),
     attrib          = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']'     -> this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3),
     class           = '.' ident:i                                                                       -> [#class, i],
-//    simpleselector  = (any | combiselector | attrib | spaceselector | sc)+:x                            -> this.concatContent([#simpleselector], [x]),
-    simpleselector  = (combinator | attrib | any | sc)+:x                                               -> this.concatContent([#simpleselector], [x]),
+    pseudoe         = seq('::') ident:x                                                                 -> [#pseudoe, x],
+    pseudoc         = ':' (function | ident):x                                                          -> [#pseudoc, x],
+    pseudo          = (pseudoe | pseudoc),
+    simpleselector  = (combinator | attrib | pseudo | any | sc)+:x                                      -> this.concatContent([#simpleselector], [x]),
     selector        = (simpleselector | delim | sc)+:x                                                  -> this.concat([#selector], x),
     declaration     = property:x ':' value:y                                                            -> [#declaration, x, y],
     property        = ident:x sc*:s0                                                                    -> this.concat([#property, x], s0),
@@ -66,8 +67,8 @@ ometa CSSParser <: CSSBSParser {
     uri             = seq('url') '(' sc*:s0 string:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
                     | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                     -> [#uri, [#raw, xx.join('')]],
     value           = (any | block | atkeyword | operator | sc | prio)+:x                               -> this.concat([#value], x),
-    func            = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
-    any             = (class | string | percentage | dimension | hash | number | uri | func | ident):x  -> x
+    function        = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
+    any             = (class | string | percentage | dimension | hash | number | uri | function | ident):x  -> x
                     | unary*:x (percentage | dimension | number):y                                      -> x.concat(y)
                     | '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1)
@@ -92,8 +93,8 @@ CSSParser.concat = function() {
 
 ometa CSSTransformer {
     anys = any*,
-    before = [],
-    after = [],
+    before = ['before'],
+    after = ['after'],
 
     any = before
         | ident
@@ -110,6 +111,8 @@ ometa CSSTransformer {
         | attrselector
         | attrib
         | class
+        | pseudoe
+        | pseudoc
         | delim
         | stylesheet
         | atrulem
@@ -139,7 +142,7 @@ ometa CSSTransformer {
     hash            = ['hash':t :x]                 -> [t, x],
     number          = ['number':t :x]               -> [t, x],
     percentage      = ['percentage':t :x]           -> [t, x],
-    dimension       = ['dimension':t any:x :y]      -> [t, x, y],
+    dimension       = ['dimension':t :x :y]      -> [t, x, y],
     cdo             = ['cdo':t]                     -> [t],
     cdc             = ['cdc':t]                     -> [t],
     decldelim       = ['decldelim':t]               -> [t],
@@ -147,6 +150,8 @@ ometa CSSTransformer {
     attrselector    = ['attrselector':t :x]         -> [t, x],
     attrib          = ['attrib':t anys:x]           -> [t].concat(x),
     class           = ['class':t :x]                -> [t, x],
+    pseudoe         = ['pseudoe':t :x]              -> [t, x],
+    pseudoc         = ['pseudoc':t :x]              -> [t, x],
     delim           = ['delim':t :x]                -> [t, x],
     stylesheet      = ['stylesheet':t anys:x]       -> [t].concat(x),
     atrulem         = ['atrulem':t anys:x]          -> [t].concat(x),
@@ -167,7 +172,7 @@ ometa CSSTransformer {
     comment         = ['comment':t :x]              -> [t, x],
     uri             = ['uri':t :x]                  -> [t, x],
     raw             = ['raw':t :x]                  -> [t, x],
-    function        = ['function':t :x anys*:y]     -> [t, x].concat(y)
+    function        = ['function':t :x anys:y]      -> [t, x].concat(y)
 }
 
 ometa CSSTranslator {
@@ -190,6 +195,8 @@ ometa CSSTranslator {
         | attrselector
         | attrib
         | class
+        | pseudoe
+        | pseudoc
         | delim
         | stylesheet
         | atrulem
@@ -227,6 +234,8 @@ ometa CSSTranslator {
     attrselector    = ['attrselector' :x]           -> x,
     attrib          = ['attrib' anys:x]             -> ('[' + x.join('') + ']'),
     class           = ['class' any:x]               -> ('.' + x),
+    pseudoe         = ['pseudoe' anys:x]            -> ('::' + x.join('')),
+    pseudoc         = ['pseudoc' anys:x]            -> (':' + x.join('')),
     delim           = ['delim' :x]                  -> x,
     stylesheet      = ['stylesheet' anys:x]         -> x.join(''),
     atrulem         = ['atrulem' anys:x]            -> ('@media' + x.join('')),
@@ -247,5 +256,5 @@ ometa CSSTranslator {
     comment         = ['comment' :x]                -> x,
     uri             = ['uri' :x]                    -> ('url(' + x + ')'),
     raw             = ['raw' :x]                    -> x,
-    function        = ['function' :x anys:y]        -> (x + '(' + y.join('') + ')')
+    function        = ['function' any:x anys:y]     -> (x + '(' + y.join('') + ')')
 }
