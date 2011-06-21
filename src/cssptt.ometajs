@@ -41,7 +41,7 @@ ometa CSSParser <: CSSBSParser {
     sc              = (s | comment),
     stylesheet      = (cdo | cdc | sc | statement)*:x                                                   -> this.concat([#stylesheet], x),
     statement       = (ruleset | atrule),
-    atrulepart      = (any | operator | sc),
+    atrulepart      = (sc | any | operator),
     mediaq          = atrulepart*:ap                                                                    -> [#mediaq].concat(ap),
     medias          = sc*:s0 ruleset*:r sc*:s1                                                          -> this.concat([#medias], s0, r, s1),
     atrulem         = seq('@media') mediaq:x '{' medias:y '}'                                           -> [#atrulem, x, y],
@@ -69,7 +69,7 @@ ometa CSSParser <: CSSBSParser {
     operator        = ('/' | ',' | ':'):x                                                               -> [#operator, x],
     uri             = seq('url') '(' sc*:s0 string:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
                     | seq('url') '(' (~')' char)*:x ')'                                                 -> [#uri, [#raw, x.join('')]],
-    value           = (any | block | atkeyword | operator | sc | important)+:x                          -> this.concat([#value], x),
+    value           = (sc | any | block | atkeyword | operator | important)+:x                          -> this.concat([#value], x),
     function        = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
     braces          = '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1),
