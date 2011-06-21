@@ -68,7 +68,8 @@ ometa CSSParser <: CSSBSParser {
     unary           = ('-' | '+'):x                                                                     -> [#unary, x],
     operator        = ('/' | ',' | ':'):x                                                               -> [#operator, x],
     uri             = seq('url') '(' sc*:s0 string:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
-                    | seq('url') '(' (~')' char)*:x ')'                                                 -> [#uri, [#raw, x.join('')]],
+//                    | seq('url') '(' sc*:s0 (~')' ~m_w char)*:x sc*:s1 ')'                              -> [#uri, [#raw, x.join('')]],
+                    | seq('url') '(' sc*:s0 (~')' ~m_w char)*:x sc*:s1 ')'                              -> this.concat([#uri], s0, [[#raw, x.join('')]], s1),
     value           = (sc | any | block | atkeyword | operator | important)+:x                          -> this.concat([#value], x),
     function        = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
     braces          = '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
@@ -177,7 +178,7 @@ ometa CSSTransformer {
     braces          = ['braces':t :x :y anys:z]     -> [t, x, y].concat(z),
     value           = ['value':t anys:x]            -> [t].concat(x),
     comment         = ['comment':t :x]              -> [t, x],
-    uri             = ['uri':t :x]                  -> [t, x],
+    uri             = ['uri':t anys:x]              -> [t].concat(x),
     raw             = ['raw':t :x]                  -> [t, x],
     function        = ['function':t :x anys:y]      -> [t, x].concat(y)
 }
@@ -265,7 +266,7 @@ ometa CSSTranslator {
     braces          = ['braces' :x :y anys:z]       -> (x + z.join('') + y),
     value           = ['value' anys:x]              -> x.join(''),
     comment         = ['comment' :x]                -> ('/*' + x + '*/'),
-    uri             = ['uri' any:x]                 -> ('url(' + x + ')'),
+    uri             = ['uri' anys:x]                -> ('url(' + x.join('') + ')'),
     raw             = ['raw' :x]                    -> x,
     function        = ['function' any:x anys:y]     -> (x + '(' + y.join('') + ')')
 }
