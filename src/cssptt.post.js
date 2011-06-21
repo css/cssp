@@ -2,7 +2,7 @@
 
 // [_a-z]|{nonascii}|{escape}
 CSSBSParser['_m_nmstart'] = function(x) {
-    return /[_a-zA-Z]/.test(x) || CSSBSParser['_m_escape'](x);
+    return /[_a-zA-Z\-\*]/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 // \\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?
@@ -17,7 +17,7 @@ CSSBSParser['_m_escape'] = function(x) {
 
 // [_a-z0-9-]|{nonascii}|{escape}
 CSSBSParser['_m_nmchar'] = function(x) {
-    return /[_a-zA-Z0-9]/.test(x) || CSSBSParser['_m_escape'](x);
+    return /[_a-zA-Z0-9\-]/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 //  \n|\r\n|\r|\f

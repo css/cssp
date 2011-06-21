@@ -14,7 +14,7 @@ var ometajs = require('ometajs'),
 "attrselector":function(){var $elf=this,_fromIdx=this.input.idx,x;return (function(){x=(function(){switch(this._apply('anything')){case "=":return "=";case "~":return (function(){this._applyWithArgs("exactly","=");return "~="}).call(this);case "^":return (function(){this._applyWithArgs("exactly","=");return "^="}).call(this);case "$":return (function(){this._applyWithArgs("exactly","=");return "$="}).call(this);case "*":return (function(){this._applyWithArgs("exactly","=");return "*="}).call(this);default: throw fail}}).call(this);return ["attrselector",x]}).call(this)},
 "delim":function(){var $elf=this,_fromIdx=this.input.idx;return (function(){this._applyWithArgs("exactly",",");return ["delim",","]}).call(this)},
 "comment":function(){var $elf=this,_fromIdx=this.input.idx,x;return (function(){this._applyWithArgs("exactly","/");this._applyWithArgs("exactly","*");"/*";x=this._many((function(){return (function(){this._not((function(){return (function(){this._applyWithArgs("exactly","*");this._applyWithArgs("exactly","/");return "*/"}).call(this)}));return this._apply("char")}).call(this)}));this._applyWithArgs("exactly","*");this._applyWithArgs("exactly","/");"*/";return ["comment",x.join("")]}).call(this)},
-"m_ident":function(){var $elf=this,_fromIdx=this.input.idx,x,y,z,zz;return (function(){x=this._many((function(){return (function(){switch(this._apply('anything')){case "-":return "-";case "*":return "*";default: throw fail}}).call(this)}));y=this._apply("anything");this._applyWithArgs("m_nmstart",y);zz=this._many((function(){return (function(){this._or((function(){return (function(){z=this._apply("anything");return this._applyWithArgs("m_nmchar",z)}).call(this)}),(function(){return (function(){switch(this._apply('anything')){case "-":return "-";default: throw fail}}).call(this)}));return z}).call(this)}));return ((x.join("") + y) + zz.join(""))}).call(this)},
+"m_ident":function(){var $elf=this,_fromIdx=this.input.idx,x,y,z;return (function(){x=this._apply("char");this._applyWithArgs("m_nmstart",x);x;z=this._many((function(){return (function(){y=this._apply("anything");this._applyWithArgs("m_nmchar",y);return y}).call(this)}));return (x + z.join(""))}).call(this)},
 "m_name":function(){var $elf=this,_fromIdx=this.input.idx,x,xx;return (function(){xx=this._many1((function(){return (function(){x=this._apply("anything");this._applyWithArgs("m_nmchar",x);return x}).call(this)}));return xx.join("")}).call(this)},
 "m_number":function(){var $elf=this,_fromIdx=this.input.idx,x,y,x,x;return this._or((function(){return (function(){x=this._many1((function(){return this._apply("digit")}));this._applyWithArgs("exactly",".");y=this._many1((function(){return this._apply("digit")}));return ((x.join("") + ".") + y.join(""))}).call(this)}),(function(){return (function(){switch(this._apply('anything')){case ".":return (function(){x=this._many1((function(){return this._apply("digit")}));return ("." + x.join(""))}).call(this);default: throw fail}}).call(this)}),(function(){return (function(){x=this._many1((function(){return this._apply("digit")}));return x.join("")}).call(this)}))},
 "m_string":function(){var $elf=this,_fromIdx=this.input.idx,s,s;return (function(){switch(this._apply('anything')){case "\"":return (function(){s=this._many((function(){return this._or((function(){return this._apply("m_string_nl1")}),(function(){return (function(){this._not((function(){return this._applyWithArgs("exactly","\"")}));return this._apply("char")}).call(this)}))}));this._applyWithArgs("exactly","\"");return (("\"" + s.join("")) + "\"")}).call(this);case "\'":return (function(){s=this._many((function(){return this._or((function(){return this._apply("m_string_nl2")}),(function(){return (function(){this._not((function(){return this._applyWithArgs("exactly","\'")}));return this._apply("char")}).call(this)}))}));this._applyWithArgs("exactly","\'");return (("\'" + s.join("")) + "\'")}).call(this);default: throw fail}}).call(this)},
@@ -149,7 +149,7 @@ var ometajs = require('ometajs'),
 
 // [_a-z]|{nonascii}|{escape}
 CSSBSParser['_m_nmstart'] = function(x) {
-    return /[_a-zA-Z]/.test(x) || CSSBSParser['_m_escape'](x);
+    return /[_a-zA-Z\-\*]/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 // \\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?
@@ -164,7 +164,7 @@ CSSBSParser['_m_escape'] = function(x) {
 
 // [_a-z0-9-]|{nonascii}|{escape}
 CSSBSParser['_m_nmchar'] = function(x) {
-    return /[_a-zA-Z0-9]/.test(x) || CSSBSParser['_m_escape'](x);
+    return /[_a-zA-Z0-9\-]/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 //  \n|\r\n|\r|\f

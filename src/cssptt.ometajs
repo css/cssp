@@ -18,7 +18,7 @@ ometa CSSBSParser {
 
     // Macros
 
-    m_ident         = ('-' | '*')*:x (:y m_nmstart(y)) ((:z m_nmchar(z) | '-') -> z)*:zz  -> (x.join('') + y + zz.join('')),
+    m_ident         = (char:x m_nmstart(x) -> x) (:y m_nmchar(y) -> y)*:z           -> (x + z.join('')),
     m_name          = ((:x m_nmchar(x)) -> x)+:xx                                   -> xx.join(''),
     m_number        = digit+:x '.' digit+:y                                         -> (x.join('') + '.' + y.join(''))
                     | '.' digit+:x                                                  -> ('.' + x.join(''))
