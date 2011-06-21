@@ -14,7 +14,7 @@ ometa CSSBSParser {
     s               = ((:x m_w(x)) -> x)+:xx                                        -> [#s, xx.join('')],
     attrselector    = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x  -> [#attrselector, x],
     delim           = ','                                                           -> [#delim, ','],
-    comment         = seq('/*') anything*:x seq('*/')                               -> [#comment, x.join('')],
+    comment         = seq('/*') (~seq('*/') char)*:x seq('*/')                      -> [#comment, x.join('')],
 
     // Macros
 
@@ -264,7 +264,7 @@ ometa CSSTranslator {
     operator        = ['operator' :x]               -> x,
     braces          = ['braces' :x :y anys:z]       -> (x + z.join('') + y),
     value           = ['value' anys:x]              -> x.join(''),
-    comment         = ['comment' :x]                -> x,
+    comment         = ['comment' :x]                -> ('/*' + x + '*/'),
     uri             = ['uri' :x]                    -> ('url(' + x + ')'),
     raw             = ['raw' :x]                    -> x,
     function        = ['function' any:x anys:y]     -> (x + '(' + y.join('') + ')')
