@@ -8,4 +8,6 @@
         ['property', 
           ['ident', 'p']], 
         ['value', 
-          ['ident', 'v']]]]]]
+          ['ident', 'v']]]]], 
+  ['atrules', 
+    ['atkeyword', 'test']]]

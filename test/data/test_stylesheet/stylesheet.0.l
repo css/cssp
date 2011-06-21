@@ -1,1 +1,1 @@
-s{color:red}
+s{p:v}
