@@ -25,8 +25,8 @@ ometa CSSBSParser {
                     | digit+:x                                                      -> x.join(''),
     m_string        = '"' (m_string_nl1 | ~'"' char)*:s '"'                         -> ('"' + s.join('') + '"')
                     | '\'' (m_string_nl2 | ~'\'' char)*:s '\''                      -> ('\'' + s.join('') + '\''),
-    m_string_nl1    = ('\n' | '\r' | '\f' | seq('\\"')):x                           -> x,
-    m_string_nl2    = ('\n' | '\r' | '\f' | seq('\\\'')):x                          -> x,
+    m_string_nl1    = ('\n' | '\r' | seq('\\"')):x                                  -> x,
+    m_string_nl2    = ('\n' | '\r' | seq('\\\'')):x                                 -> x,
 
     m_nmstart :x    = ?CSSBSParser._m_nmstart(x),
     m_unicode :x    = ?CSSBSParser._m_unicode(x),
