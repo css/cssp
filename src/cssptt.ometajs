@@ -64,12 +64,12 @@ ometa CSSParser <: CSSBSParser {
     selector        = (simpleselector | delim | sc)+:x                                                  -> this.concat([#selector], x),
     declaration     = property:x ':' value:y                                                            -> [#declaration, x, y],
     property        = ident:x sc*:s0                                                                    -> this.concat([#property, x], s0),
-    prio            = '!' sc*:s0 seq('important')                                                       -> [#important].concat(s0),
+    important            = '!' sc*:s0 seq('important')                                                       -> [#important].concat(s0),
     unary           = ('-' | '+'):x                                                                     -> [#unary, x],
     operator        = ('/' | ',' | ':'):x                                                               -> [#operator, x],
     uri             = seq('url') '(' sc*:s0 string:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
                     | seq('url') '(' (:x ?(x !== ')') -> x)*:xx ')'                                     -> [#uri, [#raw, xx.join('')]],
-    value           = (any | block | atkeyword | operator | sc | prio)+:x                               -> this.concat([#value], x),
+    value           = (any | block | atkeyword | operator | sc | important)+:x                          -> this.concat([#value], x),
     function        = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
     braces          = '(' sc*:s0 any*:x sc*:s1 ')'                                                      -> this.concat([#braces, '(', ')'], s0, x, s1)
                     | '[' sc*:s0 any*:x sc*:s1 ']'                                                      -> this.concat([#braces, '[', ']'], s0, x, s1),
