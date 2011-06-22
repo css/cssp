@@ -1,5 +1,9 @@
 Beta, try to use.
 
+Предварительные требования:
+* Node.js: http://nodejs.org
+* npm: https://github.com/isaacs/npm
+
 Установка:
   npm install cssp
 
