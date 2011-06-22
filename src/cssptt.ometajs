@@ -60,7 +60,11 @@ ometa CSSParser <: CSSBSParser {
     pseudoe         = seq('::') ident:x                                                                 -> [#pseudoe, x],
     pseudoc         = ':' (function | ident):x                                                          -> [#pseudoc, x],
     pseudo          = (pseudoe | pseudoc),
-    simpleselector  = (combinator | attrib | pseudo | any | sc)+:x                                      -> this.concatContent([#simpleselector], [x]),
+    nthf            = ':' seq('nth-') (seq('child') | seq('last-child') | seq('of-type') | seq('last-of-type')),
+    nth             = (digit | 'n')+:x                                                                  -> [#nth, x.join('')]
+                    | (seq('even') | seq('odd')):x                                                      -> [#nth, x],
+    nthselector     = nthf:x '(' (sc | unary | nth)*:y ')'                                              -> [#nthselector, x].concat(y),
+    simpleselector  = (nthselector | combinator | attrib | pseudo | any | sc)+:x                        -> this.concatContent([#simpleselector], [x]),
     selector        = (simpleselector | delim | sc)+:x                                                  -> this.concat([#selector], x),
     declaration     = property:x ':' value:y                                                            -> [#declaration, x, y],
     property        = ident:x sc*:s0                                                                    -> this.concat([#property, x], s0),
@@ -113,6 +117,8 @@ ometa CSSTransformer {
         | s
         | attrselector
         | attrib
+        | nth
+        | nthselector
         | class
         | pseudoe
         | pseudoc
@@ -154,6 +160,8 @@ ometa CSSTransformer {
     s               = ['s':t :x]                    -> [t, x],
     attrselector    = ['attrselector':t :x]         -> [t, x],
     attrib          = ['attrib':t anys:x]           -> [t].concat(x),
+    nth             = ['nth':t :x]                  -> [t, x],
+    nthselector     = ['nthselector':t :x anys:y]   -> [t, x].concat(y),
     class           = ['class':t :x]                -> [t, x],
     pseudoe         = ['pseudoe':t :x]              -> [t, x],
     pseudoc         = ['pseudoc':t :x]              -> [t, x],
@@ -201,6 +209,8 @@ ometa CSSTranslator {
         | s
         | attrselector
         | attrib
+        | nth
+        | nthselector
         | class
         | pseudoe
         | pseudoc
@@ -242,6 +252,8 @@ ometa CSSTranslator {
     s               = ['s' :x]                      -> x,
     attrselector    = ['attrselector' :x]           -> x,
     attrib          = ['attrib' anys:x]             -> ('[' + x.join('') + ']'),
+    nth             = ['nth' :x]                    -> x,
+    nthselector     = ['nthselector' :x anys:y]     -> (':nth-' + x + '(' + y.join('') + ')'),
     class           = ['class' any:x]               -> ('.' + x),
     pseudoe         = ['pseudoe' anys:x]            -> ('::' + x.join('')),
     pseudoc         = ['pseudoc' anys:x]            -> (':' + x.join('')),
