@@ -3,3 +3,40 @@ Beta, try to use.
 Установка:
   npm install cssp
 
+По умолчанию CSSP разбирает входной CSS-текст в дерево (parser -- P), затем отправляет дерево
+на трансформацию (transformer -- TF), после чего транслирует в CSS-текст (translator -- TL).
+Таким образом полный цикл выглядит как CSS -> P -> TF -> TL -> CSS, и без указания ключей
+CSSP отдаст тот же текст, что был на входе.
+
+Использование:
+    cssp
+        показывает этот текст
+    cssp <имя_файла>
+        считывает CSS из <имя_файла> и записывает результат полного цикла (тот же CSS) в stdout
+    cssp <имя_файла> -dp
+    cssp <имя_файла> --parser
+        считывает CSS из <имя_файла> и записывает результат CSS -> P -> stdout
+    cssp <имя_файла> -df
+    cssp <имя_файла> --transformer
+        считывает CSS из <имя_файла> и записывает результат CSS -> P -> TF -> stdout
+    cssp <имя_файла> -dl
+    cssp <имя_файла> --translator
+        считывает CSS из <имя_файла> и записывает результат CSS -> P -> TF -> TL -> stdout
+    cssp <имя_файла> -r <имя_правила>
+    cssp <имя_файла> --rule <имя_правила>
+        считывает CSS из <имя_файла> и передаёт в цикл (P TF TL) <имя_правила>, которое надо обработать
+
+Примеры:
+    1) test.css = 'color: red'
+    > cssp test.css -r declaration -dp
+    > ['declaration',
+      ['property',
+        ['ident', 'color']],
+          ['value',
+            ['s', ' '],
+              ['ident', 'red']]]
+    2) test.css = '10px'
+    > cssp test.css -r dimension -dp -dl
+    > ['dimension',
+        ['number', '10'], 'px']
+      10px
