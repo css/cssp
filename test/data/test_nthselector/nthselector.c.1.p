@@ -1,0 +1,10 @@
+['nthselector', 'last-child', 
+  ['comment', 'test'], 
+  ['unary', '+'], 
+  ['comment', 'test'], 
+  ['nth', '3n'], 
+  ['comment', 'test'], 
+  ['unary', '-'], 
+  ['comment', 'test'], 
+  ['nth', '2'], 
+  ['comment', 'test']]
