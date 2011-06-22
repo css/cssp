@@ -34,11 +34,11 @@ CSSP отдаст тот же текст, что был на входе.
     1) test.css = 'color: red'
     > cssp test.css -r declaration -dp
     > ['declaration',
-      ['property',
-        ['ident', 'color']],
-          ['value',
-            ['s', ' '],
-              ['ident', 'red']]]
+        ['property',
+          ['ident', 'color']],
+        ['value',
+          ['s', ' '],
+          ['ident', 'red']]]
     2) test.css = '10px'
     > cssp test.css -r dimension -dp -dl
     > ['dimension',
