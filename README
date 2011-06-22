@@ -8,7 +8,7 @@ Beta, try to use.
 Таким образом полный цикл выглядит как CSS -> P -> TF -> TL -> CSS, и без указания ключей
 CSSP отдаст тот же текст, что был на входе.
 
-Использование:
+Использование command line интерфейса:
     cssp
         показывает этот текст
     cssp <имя_файла>
@@ -40,3 +40,26 @@ CSSP отдаст тот же текст, что был на входе.
     > ['dimension',
         ['number', '10'], 'px']
       10px
+
+Пример программного использования (Node.js):
+    var cssp = require('cssp'),
+        parser = cssp.CSSParser,
+        transformer = cssp.CSSTransformer,
+        translator = cssp.CSSTranslator,
+        rule = 'stylesheet',
+        src = 'a { color: red }',
+        tree, trans,
+        dst;
+
+    tree = parser.matchAll(src, rule);
+    trans = transformer.match(tree, rule);
+    dst = translator.match(trans, rule);
+
+    console.log('Source CSS:');
+    console.log(src);
+    console.log('Parser out:');
+    console.log(tree);
+    console.log('Transformer out:');
+    console.log(trans);
+    console.log('Translator out:');
+    console.log(dst);
