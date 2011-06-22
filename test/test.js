@@ -1,5 +1,6 @@
 var fs = require('fs'),
     cssptt = require('./../src/cssptt.js'),
+//    cssptt = require('cssp'),
     parser = cssptt.CSSParser,
     transformer = cssptt.CSSTransformer,
     translator = cssptt.CSSTranslator,

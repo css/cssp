@@ -68,7 +68,6 @@ ometa CSSParser <: CSSBSParser {
     unary           = ('-' | '+'):x                                                                     -> [#unary, x],
     operator        = ('/' | ',' | ':'):x                                                               -> [#operator, x],
     uri             = seq('url') '(' sc*:s0 string:x sc*:s1')'                                          -> this.concat([#uri], s0, [x], s1)
-//                    | seq('url') '(' sc*:s0 (~')' ~m_w char)*:x sc*:s1 ')'                              -> [#uri, [#raw, x.join('')]],
                     | seq('url') '(' sc*:s0 (~')' ~m_w char)*:x sc*:s1 ')'                              -> this.concat([#uri], s0, [[#raw, x.join('')]], s1),
     value           = (sc | any | block | atkeyword | operator | important)+:x                          -> this.concat([#value], x),
     function        = ident:x '(' (any | sc)*:y ')'                                                     -> this.concat([#function, x], y),
@@ -97,8 +96,8 @@ CSSParser.concat = function() {
 
 ometa CSSTransformer {
     anys = any*,
-    before = ['before'],
-    after = ['after'],
+    before = [],
+    after = [],
 
     any = before
         | ident
