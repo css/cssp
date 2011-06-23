@@ -47,45 +47,85 @@ ometa CSSTransformer {
         | function
         | after,
 
-    ident           = ['ident':t :x]                -> [t, x],
-    atkeyword       = ['atkeyword':t :x]            -> [t, x],
-    string          = ['string':t :x]               -> [t, x],
-    hash            = ['hash':t :x]                 -> [t, x],
-    number          = ['number':t :x]               -> [t, x],
-    percentage      = ['percentage':t :x]           -> [t, x],
-    dimension       = ['dimension':t :x :y]         -> [t, x, y],
-    cdo             = ['cdo':t]                     -> [t],
-    cdc             = ['cdc':t]                     -> [t],
-    decldelim       = ['decldelim':t]               -> [t],
-    s               = ['s':t :x]                    -> [t, x],
-    attrselector    = ['attrselector':t :x]         -> [t, x],
-    attrib          = ['attrib':t anys:x]           -> [t].concat(x),
-    nth             = ['nth':t :x]                  -> [t, x],
-    nthselector     = ['nthselector':t :x anys:y]   -> [t, x].concat(y),
-    class           = ['class':t :x]                -> [t, x],
-    pseudoe         = ['pseudoe':t :x]              -> [t, x],
-    pseudoc         = ['pseudoc':t :x]              -> [t, x],
-    delim           = ['delim':t :x]                -> [t, x],
-    stylesheet      = ['stylesheet':t anys:x]       -> [t].concat(x),
-    mediaq          = ['mediaq':t anys:x]           -> [t].concat(x),
-    medias          = ['medias':t anys:x]           -> [t].concat(x),
-    atrulem         = ['atrulem':t anys:x]          -> [t].concat(x),
-    atruleb         = ['atruleb':t anys:x]          -> [t].concat(x),
-    atrules         = ['atrules':t anys:x]          -> [t].concat(x),
-    block           = ['block':t anys:x]            -> [t].concat(x),
-    ruleset         = ['ruleset':t anys:x]          -> [t].concat(x),
-    combinator      = ['combinator':t :x]           -> [t, x],
-    simpleselector  = ['simpleselector':t anys:x]   -> [t].concat(x),
-    selector        = ['selector':t anys:x]         -> [t].concat(x),
-    declaration     = ['declaration':t any:p any:v] -> [t, p, v],
-    property        = ['property':t anys:x]         -> [t].concat(x),
-    important       = ['important':t anys:x]        -> [t].concat(x),
-    unary           = ['unary':t :x]                -> [t, x],
-    operator        = ['operator':t :x]             -> [t, x],
-    braces          = ['braces':t :x :y anys:z]     -> [t, x, y].concat(z),
-    value           = ['value':t anys:x]            -> [t].concat(x),
-    comment         = ['comment':t :x]              -> [t, x],
-    uri             = ['uri':t anys:x]              -> [t].concat(x),
-    raw             = ['raw':t :x]                  -> [t, x],
-    function        = ['function':t :x anys:y]      -> [t, x].concat(y)
+    ident = ['ident':t :x] -> [t, x],
+
+    atkeyword = ['atkeyword':t :x] -> [t, x],
+
+    string = ['string':t :x] -> [t, x],
+
+    hash = ['hash':t :x] -> [t, x],
+
+    number = ['number':t :x] -> [t, x],
+
+    percentage = ['percentage':t :x] -> [t, x],
+
+    dimension = ['dimension':t :x :y] -> [t, x, y],
+
+    cdo = ['cdo':t] -> [t],
+
+    cdc = ['cdc':t] -> [t],
+
+    decldelim = ['decldelim':t] -> [t],
+
+    s = ['s':t :x] -> [t, x],
+
+    attrselector = ['attrselector':t :x] -> [t, x],
+
+    attrib = ['attrib':t anys:x] -> [t].concat(x),
+
+    nth = ['nth':t :x] -> [t, x],
+
+    nthselector = ['nthselector':t :x anys:y] -> [t, x].concat(y),
+
+    class = ['class':t :x] -> [t, x],
+
+    pseudoe = ['pseudoe':t :x] -> [t, x],
+
+    pseudoc = ['pseudoc':t :x] -> [t, x],
+
+    delim = ['delim':t :x] -> [t, x],
+
+    stylesheet = ['stylesheet':t anys:x] -> [t].concat(x),
+
+    mediaq = ['mediaq':t anys:x] -> [t].concat(x),
+
+    medias = ['medias':t anys:x] -> [t].concat(x),
+
+    atrulem = ['atrulem':t anys:x] -> [t].concat(x),
+
+    atruleb = ['atruleb':t anys:x] -> [t].concat(x),
+
+    atrules = ['atrules':t anys:x] -> [t].concat(x),
+
+    block = ['block':t anys:x] -> [t].concat(x),
+
+    ruleset = ['ruleset':t anys:x] -> [t].concat(x),
+
+    combinator = ['combinator':t :x] -> [t, x],
+
+    simpleselector = ['simpleselector':t anys:x] -> [t].concat(x),
+
+    selector = ['selector':t anys:x] -> [t].concat(x),
+
+    declaration = ['declaration':t any:p any:v] -> [t, p, v],
+
+    property = ['property':t anys:x] -> [t].concat(x),
+
+    important = ['important':t anys:x] -> [t].concat(x),
+
+    unary = ['unary':t :x] -> [t, x],
+
+    operator = ['operator':t :x] -> [t, x],
+
+    braces = ['braces':t :x :y anys:z] -> [t, x, y].concat(z),
+
+    value = ['value':t anys:x] -> [t].concat(x),
+
+    comment = ['comment':t :x] -> [t, x],
+
+    uri = ['uri':t anys:x] -> [t].concat(x),
+
+    raw = ['raw':t :x] -> [t, x],
+
+    function = ['function':t :x anys:y] -> [t, x].concat(y)
 }
