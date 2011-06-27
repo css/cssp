@@ -45,6 +45,7 @@ ometa CSSTranslator {
         | uri
         | raw
         | function
+        | functionExpression
         | after,
 
     ident = ['ident' :x] -> x,
@@ -127,5 +128,7 @@ ometa CSSTranslator {
 
     raw = ['raw' :x] -> x,
 
-    function = ['function' any:x anys:y] -> (x + '(' + y.join('') + ')')
+    function = ['function' any:x anys:y] -> (x + '(' + y.join('') + ')'),
+
+    functionExpression = ['functionExpression' :x] -> ('expression(' + x + ')')
 }

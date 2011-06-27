@@ -126,7 +126,45 @@ ometa CSSParser <: CSSBSParser {
     braces = '(' sc*:s0 any*:x sc*:s1 ')' -> this.concat([#braces, '(', ')'], s0, x, s1)
            | '[' sc*:s0 any*:x sc*:s1 ']' -> this.concat([#braces, '[', ']'], s0, x, s1),
 
-    any = (class | string | percentage | dimension | hash | number | uri | function | ident | unary):x -> x
+// Don't reuse CSS-grammar elements to parse JS-grammar basics!
+
+    jsLT = '\n' | '\r',
+
+    jsComment = jsMLComment | jsSLComment,
+
+    jsMLComment = ``/*'' (~``*/'' char)*:x ``*/'' -> ('/*' + x.join('') + '*/'),
+
+    jsSLComment = ``//'' (~jsLT char)*:x -> ('//' + x.join('')),
+
+    jsString = '"' jsDSChar*:x '"' -> ('"' + x.join('') + '"')
+             | '\'' jsSSChar*:x '\'' -> ('\'' + x.join('') + '\''),
+
+    jsDSChar = ~'"' ~'\\' ~jsLT char
+             | jsEscapeChar
+             | jsLineContinuation,
+
+    jsSSChar = ~'\'' ~'\\' ~jsLT char
+             | jsEscapeChar
+             | jsLineContinuation,
+
+    jsLineContinuation = '\\' jsLT*:x -> ('\\' + x.join('')),
+
+    jsEscapeChar = '\\' char:x -> ('\\' + x),
+
+    jsInBraceChar = ~'(' ~')' char:x -> x,
+
+    jsBracesContent = (jsComment | jsString | jsEscapeChar | jsInBraceChar)+:x -> x.join(''),
+
+    functionExpressionBody = '(' jsBracesContent*:x (
+                                    functionExpressionBody:y jsBracesContent*:z -> (y + z.join(''))
+                                 )*:xx
+                             ')' -> ('(' + x.join('') + xx.join('') + ')')
+               | jsBracesContent*:x functionExpressionBody:y jsBracesContent*:z -> (x.join('') + y + z.join(''))
+               | jsBracesContent+:x -> x.join(''),
+
+    functionExpression = ``expression('' functionExpressionBody*:x ')' -> [#functionExpression, x.join('')],
+
+    any = (class | string | percentage | dimension | hash | number | uri | functionExpression | function | ident | unary):x -> x
         | braces
 }
 

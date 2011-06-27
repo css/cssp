@@ -45,6 +45,7 @@ ometa CSSTransformer {
         | uri
         | raw
         | function
+        | functionExpression
         | after,
 
     ident = ['ident':t :x] -> [t, x],
@@ -127,5 +128,7 @@ ometa CSSTransformer {
 
     raw = ['raw':t :x] -> [t, x],
 
-    function = ['function':t :x anys:y] -> [t, x].concat(y)
+    function = ['function':t :x anys:y] -> [t, x].concat(y),
+
+    functionExpression = ['functionExpression':t :x] -> [t, x]
 }
