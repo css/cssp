@@ -75,7 +75,8 @@ ometa CSSParser <: CSSBSParser {
 
     blockdecl = sc*:s0 declaration:x decldelim:y sc*:s1 -> this.concat(s0, [x], [y], s1)
               | sc*:s0 declaration:x sc*:s1 -> this.concat(s0, [x], s1)
-              | sc*:s0 decldelim:x sc*:s1 -> this.concat(s0, [x], s1),
+              | sc*:s0 decldelim:x sc*:s1 -> this.concat(s0, [x], s1)
+              | sc+:s0 -> s0,
 
     decldelim = ';' -> [#decldelim],
 
@@ -121,7 +122,7 @@ ometa CSSParser <: CSSBSParser {
 
     value = (sc | any | block | atkeyword | operator | important)+:x -> this.concat([#value], x),
 
-    function = ident:x '(' (any | sc)*:y ')' -> this.concat([#function, x], y),
+    function = ident:x '(' (any | sc | operator)*:y ')' -> this.concat([#function, x], y),
 
     braces = '(' sc*:s0 any*:x sc*:s1 ')' -> this.concat([#braces, '(', ')'], s0, x, s1)
            | '[' sc*:s0 any*:x sc*:s1 ']' -> this.concat([#braces, '[', ']'], s0, x, s1),
