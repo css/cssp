@@ -19,6 +19,7 @@ ometa CSSTransformer {
         | attrib
         | nth
         | nthselector
+        | namespace
         | class
         | pseudoe
         | pseudoc
@@ -77,6 +78,8 @@ ometa CSSTransformer {
     nth = ['nth':t :x] -> [t, x],
 
     nthselector = ['nthselector':t :x anys:y] -> [t, x].concat(y),
+
+    namespace = ['namespace':t] -> [t],
 
     class = ['class':t :x] -> [t, x],
 

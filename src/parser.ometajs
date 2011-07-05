@@ -103,7 +103,9 @@ ometa CSSParser <: CSSBSParser {
 
     nthselector = nthf:x '(' (sc | unary | nth)*:y ')' -> [#nthselector, x].concat(y),
 
-    simpleselector = (nthselector | combinator | attrib | pseudo | any | sc)+:x -> this.concatContent([#simpleselector], [x]),
+    namespace = '|' -> [#namespace],
+
+    simpleselector = (nthselector | combinator | attrib | pseudo | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
 
     selector = (simpleselector | delim | sc)+:x -> this.concat([#selector], x),
 

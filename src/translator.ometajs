@@ -19,6 +19,7 @@ ometa CSSTranslator {
         | attrib
         | nth
         | nthselector
+        | namespace
         | class
         | pseudoe
         | pseudoc
@@ -77,6 +78,8 @@ ometa CSSTranslator {
     nth = ['nth' :x] -> x,
 
     nthselector = ['nthselector' :x anys:y] -> (':nth-' + x + '(' + y.join('') + ')'),
+
+    namespace = ['namespace'] -> '|',
 
     class = ['class' any:x] -> ('.' + x),
 
