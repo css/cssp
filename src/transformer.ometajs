@@ -25,11 +25,11 @@ ometa CSSTransformer {
         | pseudoc
         | delim
         | stylesheet
-        | mediaq
-        | medias
-        | atrulem
         | atruleb
         | atrules
+        | atrulerq
+        | atrulers
+        | atruler
         | block
         | ruleset
         | combinator
@@ -91,15 +91,15 @@ ometa CSSTransformer {
 
     stylesheet = ['stylesheet':t anys:x] -> [t].concat(x),
 
-    mediaq = ['mediaq':t anys:x] -> [t].concat(x),
-
-    medias = ['medias':t anys:x] -> [t].concat(x),
-
-    atrulem = ['atrulem':t anys:x] -> [t].concat(x),
-
     atruleb = ['atruleb':t anys:x] -> [t].concat(x),
 
     atrules = ['atrules':t anys:x] -> [t].concat(x),
+
+    atrulerq = ['atrulerq':t anys:x] -> [t].concat(x),
+
+    atrulers = ['atrulers':t anys:x] -> [t].concat(x),
+
+    atruler = ['atruler':t anys:x] -> [t].concat(x),
 
     block = ['block':t anys:x] -> [t].concat(x),
 

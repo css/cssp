@@ -61,17 +61,17 @@ ometa CSSParser <: CSSBSParser {
 
     atrulepart = (sc | any | operator),
 
-    mediaq = atrulepart*:ap -> [#mediaq].concat(ap),
-
-    medias = sc*:s0 ruleset*:r sc*:s1 -> this.concat([#medias], s0, r, s1),
-
-    atrulem = seq('@media') mediaq:x '{' medias:y '}' -> [#atrulem, x, y],
-
     atruleb = atkeyword:ak atrulepart*:ap block:b -> this.concat([#atruleb, ak], ap, [b]),
 
     atrules = atkeyword:ak atrulepart*:ap ';' -> this.concat([#atrules, ak], ap),
 
-    atrule = (atrulem | atruleb | atrules),
+    atrulerq = atrulepart*:ap -> [#atrulerq].concat(ap),
+
+    atrulers = sc*:s0 ruleset*:r sc*:s1 -> this.concat([#atrulers], s0, r, s1),
+
+    atruler = atkeyword:ak atrulerq:x '{' atrulers:y '}' -> [#atruler, ak, x, y],
+
+    atrule = (atruler | atruleb | atrules),
 
     blockdecl = sc*:s0 declaration:x decldelim:y sc*:s1 -> this.concat(s0, [x], [y], s1)
               | sc*:s0 declaration:x sc*:s1 -> this.concat(s0, [x], s1)
