@@ -1,22 +1,21 @@
 var fs = require('fs'),
-    cssptt = require('./../src/cssptt.js'),
-//    cssptt = require('cssp'),
-    parser = cssptt.CSSParser,
-    transformer = cssptt.CSSTransformer,
-    translator = cssptt.CSSTranslator,
+    cssp = require('./../lib/csspapi.js'),
+    _parse = cssp.parse,
+    _transform = cssp.transform,
+    _translate = cssp.translate,
     d_dir = __dirname + '/data',
     d_list = fs.readdirSync(d_dir),
     okn = 0, total = 0;
 
 var funcs = {
     'p': function parse(src, match) {
-            return array2string(parser.matchAll(src, match), 0);
+            return array2string(_parse(src, match), 0);
          },
     'f': function transform(src, match) {
-            return array2string(transformer.matchAll(parser.matchAll(src, match), match), 0);
+            return array2string(_transform(_parse(src, match), match), 0);
          },
     'l': function translate(src, match) {
-            return translator.match(transformer.match(parser.matchAll(src, match), match), match);
+            return _translate(_transform(_parse(src, match), match), match);
          }
 };
 
@@ -45,7 +44,6 @@ d_list.forEach(function(rule_dir) {
             t = '\'' + rule + '\' / \'' + k + '.';
             for (a in funcs) {
                 if (a in files[k]) {
-                    //console.log(t + a);
                     total++;
                     r = (((b = funcs[a](src, rule)) == (c = readFile(path + k + '.' + a).trim())));
                     r && okn++;
