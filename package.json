@@ -1,7 +1,7 @@
 {
     "name" : "cssp",
     "description" : "CSSP — Ometa-JS based CSS parser",
-    "version" : "0.0.5",
+    "version" : "0.0.6",
     "homepage": "http://github.com/afelix/cssp",
     "author" : "Sergey Kryzhanovsky <skryzhanovsky@ya.ru> (http://github.com/afelix)",
     "repository" : {
