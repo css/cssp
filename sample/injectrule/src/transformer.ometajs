@@ -1,0 +1,8 @@
+var ometajs = require('ometajs'),
+    OMeta = ometajs.OMeta;
+
+ometa IRTransformer {
+    before = sample,
+
+    sample = ['atrules' ['atkeyword' 'sample']] -> [#raw, '* { color: red }']
+}
