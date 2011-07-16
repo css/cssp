@@ -1,5 +1,6 @@
 var fs = require('fs'),
     cssp = require('./../lib/csspapi.js'),
+    array2string = cssp.array2string,
     _parse = cssp.parse,
     _transform = cssp.transform,
     _translate = cssp.translate,
@@ -58,23 +59,6 @@ d_list.forEach(function(rule_dir) {
 });
 
 console.log('Total: ' + total + '. Ok: ' + okn + '. Fail: ' + (total - okn));
-
-// Utils
-
-function array2string(a, level) {
-    var spaces = dummySpaces(level),
-        s = (level ? '\n' + spaces : '') + '[', t;
-
-    a.forEach(function(e) {
-        s += (Array.isArray(e) ? array2string(e, level + 1) : '\'' + e.toString() + '\'') + ', ';
-    });
-
-    return s.substr(0, s.length - 2) + ']';
-}
-
-function dummySpaces(num) {
-    return '                                        '.substr(0, num * 2);
-}
 
 function readFile(path) {
     return fs.readFileSync(path).toString();
