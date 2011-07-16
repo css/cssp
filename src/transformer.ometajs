@@ -43,6 +43,7 @@ ometa CSSTransformer {
         | braces
         | value
         | filterp
+        | progid
         | filterv
         | filter
         | comment
@@ -129,6 +130,8 @@ ometa CSSTransformer {
     value = ['value':t anys:x] -> [t].concat(x),
 
     filterp = ['filterp':t anys:x] -> [t].concat(x),
+
+    progid = ['progid':t anys:x] -> [t].concat(x),
 
     filterv = ['filterv':t anys:x] -> [t].concat(x),
 
