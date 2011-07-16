@@ -42,6 +42,9 @@ ometa CSSTransformer {
         | operator
         | braces
         | value
+        | filterp
+        | filterv
+        | filter
         | comment
         | uri
         | raw
@@ -124,6 +127,12 @@ ometa CSSTransformer {
     braces = ['braces':t :x :y anys:z] -> [t, x, y].concat(z),
 
     value = ['value':t anys:x] -> [t].concat(x),
+
+    filterp = ['filterp':t anys:x] -> [t].concat(x),
+
+    filterv = ['filterv':t anys:x] -> [t].concat(x),
+
+    filter = ['filter':t any:p any:v] -> [t, p, v],
 
     comment = ['comment':t :x] -> [t, x],
 

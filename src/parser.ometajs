@@ -29,6 +29,8 @@ ometa CSSBSParser {
 
     // Macros
 
+    m_comment = seq('/*') (~seq('*/') char)*:x seq('*/') -> ('/*' + x.join('') + '*/'),
+
     m_ident = (char:x m_nmstart(x) -> x) (:y m_nmchar(y) -> y)*:z -> (x + z.join('')),
 
     m_name = ((:x m_nmchar(x)) -> x)+:xx -> xx.join(''),
@@ -48,8 +50,7 @@ ometa CSSBSParser {
     m_escape :x = ?CSSBSParser._m_escape(x),
     m_nmchar :x = ?CSSBSParser._m_nmchar(x),
     m_nl :x = ?CSSBSParser._m_nl(x),
-    m_w :x = ?CSSBSParser._m_w(x),
-    m_comment :x = ?CSSBSParser._m_comment(x)
+    m_w :x = ?CSSBSParser._m_w(x)
 }
 
 ometa CSSParser <: CSSBSParser {
@@ -73,8 +74,8 @@ ometa CSSParser <: CSSBSParser {
 
     atrule = (atruler | atruleb | atrules),
 
-    blockdecl = sc*:s0 declaration:x decldelim:y sc*:s1 -> this.concat(s0, [x], [y], s1)
-              | sc*:s0 declaration:x sc*:s1 -> this.concat(s0, [x], s1)
+    blockdecl = sc*:s0 (filter | declaration):x decldelim:y sc*:s1 -> this.concat(s0, [x], [y], s1)
+              | sc*:s0 (filter | declaration):x sc*:s1 -> this.concat(s0, [x], s1)
               | sc*:s0 decldelim:x sc*:s1 -> this.concat(s0, [x], s1)
               | sc+:s0 -> s0,
 
@@ -105,11 +106,19 @@ ometa CSSParser <: CSSBSParser {
 
     namespace = '|' -> [#namespace],
 
-    simpleselector = (nthselector | combinator | attrib | pseudo | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
+    simpleselector = (nthselector | combinator | attrib | pseudo | class | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
 
     selector = (simpleselector | delim | sc)+:x -> this.concat([#selector], x),
 
     declaration = property:x ':' value:y -> [#declaration, x, y],
+
+    filterp = seq('filter') sc*:s0 -> this.concat([#filterp], s0),
+
+    filterv = sc*:s0
+                seq('progid:DXImageTransform.Microsoft.'):x letter+:y '(' (m_string | m_comment | ~')' char)+:z ')'
+              sc*:s1 -> this.concat([#filterv], s0, [[#raw, x + y.join('') + '(' + z.join('') + ')']], s1),
+
+    filter = filterp:x ':' filterv:y -> [#filter, x, y],
 
     property = ident:x sc*:s0 -> this.concat([#property, x], s0),
 
@@ -167,7 +176,7 @@ ometa CSSParser <: CSSBSParser {
 
     functionExpression = ``expression('' functionExpressionBody*:x ')' -> [#functionExpression, x.join('')],
 
-    any = (class | string | percentage | dimension | hash | number | uri | functionExpression | function | ident | unary):x -> x
+    any = (string | percentage | dimension | hash | number | uri | functionExpression | function | ident | unary):x -> x
         | braces
 }
 
@@ -192,36 +201,30 @@ CSSParser.concat = function() {
 
 // [_a-z]|{nonascii}|{escape}
 CSSBSParser['_m_nmstart'] = function(x) {
-    return /[_a-zA-Z\-\*]/.test(x) || CSSBSParser['_m_escape'](x);
+    return /^[_a-zA-Z\-\*]+$/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 // \\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?
 CSSBSParser['_m_unicode'] = function(x) {
-    return /\\[0-9a-fA-F]{1,6}(\r\n|[ \n\r\t\f])?/.test(x);
+    return /^\\[0-9a-fA-F]{1,6}(\r\n|[ \n\r\t\f])?$/.test(x);
 };
 
 // {unicode}|\\[^\n\r\f0-9a-f]
 CSSBSParser['_m_escape'] = function(x) {
-    return CSSBSParser['_m_unicode'](x) || /\\[^\n\r\f0-9a-fA-F]/.test(x);
+    return CSSBSParser['_m_unicode'](x) || /^\\[^\n\r\f0-9a-fA-F]+$/.test(x);
 }
 
 // [_a-z0-9-]|{nonascii}|{escape}
 CSSBSParser['_m_nmchar'] = function(x) {
-    return /[_a-zA-Z0-9\-]/.test(x) || CSSBSParser['_m_escape'](x);
+    return /^[_a-zA-Z0-9\-]+$/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 //  \n|\r\n|\r|\f
 CSSBSParser['_m_nl'] = function(x) {
-    return /[ \n\r\n\r\f]/.test(x);
+    return /^[ \n\r\n\r\f]+$/.test(x);
 };
 
 // [ \t\r\n\f]*
 CSSBSParser['_m_w'] = function(x) {
-    return /[ \t\r\n\f]/.test(x);
+    return /^[ \t\r\n\f]+$/.test(x);
 };
-
-// \/\*[^*]*\*+([^/*][^*]*\*+)*\/
-CSSBSParser['_m_comment'] = function(x) {
-    return new RegExp('\/\*[^*]*\*+([^/*][^*]*\*+)*\/').test(x);
-};
-

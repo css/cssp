@@ -42,6 +42,9 @@ ometa CSSTranslator {
         | operator
         | braces
         | value
+        | filterp
+        | filterv
+        | filter
         | comment
         | uri
         | raw
@@ -124,6 +127,12 @@ ometa CSSTranslator {
     braces = ['braces' :x :y anys:z] -> (x + z.join('') + y),
 
     value = ['value' anys:x] -> x.join(''),
+
+    filterp = ['filterp' anys:x] -> ('filter' + x.join('')),
+
+    filterv = ['filterv' anys:x] -> x.join(''),
+
+    filter = ['filter' any:p any:v] -> (p + ':' + v),
 
     comment = ['comment' :x] -> ('/*' + x + '*/'),
 
