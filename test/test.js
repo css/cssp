@@ -1,6 +1,6 @@
 var fs = require('fs'),
     cssp = require('./../lib/csspapi.js'),
-    array2string = cssp.array2string,
+    treeToString = cssp.treeToString,
     _parse = cssp.parse,
     _transform = cssp.transform,
     _translate = cssp.translate,
@@ -10,10 +10,10 @@ var fs = require('fs'),
 
 var funcs = {
     'p': function parse(src, match) {
-            return array2string(_parse(src, match), 0);
+            return treeToString(_parse(src, match));
          },
     'f': function transform(src, match) {
-            return array2string(_transform(_parse(src, match), match), 0);
+            return treeToString(_transform(_parse(src, match), match));
          },
     'l': function translate(src, match) {
             return _translate(_transform(_parse(src, match), match), match);
