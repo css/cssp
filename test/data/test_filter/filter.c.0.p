@@ -1,5 +1,5 @@
 ['filter', 
-  ['filterp', 
+  ['filterp', 'filter', 
     ['comment', 'test']], 
   ['filterv', 
     ['progid', 

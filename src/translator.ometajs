@@ -129,7 +129,7 @@ ometa CSSTranslator {
 
     value = ['value' anys:x] -> x.join(''),
 
-    filterp = ['filterp' anys:x] -> ('filter' + x.join('')),
+    filterp = ['filterp' :x anys:y] -> (x + y.join('')),
 
     progid = ['progid' anys:x] -> x.join(''),
 
