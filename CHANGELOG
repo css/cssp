@@ -1,6 +1,7 @@
 0.0.8:
     * Добавлена поддержка хаков IE вида -filter, *filter, _filter и вендорного -ms-filter.
     * API.array2string разделён на API.printTree(tree) и API.treeToString(tree, level).
+    * Фикс неправильной обработки ident с escape символами.
 0.0.7:
     * Добавлено правило progid для корректной обработки filter с множественным progid.
 0.0.6:

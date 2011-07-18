@@ -31,7 +31,9 @@ ometa CSSBSParser {
 
     m_comment = seq('/*') (~seq('*/') char)*:x seq('*/') -> ('/*' + x.join('') + '*/'),
 
-    m_ident = (char:x m_nmstart(x) -> x) (:y m_nmchar(y) -> y)*:z -> (x + z.join('')),
+    m_ident = (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> (x + z.join('')),
+
+    escape = '\\' char:x -> ('\\' + x),
 
     m_name = ((:x m_nmchar(x)) -> x)+:xx -> xx.join(''),
 
