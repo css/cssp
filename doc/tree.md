@@ -14,30 +14,6 @@
 
 ### ruleset
 
-## CSS at-rule
-
-### atrules
-
-### atruleb
-
-### atruler
-
-### atrulerq
-
-### atrulers
-
-### atkeyword
-
-Имя at-rule.
-
-* Ometa/JS: `['atkeyword' ident:x]`
-* JS: `['atkeyword', x]`
-* out: `'@' + x`
-
-Примеры:
-
-* `@charset` -> `['atkeyword', ['ident', 'charset']]`
-
 ## CSS selector
 
 ### selector
@@ -135,7 +111,55 @@
 
 ### progid
 
+## CSS at-rule
+
+### atrules
+
+### atruleb
+
+### atruler
+
+### atrulerq
+
+### atrulers
+
+### atkeyword
+
+Имя at-rule.
+
+* Ometa/JS: `['atkeyword' ident:x]`
+* JS: `['atkeyword', x]`
+* out: `'@' + x`
+
+Примеры:
+
+* `@charset` -> `['atkeyword', ['ident', 'charset']]`
+
 ## Остальное общее
+
+### unary
+
+Унарный оператор: `+`, `-`.
+
+* Ometa/JS: `['unary' :x]`
+* JS: `['unary', x]`
+* out: `x`
+
+Примеры:
+
+* `+``100` -> `['unary', '+']``['number', '100']`
+
+### operator
+
+Оператор: `/`, `,`, `:`.
+
+* Ometa/JS: `['operator' :x]`
+* JS: `['operator', x]`
+* out: `x`
+
+Примеры:
+
+* `<ident>``/``<ident>` -> `[.. ident ..]``['operator', '/']``[.. ident ..]`
 
 ### uri
 
