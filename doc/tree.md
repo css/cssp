@@ -1,14 +1,24 @@
 # Справочник элементов дерева
 
+## CSS stylesheet
+
 ### stylesheet
+
+## CSS ruleset
 
 ### ruleset
 
-### atruler
+## CSS at-rule
+
+### atrules
 
 ### atruleb
 
-### atrules
+### atruler
+
+### atrulerq
+
+### atrulers
 
 ### atkeyword
 
@@ -22,13 +32,51 @@
 
 * `@charset` -> `['atkeyword', ['ident', 'charset']]`
 
-Ссылки: [ident][ident]
+## CSS selector
 
 ### selector
 
 ### simpleselector
 
-[ident]:### ident
+### delim
+
+Разделитель простых селекторов (см. simpleselector).
+
+* Ometa/JS: `['delim']`
+* JS: `['delim']`
+* out: `,`
+
+Примеры:
+
+* `<simpleselector>,<simpleselector>` -> `<simpleselector>['delim']<simpleselector>`
+
+## CSS block
+
+### block
+
+### decldelim
+
+Разделитель свойств (см. declaration) и фильтров (см. filter).
+
+* Ometa/JS: `['decldelim']`
+* JS: `['decldelim']`
+* out: `;`
+
+Примеры:
+
+* `<declaration>;<filter>` -> `<declaration>['decldelim']<filter>`
+
+## CSS declaration
+
+### declaration
+
+### property
+
+### value
+
+## Общие примитивы
+
+### ident
 
 Идентификатор: имена элементов, классов, функций и т.д.
 
@@ -83,20 +131,6 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 Примеры:
 
 * `    ` -> `['s', '    ']`
-
-### delim
-
-Разделитель простых селекторов (см. simpleselector).
-
-* Ometa/JS: `['delim']`
-* JS: `['delim']`
-* out: `,`
-
-Примеры:
-
-* `<simpleselector>,<simpleselector>` -> `<simpleselector>['delim']<simpleselector>`
-
-### decldelim
 
 ### comment
 
