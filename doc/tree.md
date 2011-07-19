@@ -1,10 +1,34 @@
-# Справочник по элементам дерева (проба пера)
+# Справочник элементов дерева
 
-## Примитивы
+### stylesheet
 
-Токены, состоящие лишь из первого элемента (имя токена — строка) и строк.
+### ruleset
 
-### ident
+### atruler
+
+### atruleb
+
+### atrules
+
+### atkeyword
+
+Имя at-rule.
+
+* Ometa/JS: `['atkeyword' ident:x]`
+* JS: `['atkeyword', x]`
+* out: `'@' + x`
+
+Примеры:
+
+* `@charset` -> `['atkeyword', ['ident', 'charset']]`
+
+Ссылки: [ident][ident]
+
+### selector
+
+### simpleselector
+
+[ident]:### ident
 
 Идентификатор: имена элементов, классов, функций и т.д.
 
@@ -15,18 +39,6 @@
 Примеры:
 
 * `rgb` -> `['ident', 'rgb']`
-
-### atkeyword
-
-Имя at-rule.
-
-* Ometa/JS: `['atkeyword' :x]`
-* JS: `['atkeyword', x]`
-* out: `'@' + x`
-
-Примеры:
-
-* `@charset` -> `['atkeyword', 'charset']`
 
 ### string
 
@@ -50,6 +62,8 @@
 
 ### number
 
+Число.
+
 * Ometa/JS: `['number' :x]`
 * JS: `['number', x]`
 * out: `x`
@@ -58,7 +72,43 @@
 
 * `10` -> `['number', '10']`
 
-## Составные токены
+### s
+
+whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
+
+* Ometa/JS: `['s' :x]`
+* JS: `['s', x]`
+* out: `x`
+
+Примеры:
+
+* `    ` -> `['s', '    ']`
+
+### delim
+
+Разделитель простых селекторов (см. simpleselector).
+
+* Ometa/JS: `['delim']`
+* JS: `['delim']`
+* out: `,`
+
+Примеры:
+
+* `<simpleselector>,<simpleselector>` -> `<simpleselector>['delim']<simpleselector>`
+
+### decldelim
+
+### comment
+
+Комментарий.
+
+* Ometa/JS: `['comment' :x]`
+* JS: `['comment', x]`
+* out: `'/*' + x + '*/'`
+
+Примеры:
+
+* `/*test*/` -> `['comment', 'test']`
 
 ### percentage
 
