@@ -38,6 +38,18 @@
 
 ### simpleselector
 
+### combinator
+
+Комбинатор: `+`, `>`, `~`.
+
+* Ometa/JS: `['combinator' :x]`
+* JS: `['combinator', x]`
+* out: `x`
+
+Примеры:
+
+* `<ident>``+``<class>` -> `[.. ident.. ]``['combinator', '+']``[.. class ..]`
+
 ### delim
 
 Разделитель простых селекторов (см. simpleselector).
@@ -48,7 +60,7 @@
 
 Примеры:
 
-* `<simpleselector>,<simpleselector>` -> `<simpleselector>['delim']<simpleselector>`
+* `<simpleselector>``,``<simpleselector>` -> `[.. simpleselector ..]``['delim']``[.. simpleselector ..]`
 
 ## CSS block
 
@@ -64,7 +76,7 @@
 
 Примеры:
 
-* `<declaration>;<filter>` -> `<declaration>['decldelim']<filter>`
+* `<declaration>``;``<filter>` -> `[.. declaration ..]``['decldelim']``[.. filter ..]`
 
 ## CSS declaration
 
