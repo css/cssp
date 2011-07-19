@@ -1,5 +1,11 @@
 # Справочник элементов дерева
 
+## Обозначения
+
+### SC
+
+(s | comment)*
+
 ## CSS stylesheet
 
 ### stylesheet
@@ -38,6 +44,16 @@
 
 ### simpleselector
 
+### nthselector
+
+### attrib
+
+### pseudoe
+
+### pseudoc
+
+### class
+
 ### combinator
 
 Комбинатор: `+`, `>`, `~`.
@@ -49,6 +65,16 @@
 Примеры:
 
 * `<ident>``+``<class>` -> `[.. ident.. ]``['combinator', '+']``[.. class ..]`
+
+### namespace
+
+* Ometa/JS: `['namespace']`
+* JS: `['namespace']`
+* out: `|`
+
+Примеры:
+
+* `<ident>``|``<ident>` -> `[.. ident ..]``['namespace']``[.. ident ..]`
 
 ### delim
 
@@ -85,6 +111,35 @@
 ### property
 
 ### value
+
+### functionExpression
+
+### important
+
+* Ometa/JS: `['important' SC:x]`
+* JS: `['important', SC:x]`
+* out: `'!' + x + 'important'`
+
+Примеры:
+
+* `!important` -> `['important']`
+* `!  /*test*/important` -> `['important', ['s', '  '], ['comment', 'test']]`
+
+## CSS filter
+
+### filter
+
+### filterp
+
+### filterv
+
+### progid
+
+## Остальное общее
+
+### uri
+
+### function
 
 ## Общие примитивы
 
