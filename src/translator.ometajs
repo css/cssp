@@ -55,7 +55,7 @@ ometa CSSTranslator {
 
     ident = ['ident' :x] -> x,
 
-    atkeyword = ['atkeyword' :x] -> ('@' + x),
+    atkeyword = ['atkeyword' any:x] -> ('@' + x),
 
     string = ['string' :x] -> x,
 

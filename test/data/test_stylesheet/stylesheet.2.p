@@ -1,3 +1,4 @@
 ['stylesheet', 
   ['atrules', 
-    ['atkeyword', 'test']]]
+    ['atkeyword', 
+      ['ident', 'test']]]]

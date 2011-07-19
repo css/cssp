@@ -1,5 +1,6 @@
 ['atruler', 
-  ['atkeyword', '-webkit-keyframes'], 
+  ['atkeyword', 
+    ['ident', '-webkit-keyframes']], 
   ['atrulerq', 
     ['s', ' '], 
     ['ident', 'pulsate'], 

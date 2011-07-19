@@ -1,1 +1,2 @@
-['atkeyword', 'import']
+['atkeyword', 
+  ['ident', 'import']]

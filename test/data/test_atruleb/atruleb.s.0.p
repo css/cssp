@@ -1,5 +1,6 @@
 ['atruleb', 
-  ['atkeyword', 'test'], 
+  ['atkeyword', 
+    ['ident', 'test']], 
   ['s', '  '], 
   ['block', 
     ['s', '  '], 

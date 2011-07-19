@@ -1,5 +1,6 @@
 ['atrules', 
-  ['atkeyword', 'test'], 
+  ['atkeyword', 
+    ['ident', 'test']], 
   ['comment', 'test'], 
   ['ident', 'x'], 
   ['comment', 'test'], 

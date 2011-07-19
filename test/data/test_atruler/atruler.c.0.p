@@ -1,5 +1,6 @@
 ['atruler', 
-  ['atkeyword', 'media'], 
+  ['atkeyword', 
+    ['ident', 'media']], 
   ['atrulerq', 
     ['comment', 'test']], 
   ['atrulers', 

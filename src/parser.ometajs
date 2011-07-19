@@ -4,7 +4,7 @@ ometa CSSBSParser {
 
     ident = m_ident:x -> [#ident, x],
 
-    atkeyword = '@' m_ident:x -> [#atkeyword, x],
+    atkeyword = '@' ident:x -> [#atkeyword, x],
 
     string = m_string:x -> [#string, x],
 

@@ -18,4 +18,5 @@
 
 '], 
   ['atrules', 
-    ['atkeyword', 'test']]]
+    ['atkeyword', 
+      ['ident', 'test']]]]

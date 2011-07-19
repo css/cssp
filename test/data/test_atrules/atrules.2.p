@@ -1,4 +1,5 @@
 ['atrules', 
-  ['atkeyword', 'test'], 
+  ['atkeyword', 
+    ['ident', 'test']], 
   ['s', ' '], 
   ['string', '"blah"']]

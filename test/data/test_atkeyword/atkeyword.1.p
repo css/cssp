@@ -1,1 +1,2 @@
-['atkeyword', 'font-face']
+['atkeyword', 
+  ['ident', 'font-face']]

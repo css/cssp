@@ -55,7 +55,7 @@ ometa CSSTransformer {
 
     ident = ['ident':t :x] -> [t, x],
 
-    atkeyword = ['atkeyword':t :x] -> [t, x],
+    atkeyword = ['atkeyword':t any:x] -> [t, x],
 
     string = ['string':t :x] -> [t, x],
 

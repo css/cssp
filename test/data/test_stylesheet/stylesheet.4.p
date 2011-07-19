@@ -10,4 +10,5 @@
         ['value', 
           ['ident', 'v']]]]], 
   ['atrules', 
-    ['atkeyword', 'test']]]
+    ['atkeyword', 
+      ['ident', 'test']]]]

@@ -1,7 +1,9 @@
 ['stylesheet', 
   ['atrules', 
-    ['atkeyword', 'test0']], 
+    ['atkeyword', 
+      ['ident', 'test0']]], 
   ['s', '
 '], 
   ['atrules', 
-    ['atkeyword', 'test1']]]
+    ['atkeyword', 
+      ['ident', 'test1']]]]
