@@ -16,5 +16,6 @@
   ['s', '  '], 
   ['operator', ','], 
   ['s', '  '], 
-  ['percentage', '89'], 
+  ['percentage', 
+    ['number', '89']], 
   ['s', '  ']]

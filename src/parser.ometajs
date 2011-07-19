@@ -12,7 +12,7 @@ ometa CSSBSParser {
 
     number = m_number:x -> [#number, x],
 
-    percentage = m_number:x '%' -> [#percentage, x],
+    percentage = number:x '%' -> [#percentage, x],
 
     dimension = number:x m_ident:y -> [#dimension, x, y],
 

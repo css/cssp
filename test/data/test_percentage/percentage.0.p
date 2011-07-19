@@ -1,1 +1,2 @@
-['percentage', '10']
+['percentage', 
+  ['number', '10']]

@@ -9,4 +9,5 @@
     ['ident', 'test'], 
     ['ident', 'x']], 
   ['operator', ','], 
-  ['percentage', '89']]
+  ['percentage', 
+    ['number', '89']]]

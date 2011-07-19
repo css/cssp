@@ -16,5 +16,6 @@
   ['comment', 'test'], 
   ['operator', ','], 
   ['comment', 'test'], 
-  ['percentage', '89'], 
+  ['percentage', 
+    ['number', '89']], 
   ['comment', 'test']]

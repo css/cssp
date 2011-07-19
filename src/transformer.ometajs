@@ -63,7 +63,7 @@ ometa CSSTransformer {
 
     number = ['number':t :x] -> [t, x],
 
-    percentage = ['percentage':t :x] -> [t, x],
+    percentage = ['percentage':t any:x] -> [t, x],
 
     dimension = ['dimension':t :x :y] -> [t, x, y],
 
