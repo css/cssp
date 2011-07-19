@@ -222,9 +222,9 @@ CSSBSParser['_m_nmchar'] = function(x) {
     return /^[_a-zA-Z0-9\-]+$/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
-//  \n|\r\n|\r|\f
+//  [\n\r\f]
 CSSBSParser['_m_nl'] = function(x) {
-    return /^[ \n\r\n\r\f]+$/.test(x);
+    return /^[\n\r\f]+$/.test(x);
 };
 
 // [ \t\r\n\f]*

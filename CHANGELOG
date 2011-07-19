@@ -1,5 +1,6 @@
 0.0.9:
     * Токен percentage теперь содержит число не строкой, но токеном number.
+    * Удалено дублирование \n\r в макросе m_nl.
 0.0.8:
     * Добавлена поддержка хаков IE вида -filter, *filter, _filter и вендорного -ms-filter.
     * API.array2string разделён на API.printTree(tree) и API.treeToString(tree, level).
