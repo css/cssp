@@ -10,7 +10,7 @@
     },
     "directories" : { "lib" : "./lib" },
     "main" : "./lib/csspapi",
-    "dependencies" : { "ometajs" : ">= 2.0.7" },
+    "dependencies" : { "ometajs" : ">= 2.0.9" },
     "bin" : "./bin/cssp",
     "engines" : { "node" : ">=0.4.0" },
     "licenses" : [ { "type" : "MIT" } ]
