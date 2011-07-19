@@ -12,6 +12,10 @@
 * JS: `['ident', x]`
 * out: `x`
 
+Примеры:
+
+* `rgb` -> `['ident', 'rgb']`
+
 ### atkeyword
 
 Имя at-rule.
@@ -20,11 +24,19 @@
 * JS: `['atkeyword', x]`
 * out: `'@' + x`
 
+Примеры:
+
+* `@charset` -> `['atkeyword', 'charset']`
+
 ### string
 
 * Ometa/JS: `['string' :x]`
 * JS: `['string', x]`
 * out: `x`
+
+Примеры:
+
+* `"multi \n line"` -> `['string', '"multi \n line"']`
 
 ### hash
 
@@ -32,22 +44,38 @@
 * JS: `['hash', x]`
 * out: `'#' + x`
 
+Примеры:
+
+* `#FFF` -> `['hash', 'FFF']`
+
 ### number
 
 * Ometa/JS: `['number' :x]`
 * JS: `['number', x]`
 * out: `x`
 
+Примеры:
+
+* `10` -> `['number', '10']`
+
 ## Составные токены
 
-### percentage (TODO)
+### percentage
 
 * Ometa/JS: `['percentage' number:x]`
 * JS: `['percentage', x]`
 * out: `x + '%'`
+
+Примеры:
+
+* `100%` -> `['percentage', ['number', '100']]`
 
 ### dimension
 
 * Ometa/JS: `['dimension' number:x ident:y]`
 * JS: `['dimension', x, y]`
 * out: `x + y`
+
+Примеры:
+
+* `100px` -> `['dimension', ['number', '100'], ['ident', 'px']]`
