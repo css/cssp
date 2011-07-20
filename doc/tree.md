@@ -10,9 +10,8 @@
 
 ### stylesheet
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['stylesheet']`
+* text: ``
 
 Примеры:
 
@@ -22,9 +21,8 @@
 
 ### ruleset
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['ruleset']`
+* text: ``
 
 Примеры:
 
@@ -34,9 +32,8 @@
 
 ### selector
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['selector']`
+* text: ``
 
 Примеры:
 
@@ -44,9 +41,8 @@
 
 ### simpleselector
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['simpleselector']`
+* text: ``
 
 Примеры:
 
@@ -54,9 +50,17 @@
 
 ### nthselector
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['nthselector']`
+* text: ``
+
+Примеры:
+
+*
+
+### nth
+
+* token: `['nth']`
+* text: ``
 
 Примеры:
 
@@ -64,9 +68,8 @@
 
 ### attrib
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['attrib']`
+* text: ``
 
 Примеры:
 
@@ -74,9 +77,8 @@
 
 ### pseudoe
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['pseudoe']`
+* text: ``
 
 Примеры:
 
@@ -84,9 +86,8 @@
 
 ### pseudoc
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['pseudoc']`
+* text: ``
 
 Примеры:
 
@@ -94,9 +95,8 @@
 
 ### class
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['class']`
+* text: ``
 
 Примеры:
 
@@ -106,9 +106,8 @@
 
 Комбинатор: `+`, `>`, `~`.
 
-* Ometa/JS: `['combinator' :x]`
-* JS: `['combinator', x]`
-* out: `x`
+* token: `['combinator', x]`
+* text: `x`
 
 Примеры:
 
@@ -116,9 +115,8 @@
 
 ### namespace
 
-* Ometa/JS: `['namespace']`
-* JS: `['namespace']`
-* out: `|`
+* token: `['namespace']`
+* text: `|`
 
 Примеры:
 
@@ -126,11 +124,10 @@
 
 ### delim
 
-Разделитель простых селекторов (см. simpleselector).
+Разделитель простых селекторов (см. **simpleselector**).
 
-* Ometa/JS: `['delim']`
-* JS: `['delim']`
-* out: `,`
+* token: `['delim']`
+* text: `,`
 
 Примеры:
 
@@ -140,9 +137,8 @@
 
 ### block
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['block']`
+* text: ``
 
 Примеры:
 
@@ -150,11 +146,10 @@
 
 ### decldelim
 
-Разделитель свойств (см. declaration) и фильтров (см. filter).
+Разделитель свойств (см. **declaration**) и фильтров (см. **filter**).
 
-* Ometa/JS: `['decldelim']`
-* JS: `['decldelim']`
-* out: `;`
+* token: `['decldelim']`
+* text: `;`
 
 Примеры:
 
@@ -164,9 +159,8 @@
 
 ### declaration
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['declaration']`
+* text: ``
 
 Примеры:
 
@@ -174,9 +168,8 @@
 
 ### property
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['property']`
+* text: ``
 
 Примеры:
 
@@ -184,9 +177,8 @@
 
 ### value
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['value']`
+* text: ``
 
 Примеры:
 
@@ -194,9 +186,8 @@
 
 ### functionExpression
 
-* Ometa/JS: `['functionExpression' :x]`
-* JS: `['functionExpression', x]`
-* out: `'expression(' + x + ')'`
+* token: `['functionExpression', x]`
+* text: `'expression(' + x + ')'`
 
 Примеры:
 
@@ -204,9 +195,8 @@
 
 ### important
 
-* Ometa/JS: `['important' SC:x]`
-* JS: `['important', SC:x]`
-* out: `'!' + x + 'important'`
+* token: `['important', SC:x]`
+* text: `'!' + x + 'important'`
 
 Примеры:
 
@@ -217,9 +207,8 @@
 
 ### filter
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['filter', filterp:x, filterv:y]`
+* text: `x + ':' + y`
 
 Примеры:
 
@@ -227,41 +216,33 @@
 
 ### filterp
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+Имя свойства: `filter`, `-filter`, `_filter`, `*filter`, `-ms-filter`.
 
-Примеры:
+* token: `['filterp', x, SC:y]`
+* text: `x + y`
 
-*
+Примеры: см. **filter**.
 
 ### filterv
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['filterv']`
+* text: ``
 
-Примеры:
-
-*
+Примеры: см. **filter**.
 
 ### progid
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['progid', SC:x, raw:y, SC:z]`
+* text: `x + y + z`
 
-Примеры:
-
-*
+Примеры: см. **filter**.
 
 ## CSS at-rule
 
 ### atrules
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['atrules']`
+* text: ``
 
 Примеры:
 
@@ -269,9 +250,8 @@
 
 ### atruleb
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['atruleb']`
+* text: ``
 
 Примеры:
 
@@ -279,9 +259,8 @@
 
 ### atruler
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['atruler']`
+* text: ``
 
 Примеры:
 
@@ -289,9 +268,8 @@
 
 ### atrulerq
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['atrulerq']`
+* text: ``
 
 Примеры:
 
@@ -299,9 +277,8 @@
 
 ### atrulers
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['atrulers']`
+* text: ``
 
 Примеры:
 
@@ -311,9 +288,8 @@
 
 Имя at-rule.
 
-* Ometa/JS: `['atkeyword' ident:x]`
-* JS: `['atkeyword', x]`
-* out: `'@' + x`
+* token: `['atkeyword', x]`
+* text: `'@' + x`
 
 Примеры:
 
@@ -325,9 +301,8 @@
 
 Унарный оператор: `+`, `-`.
 
-* Ometa/JS: `['unary' :x]`
-* JS: `['unary', x]`
-* out: `x`
+* token: `['unary', x]`
+* text: `x`
 
 Примеры:
 
@@ -337,9 +312,8 @@
 
 Оператор: `/`, `,`, `:`.
 
-* Ometa/JS: `['operator' :x]`
-* JS: `['operator', x]`
-* out: `x`
+* token: `['operator', x]`
+* text: `x`
 
 Примеры:
 
@@ -347,23 +321,21 @@
 
 ### uri
 
-* Ometa/JS: `['uri' SC:x (raw | string):y SC:z]`
-* JS: `['uri', SC:x, (raw | string):y, SC:z]`
-* out: `'url(' + x + y + z + ')'`
+* token: `['uri', SC:x, (raw | string):y, SC:z]`
+* text: `'url(' + x + y + z + ')'`
 
 Примеры:
 
-* `url(http://foo.com/bar.css)` -> `['uri', ['raw', 'http://foo.com/bar.css']]`
-* `url("http://foo.com/bar.css")` -> `['uri', ['string', '"http://foo.com/bar.css"']]`
-* `url(  http://foo.com/bar.css/*test*/)` -> `['uri', ['s', '  '], ['raw', 'http://foo.com/bar.css/*test*/']]`
-* `url(http://foo.com/bar.css /*test*/)` -> `['uri', ['s', '  '], ['raw', 'http://foo.com/bar.css'], ['s', ' '], ['comment', 'test']]`
-* `url("http://foo.com/bar.css"/*test*/)` -> `['uri', ['string', '"http://foo.com/bar.css"'], ['comment', 'test']]`
+* `url(foo.com/bar.css)` -> `['uri', ['raw', 'foo.com/bar.css']]`
+* `url("foo.com/bar.css")` -> `['uri', ['string', '"foo.com/bar.css"']]`
+* `url( foo.com/bar.css/*t*/)` -> `['uri', ['s', ' '], ['raw', 'foo.com/bar.css/*t*/']]`
+* `url(foo.com/bar.css /*t*/)` -> `['uri', ['s', ' '], ['raw', 'foo.com/bar.css'], ['s', ' '], ['comment', 't']]`
+* `url("foo.com/bar.css"/*t*/)` -> `['uri', ['string', '"foo.com/bar.css"'], ['comment', 't']]`
 
 ### function
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['function']`
+* text: ``
 
 Примеры:
 
@@ -371,9 +343,8 @@
 
 ### braces
 
-* Ometa/JS: `['']`
-* JS: `['']`
-* out: ``
+* token: `['braces']`
+* text: ``
 
 Примеры:
 
@@ -385,9 +356,8 @@
 
 Идентификатор: имена элементов, классов, функций и т.д.
 
-* Ometa/JS: `['ident' :x]`
-* JS: `['ident', x]`
-* out: `x`
+* token: `['ident', x]`
+* text: `x`
 
 Примеры:
 
@@ -395,9 +365,8 @@
 
 ### string
 
-* Ometa/JS: `['string' :x]`
-* JS: `['string', x]`
-* out: `x`
+* token: `['string', x]`
+* text: `x`
 
 Примеры:
 
@@ -405,9 +374,8 @@
 
 ### hash
 
-* Ometa/JS: `['hash' :x]`
-* JS: `['hash', x]`
-* out: `'#' + x`
+* token: `['hash', x]`
+* text: `'#' + x`
 
 Примеры:
 
@@ -417,9 +385,8 @@
 
 Число.
 
-* Ometa/JS: `['number' :x]`
-* JS: `['number', x]`
-* out: `x`
+* token: `['number', x]`
+* text: `x`
 
 Примеры:
 
@@ -429,9 +396,8 @@
 
 whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 
-* Ometa/JS: `['s' :x]`
-* JS: `['s', x]`
-* out: `x`
+* token: `['s', x]`
+* text: `x`
 
 Примеры:
 
@@ -441,9 +407,8 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 
 Комментарий.
 
-* Ometa/JS: `['comment' :x]`
-* JS: `['comment', x]`
-* out: `'/*' + x + '*/'`
+* token: `['comment', x]`
+* text: `'/*' + x + '*/'`
 
 Примеры:
 
@@ -451,9 +416,8 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 
 ### percentage
 
-* Ometa/JS: `['percentage' number:x]`
-* JS: `['percentage', x]`
-* out: `x + '%'`
+* token: `['percentage', x]`
+* text: `x + '%'`
 
 Примеры:
 
@@ -461,9 +425,8 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 
 ### dimension
 
-* Ometa/JS: `['dimension' number:x ident:y]`
-* JS: `['dimension', x, y]`
-* out: `x + y`
+* token: `['dimension', x, y]`
+* text: `x + y`
 
 Примеры:
 
@@ -473,8 +436,7 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 
 Служебный токен для случаев, в которых требуется лишь контейнер для значения.
 
-* Ometa/JS: `['raw' :x]`
-* JS: `['raw', x]`
-* out: `x`
+* token: `['raw', x]`
+* text: `x`
 
-Пример: см. uri.
+Примеры: см. **uri**.
