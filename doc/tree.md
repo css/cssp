@@ -10,25 +10,97 @@
 
 ### stylesheet
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ## CSS ruleset
 
 ### ruleset
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ## CSS selector
 
 ### selector
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### simpleselector
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ### nthselector
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### attrib
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ### pseudoe
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### pseudoc
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### class
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ### combinator
 
@@ -68,6 +140,14 @@
 
 ### block
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### decldelim
 
 Разделитель свойств (см. declaration) и фильтров (см. filter).
@@ -84,11 +164,43 @@
 
 ### declaration
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### property
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ### value
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### functionExpression
+
+* Ometa/JS: `['functionExpression' :x]`
+* JS: `['functionExpression', x]`
+* out: `'expression(' + x + ')'`
+
+Примеры:
+
+* `expression(var x = 1)` -> `['value', ['functionExpression', 'var x = 1']]`
 
 ### important
 
@@ -105,23 +217,95 @@
 
 ### filter
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### filterp
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ### filterv
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### progid
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ## CSS at-rule
 
 ### atrules
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### atruleb
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ### atruler
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### atrulerq
 
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
 ### atrulers
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ### atkeyword
 
@@ -163,7 +347,37 @@
 
 ### uri
 
+* Ometa/JS: `['uri' SC:x (raw | string):y SC:z]`
+* JS: `['uri', SC:x, (raw | string):y, SC:z]`
+* out: `'url(' + x + y + z + ')'`
+
+Примеры:
+
+* `url(http://foo.com/bar.css)` -> `['uri', ['raw', 'http://foo.com/bar.css']]`
+* `url("http://foo.com/bar.css")` -> `['uri', ['string', '"http://foo.com/bar.css"']]`
+* `url(  http://foo.com/bar.css/*test*/)` -> `['uri', ['s', '  '], ['raw', 'http://foo.com/bar.css/*test*/']]`
+* `url(http://foo.com/bar.css /*test*/)` -> `['uri', ['s', '  '], ['raw', 'http://foo.com/bar.css'], ['s', ' '], ['comment', 'test']]`
+* `url("http://foo.com/bar.css"/*test*/)` -> `['uri', ['string', '"http://foo.com/bar.css"'], ['comment', 'test']]`
+
 ### function
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
+
+### braces
+
+* Ometa/JS: `['']`
+* JS: `['']`
+* out: ``
+
+Примеры:
+
+*
 
 ## Общие примитивы
 
@@ -254,3 +468,13 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 Примеры:
 
 * `100px` -> `['dimension', ['number', '100'], ['ident', 'px']]`
+
+### raw
+
+Служебный токен для случаев, в которых требуется лишь контейнер для значения.
+
+* Ometa/JS: `['raw' :x]`
+* JS: `['raw', x]`
+* out: `x`
+
+Пример: см. uri.
