@@ -110,7 +110,7 @@ ometa CSSParser <: CSSBSParser {
 
     simpleselector = (nthselector | combinator | attrib | pseudo | class | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
 
-    selector = (simpleselector | delim | sc)+:x -> this.concat([#selector], x),
+    selector = (simpleselector | delim)+:x -> this.concat([#selector], x),
 
     declaration = property:x ':' value:y -> [#declaration, x, y],
 
