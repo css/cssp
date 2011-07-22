@@ -21,12 +21,12 @@
 
 ### ruleset
 
-* token: `['ruleset']`
-* text: ``
+* token: `['ruleset', selector*:x, block:y]`
+* text: `x + y`
 
 Примеры:
 
-*
+* `a{p:v}` -> `['ruleset', ['selector', ..], ['block', ..]]`
 
 ## CSS selector
 
@@ -77,30 +77,31 @@
 
 ### pseudoe
 
-* token: `['pseudoe']`
-* text: ``
+* token: `['pseudoe', ident:x]`
+* text: `'::' + x`
 
 Примеры:
 
-*
+* `::test` -> `['pseudoe', ['ident', 'test']]`
 
 ### pseudoc
 
-* token: `['pseudoc']`
-* text: ``
+* token: `['pseudoc', (function | ident):x]`
+* text: `':' + x`
 
 Примеры:
 
-*
+* `:test` -> `['pseudoc', ['ident', 'test']]`
+* `:test()` -> `['pseudoc', ['function', ['ident', 'test']]]`
 
 ### class
 
-* token: `['class']`
-* text: ``
+* token: `['class', ident:x]`
+* text: `'.' + x`
 
 Примеры:
 
-*
+* `.test` -> `['class', ['ident', 'test']]`
 
 ### combinator
 
@@ -137,12 +138,13 @@
 
 ### block
 
-* token: `['block']`
-* text: ``
+* token: `['block', blockdecl*:x]`
+* text: `'{' + x + '}'`
 
 Примеры:
 
-*
+* `{}` -> `['block']`
+* `{p:v}` -> `['block', ['declaration', ['property', ['ident', 'p']], ['value', ['ident', 'v']]]]`
 
 ### decldelim
 
@@ -159,30 +161,26 @@
 
 ### declaration
 
-* token: `['declaration']`
-* text: ``
+* token: `['declaration', property:x, value:y]`
+* text: `x + ':' + y`
 
 Примеры:
 
-*
+* `p:v` -> `['declaration', ['property', ['ident', 'p']], ['value', ['ident', 'v']]]`
 
 ### property
 
-* token: `['property']`
-* text: ``
+* token: `['property', x, SC:y]`
+* text: `x + y`
 
-Примеры:
-
-*
+Примеры: см. **declaration**.
 
 ### value
 
 * token: `['value']`
 * text: ``
 
-Примеры:
-
-*
+Примеры: см. **declaration**.
 
 ### functionExpression
 
