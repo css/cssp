@@ -1,5 +1,6 @@
 ['simpleselector', 
-  ['nthselector', 'child', 
+  ['nthselector', 
+    ['ident', 'nth-child'], 
     ['unary', '+'], 
     ['nth', '3n'], 
     ['unary', '-'], 

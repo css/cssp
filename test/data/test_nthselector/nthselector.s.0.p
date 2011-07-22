@@ -1,4 +1,5 @@
-['nthselector', 'child', 
+['nthselector', 
+  ['ident', 'nth-child'], 
   ['s', '  '], 
   ['nth', '2n'], 
   ['s', '  '], 

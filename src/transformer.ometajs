@@ -81,7 +81,7 @@ ometa CSSTransformer {
 
     nth = ['nth':t :x] -> [t, x],
 
-    nthselector = ['nthselector':t :x anys:y] -> [t, x].concat(y),
+    nthselector = ['nthselector':t any:x anys:y] -> [t, x].concat(y),
 
     namespace = ['namespace':t] -> [t],
 

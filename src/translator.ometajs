@@ -81,7 +81,7 @@ ometa CSSTranslator {
 
     nth = ['nth' :x] -> x,
 
-    nthselector = ['nthselector' :x anys:y] -> (':nth-' + x + '(' + y.join('') + ')'),
+    nthselector = ['nthselector' any:x anys:y] -> (':' + x + '(' + y.join('') + ')'),
 
     namespace = ['namespace'] -> '|',
 

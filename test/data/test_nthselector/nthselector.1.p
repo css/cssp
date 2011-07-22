@@ -1,4 +1,5 @@
-['nthselector', 'last-child', 
+['nthselector', 
+  ['ident', 'nth-last-child'], 
   ['unary', '+'], 
   ['nth', '3n'], 
   ['unary', '-'], 

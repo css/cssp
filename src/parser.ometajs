@@ -99,12 +99,12 @@ ometa CSSParser <: CSSBSParser {
 
     pseudo = (pseudoe | pseudoc),
 
-    nthf = ':' seq('nth-') (seq('child') | seq('last-child') | seq('of-type') | seq('last-of-type')),
+    nthf = ':' seq('nth-'):x (seq('child') | seq('last-child') | seq('of-type') | seq('last-of-type')):y -> (x + y),
 
     nth = (digit | 'n')+:x -> [#nth, x.join('')]
         | (seq('even') | seq('odd')):x -> [#nth, x],
 
-    nthselector = nthf:x '(' (sc | unary | nth)*:y ')' -> [#nthselector, x].concat(y),
+    nthselector = nthf:x '(' (sc | unary | nth)*:y ')' -> [#nthselector, [#ident, x]].concat(y),
 
     namespace = '|' -> [#namespace],
 
