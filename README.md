@@ -22,6 +22,7 @@
 ## Использование
 
 Использование command line интерфейса:
+
     cssp
         показывает этот текст
     cssp <имя_файла>
@@ -49,6 +50,7 @@
         считывает CSS из <имя_файла> и удаляет начальные и концевые пробельные символы
 
 Примеры:
+
     1) test.css = 'color: red'
     > cssp test.css -r declaration -dp
     > ['declaration',
@@ -64,6 +66,7 @@
       10px
 
 Пример программного использования (Node.js):
+
     var cssp = require('cssp'),
         src = 'a { color: red }',
         tree, trans,
