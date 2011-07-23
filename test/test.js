@@ -4,9 +4,10 @@ var fs = require('fs'),
     _parse = cssp.parse,
     _transform = cssp.transform,
     _translate = cssp.translate,
+    _compress = cssp.compress,
     d_dir = __dirname + '/data',
     d_list = fs.readdirSync(d_dir),
-    okn = 0, total = 0;
+    okn = total = 0;
 
 var funcs = {
     'p': function parse(src, match) {
@@ -15,42 +16,50 @@ var funcs = {
     'f': function transform(src, match) {
             return treeToString(_transform(_parse(src, match), match));
          },
+    'c': function compress(src, match) {
+            return treeToString(_compress(_parse(src, match), match));
+         },
+    'cl': function compressTranslate(src, match) {
+            return _translate(_compress(_parse(src, match), match), match);
+         },
     'l': function translate(src, match) {
             return _translate(_transform(_parse(src, match), match), match);
          }
 };
 
 d_list.forEach(function(rule_dir) {
-    var rule = rule_dir.substring(5),
-        path = d_dir + '/' + rule_dir + '/',
-        list = fs.readdirSync(path),
-        ext,
-        files = {},
-        k, a, b, c, src, t, r;
+    if (/^test/.test(rule_dir)) {
+        var rule = rule_dir.substring(5),
+            path = d_dir + '/' + rule_dir + '/',
+            list = fs.readdirSync(path),
+            ext,
+            files = {},
+            k, a, b, c, src, t, r;
 
-    list.forEach(function(f) {
-        var i = f.lastIndexOf('.');
+        list.forEach(function(f) {
+            var i = f.lastIndexOf('.');
 
-        if (i !== -1) {
-            ext = f.substring(i + 1);
-            k = f.substring(0, i);
-            if (!(k in files)) files[k] = {};
-            files[k][ext] = 1;
-        }
-    });
+            if (i !== -1) {
+                ext = f.substring(i + 1);
+                k = f.substring(0, i);
+                if (!(k in files)) files[k] = {};
+                files[k][ext] = 1;
+            }
+        });
 
-    for (k in files) {
-        if (files[k].css) {
-            src = readFile(path + k + '.css').trim();
-            t = '\'' + rule + '\' / \'' + k + '.';
-            for (a in funcs) {
-                if (a in files[k]) {
-                    total++;
-                    r = (((b = funcs[a](src, rule)) == (c = readFile(path + k + '.' + a).trim())));
-                    r && okn++;
-                    if (!r) {
-                        console.log('FAIL: ' + t + a);
-                        console.log('IN:\n' + c + '\nOUT:\n' + b);
+        for (k in files) {
+            if (files[k].css) {
+                src = readFile(path + k + '.css').trim();
+                t = '\'' + rule + '\' / \'' + k + '.';
+                for (a in funcs) {
+                    if (a in files[k]) {
+                        total++;
+                        r = (((b = funcs[a](src, rule)) == (c = readFile(path + k + '.' + a).trim())));
+                        r && okn++;
+                        if (!r) {
+                            console.log('FAIL: ' + t + a);
+                            console.log('IN:\n' + c + '\nOUT:\n' + b);
+                        }
                     }
                 }
             }

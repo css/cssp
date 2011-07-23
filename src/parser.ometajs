@@ -138,8 +138,8 @@ ometa CSSParser <: CSSBSParser {
 
     function = ident:x '(' (any | sc | operator)*:y ')' -> this.concat([#function, x], y),
 
-    braces = '(' sc*:s0 any*:x sc*:s1 ')' -> this.concat([#braces, '(', ')'], s0, x, s1)
-           | '[' sc*:s0 any*:x sc*:s1 ']' -> this.concat([#braces, '[', ']'], s0, x, s1),
+    braces = '(' sc*:s0 (any | sc)*:x ')' -> this.concat([#braces, '(', ')'], s0, x)
+           | '[' sc*:s0 (any | sc)*:x ']' -> this.concat([#braces, '[', ']'], s0, x),
 
 // Don't reuse CSS-grammar elements to parse JS-grammar basics!
 
@@ -179,8 +179,7 @@ ometa CSSParser <: CSSBSParser {
 
     functionExpression = ``expression('' functionExpressionBody*:x ')' -> [#functionExpression, x.join('')],
 
-    any = (string | percentage | dimension | hash | number | uri | functionExpression | function | ident | unary):x -> x
-        | braces
+    any = (braces | string | percentage | dimension | hash | number | uri | functionExpression | function | ident | unary):x -> x
 }
 
 CSSParser.concatContent = function(x, y) {
