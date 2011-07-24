@@ -52,13 +52,13 @@ ometa CSSCompressor <: CSSTransformer {
 
     sc = s | comment,
 
-    number = ['number':t :x] -> [t, this.compressNumber(x)],
+    number = ['number':t :x] -> [t, this._cfg.cv ? this.compressNumber(x) : x],
 
-    dimension = ['dimension':t number:x :y] -> this.compressDimension(x[1], y),
+    dimension = ['dimension':t number:x :y] -> (this._cfg.cv ? this.compressDimension(x[1], y) : [t, x, y]),
 
-    vhash = ['vhash' :x] -> this.compressColorHash(x),
+    vhash = ['vhash':t :x] -> (this._cfg.cv ? this.compressColorHash(x) : [t, x]),
 
-    ident = ['ident' :x] -> this.compressIdent(x),
+    ident = ['ident':t :x] -> (this._cfg.cv ? this.compressIdent(x) : [t, x]),
 
     attrib = ['attrib':t sc*:s0 ident:x sc*:s1 attrselector:y sc*:s2 (ident | string):z sc*:s3] -> [t, x, y, z],
 
@@ -113,6 +113,8 @@ ometa CSSCompressor <: CSSTransformer {
     function = ['function':t ['ident' 'rgb']:x anys:y] -> this.compressRgb(this.compressValue(y))
              | ['function':t ident:x anys:y] -> [t, x].concat(this.compressValue(y))
 }
+
+CSSCompressor._cfg = { cv: true };
 
 CSSCompressor.cleanSC = function(x) {
     var r = [];
