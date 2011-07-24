@@ -50,21 +50,21 @@
 
 ### nthselector
 
-* token: `['nthselector']`
-* text: ``
+* token: `['nthselector', ident:x, (SC | unary | nth)*:y]`
+* text: `':' + x + '(' + y + ')'`
 
 Примеры:
 
-*
+* `:nth-child(2n+1)` -> `['nthselector', ['ident', 'nth-child'], ['nth', '2n'], ['unary', '+'], ['nth', '1']]`
 
 ### nth
 
-* token: `['nth']`
-* text: ``
+Варианты: целое число, `n`, `even`, `odd`.
 
-Примеры:
+* token: `['nth', x]`
+* text: `x`
 
-*
+Примеры: см. **nthselector**.
 
 ### attrib
 
@@ -239,6 +239,8 @@
 
 ### atrules
 
+Single-line at-rule.
+
 * token: `['atrules']`
 * text: ``
 
@@ -247,6 +249,8 @@
 *
 
 ### atruleb
+
+Block at-rule.
 
 * token: `['atruleb']`
 * text: ``
@@ -257,14 +261,18 @@
 
 ### atruler
 
-* token: `['atruler']`
-* text: ``
+Rich at-rule.
+
+* token: `['atruler', atkeyword:x, atrulerq:y, atrulers:z]`
+* text: `x + y + '{' + z + '}'`
 
 Примеры:
 
-*
+* `@media {s{p:v}}` -> `['atruler', ['atkeyword', ['ident', 'media']], ['atrulerq', ..], ['atrulers', ..]]`
 
 ### atrulerq
+
+Rich at-rule query.
 
 * token: `['atrulerq']`
 * text: ``
@@ -274,6 +282,8 @@
 *
 
 ### atrulers
+
+Rich at-rule stylesheet.
 
 * token: `['atrulers']`
 * text: ``
@@ -370,14 +380,23 @@
 
 * `"multi \n line"` -> `['string', '"multi \n line"']`
 
-### hash
+### shash
 
-* token: `['hash', x]`
+* token: `['shash', x]`
 * text: `'#' + x`
 
 Примеры:
 
-* `#FFF` -> `['hash', 'FFF']`
+* `#myid` -> `['shash', 'myid']`
+
+### vhash
+
+* token: `['vhash', x]`
+* text: `'#' + x`
+
+Примеры:
+
+* `#fff` -> `['vhash', 'fff']`
 
 ### number
 
