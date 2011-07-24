@@ -52,11 +52,13 @@ ometa CSSCompressor <: CSSTransformer {
 
     sc = s | comment,
 
-    number = ['number':t :x] -> [t, this.minimizeNumber(x)],
+    number = ['number':t :x] -> [t, this.compressNumber(x)],
 
-    dimension = ['dimension':t number:x :y] -> this.minimizeDimension(x[1], y),
+    dimension = ['dimension':t number:x :y] -> this.compressDimension(x[1], y),
 
-    vhash = ['vhash' :x] -> this.minimizeColorHash(x),
+    vhash = ['vhash' :x] -> this.compressColorHash(x),
+
+    ident = ['ident' :x] -> this.compressIdent(x),
 
     attrib = ['attrib':t sc*:s0 ident:x sc*:s1 attrselector:y sc*:s2 (ident | string):z sc*:s3] -> [t, x, y, z],
 
@@ -65,19 +67,19 @@ ometa CSSCompressor <: CSSTransformer {
     stylesheet = ['stylesheet':t anys:x] -> [t].concat(this.cleanSC(x)),
 
     atruleb = ['atruleb':t atkeyword:x sc* block:y] -> [t, x, y]
-            | ['atruleb':t atkeyword:x comment+:y (~block any)*:z block:b] -> [t, x, y[0]].concat(this.compressAtRule(z), [b])
-            | ['atruleb':t atkeyword:x sc+ (~block any)*:y block:z] -> [t, x, [#s, ' ']].concat(this.compressAtRule(y), [z]),
+            | ['atruleb':t atkeyword:x comment+:y (~block any)*:z block:b] -> [t, x, y[0]].concat(this.compressValue(z), [b])
+            | ['atruleb':t atkeyword:x sc+ (~block any)*:y block:z] -> [t, x, [#s, ' ']].concat(this.compressValue(y), [z]),
 
     atrules = ['atrules':t atkeyword:x sc*] -> [t, x]
-            | ['atrules':t atkeyword:x comment sc+ anys:y] -> [t, x, [#s, ' ']].concat(this.compressAtRule(y))
-            | ['atrules':t atkeyword:x comment:y anys:z] -> [t, x, y].concat(this.compressAtRule(z))
-            | ['atrules':t atkeyword:x sc+ anys:y] -> [t, x, [#s, ' ']].concat(this.compressAtRule(y))
-            | ['atrules':t atkeyword:x anys:y] -> [t, x].concat(this.compressAtRule(y)),
+            | ['atrules':t atkeyword:x comment sc+ anys:y] -> [t, x, [#s, ' ']].concat(this.compressValue(y))
+            | ['atrules':t atkeyword:x comment:y anys:z] -> [t, x, y].concat(this.compressValue(z))
+            | ['atrules':t atkeyword:x sc+ anys:y] -> [t, x, [#s, ' ']].concat(this.compressValue(y))
+            | ['atrules':t atkeyword:x anys:y] -> [t, x].concat(this.compressValue(y)),
 
     atrulerq = ['atrulerq':t sc*] -> [t]
-             | ['atrulerq':t comment sc+ anys:x] -> [t, [#s, ' ']].concat(this.compressAtRule(x))
-             | ['atrulerq':t comment:y anys:z] -> [t, y].concat(this.compressAtRule(z))
-             | ['atrulerq':t sc+ anys:x] -> [t, [#s, ' ']].concat(this.compressAtRule(x)),
+             | ['atrulerq':t comment sc+ anys:x] -> [t, [#s, ' ']].concat(this.compressValue(x))
+             | ['atrulerq':t comment:y anys:z] -> [t, y].concat(this.compressValue(z))
+             | ['atrulerq':t sc+ anys:x] -> [t, [#s, ' ']].concat(this.compressValue(x)),
 
     atrulers = ['atrulers':t sc* ruleset*:r sc*] -> [t].concat(r),
 
@@ -88,7 +90,7 @@ ometa CSSCompressor <: CSSTransformer {
                | empty -> [],
 
     block = ['block':t (sc | decldelim)*] -> [t]
-          | ['block':t blockdecls:x] -> [t].concat(x),
+          | ['block':t ?(this.inBlock = true) blockdecls:x ?(this.inBlock = false, true)] -> [t].concat(x),
 
     simpleselector = ['simpleselector':t anys:x] -> [t].concat(this.compressSimpleSelector(x)),
 
@@ -175,8 +177,6 @@ CSSCompressor.compressValue = function(x) {
     return r;
 };
 
-CSSCompressor.compressAtRule = CSSCompressor.compressValue;
-
 CSSCompressor.compressSimpleSelector = function(x) {
     var r = this.joinSC(this.cleanSCLeft(this.cleanSCRight(x))),
         p, n;
@@ -195,7 +195,7 @@ CSSCompressor.compressSimpleSelector = function(x) {
     return r;
 };
 
-CSSCompressor.minimizeNumber = function(x) {
+CSSCompressor.compressNumber = function(x) {
     if (/^0*/.test(x)) x = x.replace(/^0+/, '');
     if (/\.0*$/.test(x)) x = x.replace(/\.0*$/, '');
     if (x === '.' || x === '') x = '0';
@@ -203,11 +203,11 @@ CSSCompressor.minimizeNumber = function(x) {
     return x;
 };
 
-CSSCompressor.minimizeDimension = function(x, y) {
+CSSCompressor.compressDimension = function(x, y) {
     return x === '0' ? ['number', '0'] : ['dimension', ['number', x], y];
 };
 
-CSSCompressor.minimizeColorHash = function(x) {
+CSSCompressor.compressColorHash = function(x) {
     var map = {'f00': 'red',
                'c0c0c0': 'silver',
                '808080': 'gray',
@@ -229,6 +229,22 @@ CSSCompressor.minimizeColorHash = function(x) {
     return map[x] ? ['string', map[x]] : ['vhash', (x.length < _x.length ? x : _x)];
 };
 
+CSSCompressor.compressIdent = function(x) {
+    return this.inBlock ? this.compressColorIdent(x) : ['ident', x];
+};
+
+CSSCompressor.compressColorIdent = function(x) {
+    var map = {'yellow': 'ff0',
+               'fuchsia': 'f0f',
+               'white': 'fff',
+               'black': '000',
+               'blue': '00f',
+               'aqua': '0ff'},
+        _x = x.toLowerCase();
+
+    return map[_x] ? ['vhash', map[_x]] : ['ident', x];
+};
+
 CSSCompressor.compressRgb = function(x) {
     var t, h = '';
 
@@ -236,6 +252,6 @@ CSSCompressor.compressRgb = function(x) {
         h += (t = Number(x[0][1]).toString(16)).length === 1 ? '0' + t : t;
         h += (t = Number(x[2][1]).toString(16)).length === 1 ? '0' + t : t;
         h += (t = Number(x[4][1]).toString(16)).length === 1 ? '0' + t : t;
-        return CSSCompressor.minimizeColorHash(h);
+        return this.compressColorHash(h);
     } else return ['function', ['ident', 'rgb']].concat(x);
 };
