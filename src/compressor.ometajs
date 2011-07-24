@@ -56,6 +56,8 @@ ometa CSSCompressor <: CSSTransformer {
 
     dimension = ['dimension':t number:x :y] -> this.minimizeDimension(x[1], y),
 
+    vhash = ['vhash' :x] -> this.minimizeColorHash(x),
+
     attrib = ['attrib':t sc*:s0 ident:x sc*:s1 attrselector:y sc*:s2 (ident | string):z sc*:s3] -> [t, x, y, z],
 
     nthselector = ['nthselector':t ident:x anys:y] -> [t, x].concat(this.compressValue(y)),
@@ -106,7 +108,8 @@ ometa CSSCompressor <: CSSTransformer {
 
     uri = ['uri':t anys:x] -> [t].concat(this.cleanSC(x)),
 
-    function = ['function':t ident:x anys:y] -> [t, x].concat(this.compressValue(y))
+    function = ['function':t ['ident' 'rgb']:x anys:y] -> this.compressRgb(this.compressValue(y))
+             | ['function':t ident:x anys:y] -> [t, x].concat(this.compressValue(y))
 }
 
 CSSCompressor.cleanSC = function(x) {
@@ -202,4 +205,37 @@ CSSCompressor.minimizeNumber = function(x) {
 
 CSSCompressor.minimizeDimension = function(x, y) {
     return x === '0' ? ['number', '0'] : ['dimension', ['number', x], y];
+};
+
+CSSCompressor.minimizeColorHash = function(x) {
+    var map = {'f00': 'red',
+               'c0c0c0': 'silver',
+               '808080': 'gray',
+               '800000': 'maroon',
+               '800080': 'purple',
+               '008000': 'green',
+               '808000': 'olive',
+               '000080': 'navy',
+               '008080': 'teal'},
+        _x = x;
+
+    x = x.toLowerCase();
+
+    if (x.length === 6 &&
+        x.charAt(0) === x.charAt(1) &&
+        x.charAt(2) === x.charAt(3) &&
+        x.charAt(4) === x.charAt(5)) x = x.charAt(0) + x.charAt(2) + x.charAt(4);
+
+    return map[x] ? ['string', map[x]] : ['vhash', (x.length < _x.length ? x : _x)];
+};
+
+CSSCompressor.compressRgb = function(x) {
+    var t, h = '';
+
+    if (x.length === 5 && x[0][0] === 'number' && x[2][0] === 'number' && x[4][0] === 'number') {
+        h += (t = Number(x[0][1]).toString(16)).length === 1 ? '0' + t : t;
+        h += (t = Number(x[2][1]).toString(16)).length === 1 ? '0' + t : t;
+        h += (t = Number(x[4][1]).toString(16)).length === 1 ? '0' + t : t;
+        return CSSCompressor.minimizeColorHash(h);
+    } else return ['function', ['ident', 'rgb']].concat(x);
 };
