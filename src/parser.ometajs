@@ -8,7 +8,9 @@ ometa CSSBSParser {
 
     string = m_string:x -> [#string, x],
 
-    hash = '#' m_name:x -> [#hash, x],
+    shash = '#' m_name:x -> [#shash, x],
+
+    vhash = '#' m_name:x -> [#vhash, x],
 
     number = m_number:x -> [#number, x],
 
@@ -62,7 +64,7 @@ ometa CSSParser <: CSSBSParser {
 
     statement = (ruleset | atrule),
 
-    atrulepart = (sc | any | operator),
+    atrulepart = (sc | vhash | any | operator),
 
     atruleb = atkeyword:ak atrulepart*:ap block:b -> this.concat([#atruleb, ak], ap, [b]),
 
@@ -108,7 +110,7 @@ ometa CSSParser <: CSSBSParser {
 
     namespace = '|' -> [#namespace],
 
-    simpleselector = (nthselector | combinator | attrib | pseudo | class | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
+    simpleselector = (nthselector | combinator | attrib | pseudo | class | shash | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
 
     selector = (simpleselector | delim)+:x -> this.concat([#selector], x),
 
@@ -134,12 +136,12 @@ ometa CSSParser <: CSSBSParser {
     uri = seq('url') '(' sc*:s0 string:x sc*:s1')' -> this.concat([#uri], s0, [x], s1)
         | seq('url') '(' sc*:s0 (~')' ~m_w char)*:x sc*:s1 ')' -> this.concat([#uri], s0, [[#raw, x.join('')]], s1),
 
-    value = (sc | any | block | atkeyword | operator | important)+:x -> this.concat([#value], x),
+    value = (sc | vhash | any | block | atkeyword | operator | important)+:x -> this.concat([#value], x),
 
-    function = ident:x '(' (any | sc | operator)*:y ')' -> this.concat([#function, x], y),
+    function = ident:x '(' (vhash | any | sc | operator)*:y ')' -> this.concat([#function, x], y),
 
-    braces = '(' sc*:s0 (any | sc)*:x ')' -> this.concat([#braces, '(', ')'], s0, x)
-           | '[' sc*:s0 (any | sc)*:x ']' -> this.concat([#braces, '[', ']'], s0, x),
+    braces = '(' sc*:s0 (vhash | any | sc)*:x ')' -> this.concat([#braces, '(', ')'], s0, x)
+           | '[' sc*:s0 (vhash | any | sc)*:x ']' -> this.concat([#braces, '[', ']'], s0, x),
 
 // Don't reuse CSS-grammar elements to parse JS-grammar basics!
 
@@ -179,7 +181,7 @@ ometa CSSParser <: CSSBSParser {
 
     functionExpression = ``expression('' functionExpressionBody*:x ')' -> [#functionExpression, x.join('')],
 
-    any = (braces | string | percentage | dimension | hash | number | uri | functionExpression | function | ident | unary):x -> x
+    any = (braces | string | percentage | dimension | number | uri | functionExpression | function | ident | unary):x -> x
 }
 
 CSSParser.concatContent = function(x, y) {

@@ -4,7 +4,8 @@ ometa CSSCompressor <: CSSTransformer {
     any = ident
         | atkeyword
         | string
-        | hash
+        | vhash
+        | shash
         | number
         | percentage
         | dimension

@@ -7,7 +7,8 @@ ometa CSSTransformer {
         | ident
         | atkeyword
         | string
-        | hash
+        | shash
+        | vhash
         | number
         | percentage
         | dimension
@@ -59,7 +60,9 @@ ometa CSSTransformer {
 
     string = ['string':t :x] -> [t, x],
 
-    hash = ['hash':t :x] -> [t, x],
+    shash = ['shash':t :x] -> [t, x],
+
+    vhash = ['vhash':t :x] -> [t, x],
 
     number = ['number':t :x] -> [t, x],
 
