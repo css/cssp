@@ -200,6 +200,7 @@ CSSCompressor.compressSimpleSelector = function(x) {
 CSSCompressor.compressNumber = function(x) {
     if (/^0*/.test(x)) x = x.replace(/^0+/, '');
     if (/\.0*$/.test(x)) x = x.replace(/\.0*$/, '');
+    if (/\..*[1-9]+0+$/.test(x)) x = x.replace(/0+$/, '');
     if (x === '.' || x === '') x = '0';
 
     return x;
