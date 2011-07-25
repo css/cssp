@@ -433,7 +433,7 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 
 ### percentage
 
-* token: `['percentage', x]`
+* token: `['percentage', number:x]`
 * text: `x + '%'`
 
 Примеры:
@@ -442,7 +442,7 @@ whitespace: ` `, `\t`, `\r`, `\n`, `\f`.
 
 ### dimension
 
-* token: `['dimension', x, y]`
+* token: `['dimension', number:x, ident:y]`
 * text: `x + y`
 
 Примеры:
