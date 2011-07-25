@@ -1,2 +1,3 @@
 ['dimension', 
-  ['number', '10'], 'px']
+  ['number', '10'], 
+  ['ident', 'px']]

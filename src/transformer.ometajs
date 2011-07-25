@@ -68,7 +68,7 @@ ometa CSSTransformer {
 
     percentage = ['percentage':t any:x] -> [t, x],
 
-    dimension = ['dimension':t :x :y] -> [t, x, y],
+    dimension = ['dimension':t any:x any:y] -> [t, x, y],
 
     cdo = ['cdo':t] -> [t],
 

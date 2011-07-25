@@ -10,13 +10,13 @@ ometa CSSBSParser {
 
     shash = '#' m_name:x -> [#shash, x],
 
-    vhash = '#' m_name:x -> [#vhash, x],
+    vhash = '#' m_name2:x -> [#vhash, x],
 
     number = m_number:x -> [#number, x],
 
     percentage = number:x '%' -> [#percentage, x],
 
-    dimension = number:x m_ident:y -> [#dimension, x, y],
+    dimension = number:x m_name2:y -> [#dimension, x, [#ident, y]],
 
     cdo = seq('<!--') -> [#cdo],
     cdc = seq('-->') -> [#cdc],
@@ -40,6 +40,8 @@ ometa CSSBSParser {
 
     m_name = (:x m_nmchar(x) -> x)+:xx -> xx.join(''),
 
+    m_name2 = (:x m_nmchar2(x) -> x)+:xx -> xx.join(''),
+
     m_number = digit+:x '.' digit+:y -> (x.join('') + '.' + y.join(''))
              | '.' digit+:x -> ('.' + x.join(''))
              | digit+:x -> x.join(''),
@@ -54,6 +56,7 @@ ometa CSSBSParser {
     m_unicode :x = ?CSSBSParser._m_unicode(x),
     m_escape :x = ?CSSBSParser._m_escape(x),
     m_nmchar :x = ?CSSBSParser._m_nmchar(x),
+    m_nmchar2 :x = ?CSSBSParser._m_nmchar2(x),
     m_nl :x = ?CSSBSParser._m_nl(x),
     m_w :x = ?CSSBSParser._m_w(x)
 }
@@ -222,6 +225,11 @@ CSSBSParser['_m_escape'] = function(x) {
 // [_a-z0-9-]|{nonascii}|{escape}
 CSSBSParser['_m_nmchar'] = function(x) {
     return /^[_a-zA-Z0-9\-]+$/.test(x) || CSSBSParser['_m_escape'](x);
+};
+
+// [a-z0-9]|{nonascii}|{escape}
+CSSBSParser['_m_nmchar2'] = function(x) {
+    return /^[a-zA-Z0-9]+$/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 //  [\n\r\f]

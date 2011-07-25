@@ -68,7 +68,7 @@ ometa CSSTranslator {
 
     percentage = ['percentage' any:x] -> (x + '%'),
 
-    dimension = ['dimension' any:x :y] -> (x + y),
+    dimension = ['dimension' any:x any:y] -> (x + y),
 
     cdo = ['cdo'] -> '<!--',
 
