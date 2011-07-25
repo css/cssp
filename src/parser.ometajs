@@ -21,7 +21,7 @@ ometa CSSBSParser {
     cdo = seq('<!--') -> [#cdo],
     cdc = seq('-->') -> [#cdc],
 
-    s = ((:x m_w(x)) -> x)+:xx -> [#s, xx.join('')],
+    s = (:x m_w(x) -> x)+:xx -> [#s, xx.join('')],
 
     attrselector = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
 
@@ -38,7 +38,7 @@ ometa CSSBSParser {
 
     escape = '\\' char:x -> ('\\' + x),
 
-    m_name = ((:x m_nmchar(x)) -> x)+:xx -> xx.join(''),
+    m_name = (:x m_nmchar(x) -> x)+:xx -> xx.join(''),
 
     m_number = digit+:x '.' digit+:y -> (x.join('') + '.' + y.join(''))
              | '.' digit+:x -> ('.' + x.join(''))
