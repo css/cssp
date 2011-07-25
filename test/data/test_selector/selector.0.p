@@ -1,6 +1,6 @@
 ['selector', 
   ['simpleselector', 
     ['ident', 'a']], 
-  ['delim', ','], 
+  ['delim'], 
   ['simpleselector', 
     ['ident', 'b']]]

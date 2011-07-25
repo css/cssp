@@ -2,7 +2,7 @@
   ['selector', 
     ['simpleselector', 
       ['ident', 's0']], 
-    ['delim', ','], 
+    ['delim'], 
     ['simpleselector', 
       ['ident', 's1']]], 
   ['block', 

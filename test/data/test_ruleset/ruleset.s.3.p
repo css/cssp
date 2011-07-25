@@ -3,7 +3,7 @@
     ['simpleselector', 
       ['ident', 's0'], 
       ['s', '  ']], 
-    ['delim', ','], 
+    ['delim'], 
     ['simpleselector', 
       ['s', '  '], 
       ['ident', 's1'], 

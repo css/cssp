@@ -25,7 +25,7 @@ ometa CSSBSParser {
 
     attrselector = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
 
-    delim = ',' -> [#delim, ','],
+    delim = ',' -> [#delim],
 
     comment = seq('/*') (~seq('*/') char)*:x seq('*/') -> [#comment, x.join('')],
 

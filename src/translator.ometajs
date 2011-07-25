@@ -94,7 +94,7 @@ ometa CSSTranslator {
 
     pseudoc = ['pseudoc' anys:x] -> (':' + x.join('')),
 
-    delim = ['delim' :x] -> x,
+    delim = ['delim'] -> ',',
 
     stylesheet = ['stylesheet' anys:x] -> x.join(''),
 

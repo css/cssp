@@ -3,6 +3,6 @@
     ['ident', 'a'], 
     ['combinator', '+'], 
     ['ident', 'b']], 
-  ['delim', ','], 
+  ['delim'], 
   ['simpleselector', 
     ['ident', 'c']]]

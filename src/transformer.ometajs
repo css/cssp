@@ -94,7 +94,7 @@ ometa CSSTransformer {
 
     pseudoc = ['pseudoc':t :x] -> [t, x],
 
-    delim = ['delim':t :x] -> [t, x],
+    delim = ['delim':t] -> [t],
 
     stylesheet = ['stylesheet':t anys:x] -> [t].concat(x),
 
