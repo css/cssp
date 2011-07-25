@@ -33,7 +33,8 @@ ometa CSSBSParser {
 
     m_comment = seq('/*') (~seq('*/') char)*:x seq('*/') -> ('/*' + x.join('') + '*/'),
 
-    m_ident = (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> (x + z.join('')),
+    m_ident = '-' (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> ('-' + x + z.join(''))
+            | (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> (x + z.join('')),
 
     escape = '\\' char:x -> ('\\' + x),
 
@@ -205,7 +206,7 @@ CSSParser.concat = function() {
 
 // [_a-z]|{nonascii}|{escape}
 CSSBSParser['_m_nmstart'] = function(x) {
-    return /^[_a-zA-Z\-\*]+$/.test(x) || CSSBSParser['_m_escape'](x);
+    return /^[_a-zA-Z\*]+$/.test(x) || CSSBSParser['_m_escape'](x);
 };
 
 // \\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?
