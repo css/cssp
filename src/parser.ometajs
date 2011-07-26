@@ -144,8 +144,8 @@ ometa CSSParser <: CSSBSParser {
 
     function = ident:x '(' (vhash | any | sc | operator)*:y ')' -> this.concat([#function, x], y),
 
-    braces = '(' sc*:s0 (vhash | any | sc | operator)*:x ')' -> this.concat([#braces, '(', ')'], s0, x)
-           | '[' sc*:s0 (vhash | any | sc | operator)*:x ']' -> this.concat([#braces, '[', ']'], s0, x),
+    braces = '(' (vhash | any | sc | operator)*:x ')' -> this.concat([#braces, '(', ')'], x)
+           | '[' (vhash | any | sc | operator)*:x ']' -> this.concat([#braces, '[', ']'], x),
 
 // Don't reuse CSS-grammar elements to parse JS-grammar basics!
 
