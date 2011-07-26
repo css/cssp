@@ -43,7 +43,6 @@ ometa CSSTranslator {
         | operator
         | braces
         | value
-        | filterp
         | progid
         | filterv
         | filter
@@ -131,8 +130,6 @@ ometa CSSTranslator {
     braces = ['braces' :x :y anys:z] -> (x + z.join('') + y),
 
     value = ['value' anys:x] -> x.join(''),
-
-    filterp = ['filterp' :x anys:y] -> (x + y.join('')),
 
     progid = ['progid' anys:x] -> x.join(''),
 
