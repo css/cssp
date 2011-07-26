@@ -64,17 +64,19 @@ ometa CSSBSParser {
 ometa CSSParser <: CSSBSParser {
     sc = (s | comment),
 
+    tset = vhash | any | sc | operator,
+
     stylesheet = (cdo | cdc | sc | statement)*:x -> this.concat([#stylesheet], x),
 
     statement = (ruleset | atrule),
 
     atrulepart = (sc | vhash | any | operator),
 
-    atruleb = atkeyword:ak atrulepart*:ap block:b -> this.concat([#atruleb, ak], ap, [b]),
+    atruleb = atkeyword:ak tset*:ap block:b -> this.concat([#atruleb, ak], ap, [b]),
 
-    atrules = atkeyword:ak atrulepart*:ap ';' -> this.concat([#atrules, ak], ap),
+    atrules = atkeyword:ak tset*:ap ';' -> this.concat([#atrules, ak], ap),
 
-    atrulerq = atrulepart*:ap -> [#atrulerq].concat(ap),
+    atrulerq = tset*:ap -> [#atrulerq].concat(ap),
 
     atrulers = sc*:s0 ruleset*:r sc*:s1 -> this.concat([#atrulers], s0, r, s1),
 
@@ -142,10 +144,10 @@ ometa CSSParser <: CSSBSParser {
 
     value = (sc | vhash | any | block | atkeyword | operator | important)+:x -> this.concat([#value], x),
 
-    function = ident:x '(' (vhash | any | sc | operator)*:y ')' -> this.concat([#function, x], y),
+    function = ident:x '(' tset*:y ')' -> this.concat([#function, x], y),
 
-    braces = '(' (vhash | any | sc | operator)*:x ')' -> this.concat([#braces, '(', ')'], x)
-           | '[' (vhash | any | sc | operator)*:x ']' -> this.concat([#braces, '[', ']'], x),
+    braces = '(' tset*:x ')' -> this.concat([#braces, '(', ')'], x)
+           | '[' tset*:x ']' -> this.concat([#braces, '[', ']'], x),
 
 // Don't reuse CSS-grammar elements to parse JS-grammar basics!
 
