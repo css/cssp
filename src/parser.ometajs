@@ -70,8 +70,6 @@ ometa CSSParser <: CSSBSParser {
 
     statement = (ruleset | atrule),
 
-    atrulepart = (sc | vhash | any | operator),
-
     atruleb = atkeyword:ak tset*:ap block:b -> this.concat([#atruleb, ak], ap, [b]),
 
     atrules = atkeyword:ak tset*:ap ';' -> this.concat([#atrules, ak], ap),
