@@ -62,13 +62,13 @@ ometa CSSBSParser {
 }
 
 ometa CSSParser <: CSSBSParser {
-    sc = (s | comment),
+    sc = s | comment,
 
     tset = vhash | any | sc | operator,
 
     stylesheet = (cdo | cdc | sc | statement)*:x -> this.concat([#stylesheet], x),
 
-    statement = (ruleset | atrule),
+    statement = ruleset | atrule,
 
     atruleb = atkeyword:ak tset*:ap block:b -> this.concat([#atruleb, ak], ap, [b]),
 
@@ -80,7 +80,7 @@ ometa CSSParser <: CSSBSParser {
 
     atruler = atkeyword:ak atrulerq:x '{' atrulers:y '}' -> [#atruler, ak, x, y],
 
-    atrule = (atruler | atruleb | atrules),
+    atrule = atruler | atruleb | atrules,
 
     blockdecl = sc*:s0 (filter | declaration):x decldelim:y sc*:s1 -> this.concat(s0, [x], [y], s1)
               | sc*:s0 (filter | declaration):x sc*:s1 -> this.concat(s0, [x], s1)
@@ -103,7 +103,7 @@ ometa CSSParser <: CSSBSParser {
 
     pseudoc = ':' (function | ident):x -> [#pseudoc, x],
 
-    pseudo = (pseudoe | pseudoc),
+    pseudo = pseudoe | pseudoc,
 
     nthf = ':' seq('nth-'):x (seq('child') | seq('last-child') | seq('of-type') | seq('last-of-type')):y -> (x + y),
 
@@ -185,7 +185,7 @@ ometa CSSParser <: CSSBSParser {
 
     functionExpression = ``expression('' functionExpressionBody*:x ')' -> [#functionExpression, x.join('')],
 
-    any = (braces | string | percentage | dimension | number | uri | functionExpression | function | ident | unary):x -> x
+    any = braces | string | percentage | dimension | number | uri | functionExpression | function | ident | unary
 }
 
 CSSParser.concatContent = function(x, y) {
