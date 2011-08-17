@@ -3,5 +3,6 @@
   ['pseudoc', 
     ['function', 
       ['ident', 'not'], 
-      ['braces', '[', ']', 
-        ['ident', 'ABC']]]]]
+      ['functionBody', 
+        ['braces', '[', ']', 
+          ['ident', 'ABC']]]]]]

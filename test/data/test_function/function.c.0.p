@@ -1,3 +1,4 @@
 ['function', 
   ['ident', 'test'], 
-  ['comment', 'test']]
+  ['functionBody', 
+    ['comment', 'test']]]

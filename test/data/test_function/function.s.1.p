@@ -1,5 +1,6 @@
 ['function', 
   ['ident', 'test'], 
-  ['s', '  '], 
-  ['ident', 'n'], 
-  ['s', '  ']]
+  ['functionBody', 
+    ['s', '  '], 
+    ['ident', 'n'], 
+    ['s', '  ']]]

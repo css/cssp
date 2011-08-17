@@ -142,7 +142,9 @@ ometa CSSParser <: CSSBSParser {
 
     value = (sc | vhash | any | block | atkeyword | operator | important)+:x -> this.concat([#value], x),
 
-    function = ident:x '(' tset*:y ')' -> this.concat([#function, x], y),
+    function = ident:x '(' functionBody:y ')' -> [#function, x, y],
+
+    functionBody = tset*:x -> [#functionBody].concat(x),
 
     braces = '(' tset*:x ')' -> this.concat([#braces, '(', ')'], x)
            | '[' tset*:x ']' -> this.concat([#braces, '[', ']'], x),

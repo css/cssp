@@ -5,4 +5,5 @@
   ['pseudoc', 
     ['function', 
       ['ident', 'not'], 
-      ['ident', '*']]]]
+      ['functionBody', 
+        ['ident', '*']]]]]
