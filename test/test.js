@@ -13,15 +13,6 @@ var funcs = {
     'p': function parse(src, match) {
             return treeToString(_parse(src, match));
          },
-    'f': function transform(src, match) {
-            return treeToString(_transform(_parse(src, match), match));
-         },
-    'c': function compress(src, match) {
-            return treeToString(_compress(_parse(src, match), match));
-         },
-    'cl': function compressTranslate(src, match) {
-            return _translate(_compress(_parse(src, match), match), match);
-         },
     'l': function translate(src, match) {
             return _translate(_transform(_parse(src, match), match), match);
          }

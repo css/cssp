@@ -7,6 +7,7 @@
     * Правило atrulepart удалено, вместо него используется правило tset.
     * Правила function, braces, atrule* упрощены с помощью tset.
     * Токен function разделён на function и functionBody.
+    * Убран трансформер CMP: API.compress(tree).
 0.0.10:
     * Из правила selector удалено лишнее упоминание правила sc.
     * Токен nthselector теперь содержит имя функции не строкой, но токеном ident.
