@@ -101,7 +101,7 @@ ometa CSSParser <: CSSBSParser {
 
     pseudoe = seq('::') ident:x -> [#pseudoe, x],
 
-    pseudoc = ':' (function | ident):x -> [#pseudoc, x],
+    pseudoc = ':' (funktion | ident):x -> [#pseudoc, x],
 
     pseudo = pseudoe | pseudoc,
 
@@ -142,7 +142,7 @@ ometa CSSParser <: CSSBSParser {
 
     value = (sc | vhash | any | block | atkeyword | operator | important)+:x -> this.concat([#value], x),
 
-    function = ident:x '(' functionBody:y ')' -> [#function, x, y],
+    funktion = ident:x '(' functionBody:y ')' -> [#funktion, x, y],
 
     functionBody = tset*:x -> [#functionBody].concat(x),
 
@@ -187,7 +187,7 @@ ometa CSSParser <: CSSBSParser {
 
     functionExpression = ``expression('' functionExpressionBody*:x ')' -> [#functionExpression, x.join('')],
 
-    any = braces | string | percentage | dimension | number | uri | functionExpression | function | ident | unary
+    any = braces | string | percentage | dimension | number | uri | functionExpression | funktion | ident | unary
 }
 
 CSSParser.concatContent = function(x, y) {

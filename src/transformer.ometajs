@@ -50,7 +50,7 @@ ometa CSSTransformer {
         | uri
         | raw
         | functionBody
-        | function
+        | funktion
         | functionExpression
         | after,
 
@@ -146,7 +146,7 @@ ometa CSSTransformer {
 
     functionBody = ['functionBody':t anys:x] -> [t].concat(x),
 
-    function = ['function':t any:x any:y] -> [t, x, y],
+    funktion = ['funktion':t any:x any:y] -> [t, x, y],
 
     functionExpression = ['functionExpression':t :x] -> [t, x]
 }

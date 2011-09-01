@@ -50,7 +50,7 @@ ometa CSSTranslator {
         | uri
         | raw
         | functionBody
-        | function
+        | funktion
         | functionExpression
         | after,
 
@@ -146,7 +146,7 @@ ometa CSSTranslator {
 
     functionBody = ['functionBody' anys:x] -> x.join(''),
 
-    function = ['function' any:x any:y] -> (x + '(' + y + ')'),
+    funktion = ['funktion' any:x any:y] -> (x + '(' + y + ')'),
 
     functionExpression = ['functionExpression' :x] -> ('expression(' + x + ')')
 }
