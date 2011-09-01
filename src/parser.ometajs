@@ -97,7 +97,7 @@ ometa CSSParser <: CSSBSParser {
 
     attrib = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']' -> this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3),
 
-    class = '.' ident:i -> [#class, i],
+    clazz = '.' ident:i -> [#clazz, i],
 
     pseudoe = seq('::') ident:x -> [#pseudoe, x],
 
@@ -114,7 +114,7 @@ ometa CSSParser <: CSSBSParser {
 
     namespace = '|' -> [#namespace],
 
-    simpleselector = (nthselector | combinator | attrib | pseudo | class | shash | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
+    simpleselector = (nthselector | combinator | attrib | pseudo | clazz | shash | any | sc | namespace)+:x -> this.concatContent([#simpleselector], [x]),
 
     selector = (simpleselector | delim)+:x -> this.concat([#selector], x),
 

@@ -21,7 +21,7 @@ ometa CSSTransformer {
         | nth
         | nthselector
         | namespace
-        | class
+        | clazz
         | pseudoe
         | pseudoc
         | delim
@@ -88,7 +88,7 @@ ometa CSSTransformer {
 
     namespace = ['namespace':t] -> [t],
 
-    class = ['class':t :x] -> [t, x],
+    clazz = ['clazz':t :x] -> [t, x],
 
     pseudoe = ['pseudoe':t :x] -> [t, x],
 
