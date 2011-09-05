@@ -1,4 +1,35 @@
-ometa CSSBSParser {
+ometa CSSParser {
+
+    // Macros
+
+    m_comment = seq('/*') (~seq('*/') char)*:x seq('*/') -> ('/*' + x.join('') + '*/'),
+
+    m_ident = '-' (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> ('-' + x + z.join(''))
+            | (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> (x + z.join('')),
+
+    escape = '\\' char:x -> ('\\' + x),
+
+    m_name = (:x m_nmchar(x) -> x)+:xx -> xx.join(''),
+
+    m_name2 = (:x m_nmchar2(x) -> x)+:xx -> xx.join(''),
+
+    m_number = digit+:x '.' digit+:y -> (x.join('') + '.' + y.join(''))
+             | '.' digit+:x -> ('.' + x.join(''))
+             | digit+:x -> x.join(''),
+
+    m_string = '"' (m_string_nl1 | ~'"' char)*:s '"' -> ('"' + s.join('') + '"')
+             | '\'' (m_string_nl2 | ~'\'' char)*:s '\'' -> ('\'' + s.join('') + '\''),
+
+    m_string_nl1 = ('\n' | '\r' | seq('\\"')):x -> x,
+    m_string_nl2 = ('\n' | '\r' | seq('\\\'')):x -> x,
+
+    m_nmstart :x = ?this._m_nmstart(x),
+    m_unicode :x = ?this._m_unicode(x),
+    m_escape :x = ?this._m_escape(x),
+    m_nmchar :x = ?this._m_nmchar(x),
+    m_nmchar2 :x = ?this._m_nmchar2(x),
+    m_nl :x = ?this._m_nl(x),
+    m_w :x = ?this._m_w(x),
 
     // Tokens
 
@@ -29,39 +60,6 @@ ometa CSSBSParser {
 
     comment = seq('/*') (~seq('*/') char)*:x seq('*/') -> [#comment, x.join('')],
 
-    // Macros
-
-    m_comment = seq('/*') (~seq('*/') char)*:x seq('*/') -> ('/*' + x.join('') + '*/'),
-
-    m_ident = '-' (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> ('-' + x + z.join(''))
-            | (char:x m_nmstart(x) -> x) (escape | :y m_nmchar(y) -> y)*:z -> (x + z.join('')),
-
-    escape = '\\' char:x -> ('\\' + x),
-
-    m_name = (:x m_nmchar(x) -> x)+:xx -> xx.join(''),
-
-    m_name2 = (:x m_nmchar2(x) -> x)+:xx -> xx.join(''),
-
-    m_number = digit+:x '.' digit+:y -> (x.join('') + '.' + y.join(''))
-             | '.' digit+:x -> ('.' + x.join(''))
-             | digit+:x -> x.join(''),
-
-    m_string = '"' (m_string_nl1 | ~'"' char)*:s '"' -> ('"' + s.join('') + '"')
-             | '\'' (m_string_nl2 | ~'\'' char)*:s '\'' -> ('\'' + s.join('') + '\''),
-
-    m_string_nl1 = ('\n' | '\r' | seq('\\"')):x -> x,
-    m_string_nl2 = ('\n' | '\r' | seq('\\\'')):x -> x,
-
-    m_nmstart :x = ?CSSBSParser._m_nmstart(x),
-    m_unicode :x = ?CSSBSParser._m_unicode(x),
-    m_escape :x = ?CSSBSParser._m_escape(x),
-    m_nmchar :x = ?CSSBSParser._m_nmchar(x),
-    m_nmchar2 :x = ?CSSBSParser._m_nmchar2(x),
-    m_nl :x = ?CSSBSParser._m_nl(x),
-    m_w :x = ?CSSBSParser._m_w(x)
-}
-
-ometa CSSParser <: CSSBSParser {
     sc = s | comment,
 
     tset = vhash | any | sc | operator,
@@ -210,36 +208,36 @@ CSSParser.concat = function() {
 // CSS 2.1 / 4.1.1 Tokenization / macro section
 
 // [_a-z]|{nonascii}|{escape}
-CSSBSParser['_m_nmstart'] = function(x) {
-    return /^[_a-zA-Z\*]+$/.test(x) || CSSBSParser['_m_escape'](x);
+CSSParser._m_nmstart = function(x) {
+    return /^[_a-zA-Z\*]+$/.test(x) || CSSParser._m_escape(x);
 };
 
 // \\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?
-CSSBSParser['_m_unicode'] = function(x) {
+CSSParser._m_unicode = function(x) {
     return /^\\[0-9a-fA-F]{1,6}(\r\n|[ \n\r\t\f])?$/.test(x);
 };
 
 // {unicode}|\\[^\n\r\f0-9a-f]
-CSSBSParser['_m_escape'] = function(x) {
-    return CSSBSParser['_m_unicode'](x) || /^\\[^\n\r\f0-9a-fA-F]+$/.test(x);
+CSSParser._m_escape = function(x) {
+    return CSSParser._m_unicode(x) || /^\\[^\n\r\f0-9a-fA-F]+$/.test(x);
 }
 
 // [_a-z0-9-]|{nonascii}|{escape}
-CSSBSParser['_m_nmchar'] = function(x) {
-    return /^[_a-zA-Z0-9\-]+$/.test(x) || CSSBSParser['_m_escape'](x);
+CSSParser._m_nmchar = function(x) {
+    return /^[_a-zA-Z0-9\-]+$/.test(x) || CSSParser._m_escape(x);
 };
 
 // [a-z0-9]|{nonascii}|{escape}
-CSSBSParser['_m_nmchar2'] = function(x) {
-    return /^[a-zA-Z0-9]+$/.test(x) || CSSBSParser['_m_escape'](x);
+CSSParser._m_nmchar2 = function(x) {
+    return /^[a-zA-Z0-9]+$/.test(x) || CSSParser._m_escape(x);
 };
 
 //  [\n\r\f]
-CSSBSParser['_m_nl'] = function(x) {
+CSSParser._m_nl = function(x) {
     return /^[\n\r\f]+$/.test(x);
 };
 
 // [ \t\r\n\f]*
-CSSBSParser['_m_w'] = function(x) {
+CSSParser._m_w = function(x) {
     return /^[ \t\r\n\f]+$/.test(x);
 };
