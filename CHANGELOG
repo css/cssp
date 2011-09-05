@@ -1,6 +1,7 @@
 1.0.0:
     * Добавлены CSSParser, CSSTransformer и CSSTranslator в API.
     * Внутренняя переорганизация parser.ometajs.
+    * Добавлен '=' в operator.
 0.0.11:
     * Токен dimension теперь содержит юниты не строкой, но токеном ident.
     * Более строгий символьный класс для dimension и vhash.
