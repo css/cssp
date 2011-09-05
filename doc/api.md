@@ -11,6 +11,14 @@
     tree = cssp.parse(src);
     ..
 
+## Получение объектов CSSP
+
+    ..
+    var CSSParser = require('cssp').CSSParser,
+        CSSTransformer = require('cssp').CSSTransformer,
+        CSSTranslator = require('cssp').CSSTranslator;
+    ..
+
 ## P: разбор CSS в дерево
 
 Функция: `tree = parse(src, [rule = 'stylesheet'], [parser = undefined])`
