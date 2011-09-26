@@ -1,3 +1,5 @@
+1.0.1:
+    * Добавлена обработка селектора атрибута вида [att].
 1.0.0:
     * Добавлены CSSParser, CSSTransformer и CSSTranslator в API.
     * Внутренняя переорганизация parser.ometajs.

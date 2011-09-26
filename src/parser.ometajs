@@ -93,7 +93,8 @@ ometa CSSParser {
 
     combinator = ('+' | '>' | '~'):x -> [#combinator, x],
 
-    attrib = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']' -> this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3),
+    attrib = '[' sc*:s0 ident:x sc*:s1 attrselector:a sc*:s2 (ident | string):y sc*:s3 ']' -> this.concat([#attrib], s0, [x], s1, [a], s2, [y], s3)
+           | '[' sc*:s0 ident:x sc*:s1 ']' -> this.concat([#attrib], s0, [x], s1),
 
     clazz = '.' ident:i -> [#clazz, i],
 
