@@ -1,9 +1,10 @@
 digraph G {
-    node[shape=record,fontsize=12.0,fontname="Arial"];
+    node[shape=record,fontsize=10.0,fontname="Arial"];
 
     stylesheet[label=<{<FONT COLOR="red">stylesheet</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="red">cdo</FONT> \| <FONT COLOR="red">cdc</FONT> \| <FONT COLOR="green">sc</FONT> \| <FONT COLOR="red">ruleset</FONT> \| <FONT COLOR="red">atruler</FONT> \| <FONT COLOR="red">atruleb</FONT> \| <FONT COLOR="red">atrules</FONT>)* ]    }}>];
     stylesheet->cdo;
     stylesheet->cdc;
+    stylesheet->sc;
     stylesheet->ruleset;
     stylesheet->atruler;
     stylesheet->atruleb;
@@ -15,6 +16,13 @@ digraph G {
     comment[label=<{<FONT COLOR="red">comment</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
 
     ruleset[label=<{<FONT COLOR="red">ruleset</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">selector</FONT>*, <FONT COLOR="red">block</FONT> ]}}>];
+    ruleset->selector;
+    ruleset->block;
+
+    selector[label=<{<FONT COLOR="red">selector</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="red">simpleselector</FONT> \| <FONT COLOR="red">delim</FONT>)+ ]}}>];
+    selector->simpleselector;
+    selector->delim;
+
     atruler[label=<{<FONT COLOR="red">atruler</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">atkeyword</FONT>, <FONT COLOR="red">atrulerq</FONT>, <FONT COLOR="red">atrulers</FONT> ]}}>];
     atruleb[label=<{<FONT COLOR="red">atruleb</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">atkeyword</FONT>, <FONT COLOR="green">tset</FONT>*, <FONT COLOR="red">block</FONT> ]}}>];
     atrules[label=<{<FONT COLOR="red">atrules</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">atkeyword</FONT>, <FONT COLOR="green">tset</FONT>*]}}>];
@@ -24,14 +32,22 @@ digraph G {
     atruler->atrulerq;
     atruler->atrulers;
     atruleb->atkeyword;
+    atruleb->tset;
     atrules->atkeyword;
+    atrules->tset;
 
     atrulerq[label=<{<FONT COLOR="red">atrulerq</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">tset</FONT>* ]}}>];
     atrulers[label=<{<FONT COLOR="red">atrulers</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">ruleset</FONT>*, <FONT COLOR="green">sc</FONT>* ]}}>];
 
+    atrulerq->tset;
+    atrulers->sc;
+    atrulers->ruleset;
+
     tset[label=<{<FONT COLOR="green">tset</FONT>|{описание}|{<FONT COLOR="red">vhash</FONT> \| <FONT COLOR="green">any</FONT> \| <FONT COLOR="green">sc</FONT> \| <FONT COLOR="red">operator</FONT>}}>];
+    tset->vhash;
     tset->sc;
     tset->any;
+    tset->operator;
 
     any[label=<{<FONT COLOR="green">any</FONT>|{описание}|{[ <FONT COLOR="red">braces</FONT> \| <FONT COLOR="red">string</FONT> \| <FONT COLOR="red">percentage</FONT> \| <FONT COLOR="red">dimension</FONT> \| <FONT COLOR="red">number</FONT> \| <FONT COLOR="red">uri</FONT> \| <FONT COLOR="red">functionExpression</FONT> \| <FONT COLOR="red">funktion</FONT> \| <FONT COLOR="red">ident</FONT> \| <FONT COLOR="red">unary</FONT> ]    }}>];
     any->braces;
@@ -45,10 +61,34 @@ digraph G {
     any->ident;
     any->unary;
 
+    ident[label=<{<FONT COLOR="red">ident</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    unary[label=<{<FONT COLOR="red">unary</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    number[label=<{<FONT COLOR="red">number</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    string[label=<{<FONT COLOR="red">string</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    vhash[label=<{<FONT COLOR="red">vhash</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    shash[label=<{<FONT COLOR="red">shash</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    operator[label=<{<FONT COLOR="red">operator</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    raw[label=<{<FONT COLOR="red">raw</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    functionExpression[label=<{<FONT COLOR="red">functionExpression</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    percentage[label=<{<FONT COLOR="red">percentage</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">number</FONT> ]}}>];
+    percentage->number;
+    dimension[label=<{<FONT COLOR="red">dimension</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">number</FONT>, <FONT COLOR="red">ident</FONT> ]}}>];
+    dimension->number;
+    dimension->ident;
+    funktion[label=<{<FONT COLOR="red">funktion</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">ident</FONT>, <FONT COLOR="red">functionBody</FONT> ]}}>];
+    funktion->ident;
+    funktion->functionBody;
+    functionBody[label=<{<FONT COLOR="red">functionBody</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">tset</FONT>* ]}}>];
+    functionBody->tset;
+    uri[label=<{<FONT COLOR="red">uri</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">string</FONT>, <FONT COLOR="green">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">raw</FONT>, <FONT COLOR="green">sc</FONT>* ]}}>];
+    uri->string;
+    uri->raw;
+    uri->sc;
+
     sc[label=<{<FONT COLOR="green">sc</FONT>|{описание}|{<FONT COLOR="red">s</FONT> \| <FONT COLOR="red">comment</FONT>}}>];
     sc->s;
     sc->comment;
 
     braces[label=<{<FONT COLOR="red">braces</FONT>|{описание}|{[ &lt;имя&gt;, '(', ')', <FONT COLOR="green">tset</FONT>* ]}|{[ &lt;имя&gt;, '[', ']', <FONT COLOR="green">tset</FONT>* ]}}>];
-
+    braces->tset;
 }
