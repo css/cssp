@@ -1,5 +1,5 @@
 digraph G {
-    node[shape=record,fontsize=10.0,fontname="Arial",style=filled,fillcolor="white"];
+    node[shape=plaintext,fontsize=10.0,fontname="Arial"];
 
     subgraph clusteratom {
         edge[color=white];
@@ -35,119 +35,459 @@ digraph G {
         shash->atkeyword->comment->decldelim;
     }
 
-    stylesheet[label=<{<FONT COLOR="blue">stylesheet</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="blue">cdo</FONT> \| <FONT COLOR="blue">cdc</FONT> \| <FONT COLOR="red">sc</FONT> \| <FONT COLOR="blue">ruleset</FONT> \| <FONT COLOR="blue">atruler</FONT> \| <FONT COLOR="blue">atruleb</FONT> \| <FONT COLOR="blue">atrules</FONT>)* ]    }}>];
+    /* atoms */
+    vhash[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">vhash</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    shash[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">shash</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    number[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">number</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    string[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">string</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    ident[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">ident</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    namespace[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">namespace</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    atkeyword[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">atkeyword</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    combinator[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">combinator</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    operator[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">operator</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    unary[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">unary</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    raw[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">raw</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    comment[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">comment</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    functionExpression[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">functionExpression</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    attrselector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">attrselector</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    nth[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">nth</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    delim[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">delim</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    decldelim[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">decldelim</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    cdo[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">cdo</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    cdc[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">cdc</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    s[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">s</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    stylesheet[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">stylesheet</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">cdo</FONT> | <FONT COLOR="blue">cdc</FONT> | <FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">ruleset</FONT> | <FONT COLOR="blue">atruler</FONT> | <FONT COLOR="blue">atruleb</FONT> | <FONT COLOR="blue">atrules</FONT>)* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     stylesheet->ruleset;
     stylesheet->atruler;
     stylesheet->atruleb;
     stylesheet->atrules;
 
-    cdo[label=<{<FONT COLOR="blue">cdo</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
-    cdc[label=<{<FONT COLOR="blue">cdc</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
-    s[label=<{<FONT COLOR="blue">s</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    comment[label=<{<FONT COLOR="blue">comment</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-
-    ruleset[label=<{<FONT COLOR="blue">ruleset</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">selector</FONT>*, <FONT COLOR="blue">block</FONT> ]}}>];
+    ruleset[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">ruleset</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">selector</FONT>*, <FONT COLOR="blue">block</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     ruleset->selector;
     ruleset->block;
 
-    block[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">block</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">blockdecl</FONT>* ]}}>];
+    block[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">block</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">blockdecl</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     block->blockdecl;
-    blockdecl[fillcolor="#B4EEB4",label=<{<FONT COLOR="red">blockdecl</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">filter</FONT> \| <FONT COLOR="blue">declaration</FONT>), <FONT COLOR="blue">decldelim</FONT>, <FONT COLOR="red">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">filter</FONT> \| <FONT COLOR="blue">declaration</FONT>), <FONT COLOR="red">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">decldelim</FONT>, <FONT COLOR="red">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>+ ]}}>];
+
+    blockdecl[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">blockdecl</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">filter</FONT> | <FONT COLOR="blue">declaration</FONT>), <FONT COLOR="blue">decldelim</FONT>, <FONT COLOR="red">sc</FONT>* ]  </TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">filter</FONT> | <FONT COLOR="blue">declaration</FONT>), <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">decldelim</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>+ ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     blockdecl->filter;
     blockdecl->declaration;
-    decldelim[label=<{<FONT COLOR="blue">decldelim</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
 
-    declaration[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">declaration</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">property</FONT>, <FONT COLOR="blue">value</FONT> ]}}>];
+    declaration[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">declaration</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">property</FONT>, <FONT COLOR="blue">value</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     declaration->property;
     declaration->value;
 
-    property[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">property</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>* ]}}>];
+    property[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">property</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    value[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">value</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="red">sc</FONT> \| <FONT COLOR="blue">vhash</FONT> \| <FONT COLOR="red">any</FONT> \| <FONT COLOR="blue">block</FONT> \| <FONT COLOR="blue">atkeyword</FONT> \| <FONT COLOR="blue">operator</FONT> \| <FONT COLOR="blue">important</FONT>)+ ]}}>];
+    value[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">value</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">vhash</FONT> | <FONT COLOR="red">any</FONT> | <FONT COLOR="blue">block</FONT> | <FONT COLOR="blue">atkeyword</FONT> | <FONT COLOR="blue">operator</FONT> | <FONT COLOR="blue">important</FONT>)+ ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     value->block;
     value->important;
 
-    important[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">important</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>* ]}|{пример}}>];
+    important[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">important</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    filter[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">filter</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">property</FONT>, <FONT COLOR="blue">filterv</FONT> ]}}>];
+    filter[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">filter</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">property</FONT>, <FONT COLOR="blue">filterv</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     filter->property;
     filter->filterv;
 
-    filterv[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">filterv</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">progid</FONT>+ ]}}>];
+    filterv[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">filterv</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">progid</FONT>+ ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     filterv->progid;
 
-    progid[fillcolor="#B4EEB4",label=<{<FONT COLOR="blue">progid</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">raw</FONT>, <FONT COLOR="red">sc</FONT>* ]}}>];
+    progid[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">progid</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">raw</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    selector[fillcolor="#EEE9E9",label=<{<FONT COLOR="blue">selector</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="blue">simpleselector</FONT> \| <FONT COLOR="blue">delim</FONT>)+ ]}}>];
+    selector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">selector</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">simpleselector</FONT> | <FONT COLOR="blue">delim</FONT>)+ ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     selector->simpleselector;
 
-    delim[label=<{<FONT COLOR="blue">delim</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
-
-    simpleselector[fillcolor="#EEE9E9",label=<{<FONT COLOR="blue">simpleselector</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="blue">nthselector</FONT> \| <FONT COLOR="blue">combinator</FONT> \| <FONT COLOR="blue">attrib</FONT> \| <FONT COLOR="blue">pseudoe</FONT> \| <FONT COLOR="blue">pseudoc</FONT> \| <FONT COLOR="blue">clazz</FONT> \| <FONT COLOR="blue">shash</FONT> \| <FONT COLOR="red">any</FONT> \| <FONT COLOR="red">sc</FONT> \| <FONT COLOR="blue">namespace</FONT>)+ ]   }}>];
+    simpleselector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">simpleselector</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">nthselector</FONT> | <FONT COLOR="blue">combinator</FONT> | <FONT COLOR="blue">attrib</FONT> | <FONT COLOR="blue">pseudoe</FONT> | <FONT COLOR="blue">pseudoc</FONT> | <FONT COLOR="blue">clazz</FONT> | <FONT COLOR="blue">shash</FONT> | <FONT COLOR="red">any</FONT> | <FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">namespace</FONT>)+ ]   </TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     simpleselector->nthselector;
     simpleselector->attrib;
     simpleselector->pseudoe;
     simpleselector->pseudoc;
     simpleselector->clazz;
 
-    namespace[label=<{<FONT COLOR="blue">namespace</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
+    clazz[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">clazz</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    combinator[label=<{<FONT COLOR="blue">combinator</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    pseudoe[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">pseudoe</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    clazz[fillcolor="#EEE9E9",label=<{<FONT COLOR="blue">clazz</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT> ]}}>];
-
-    pseudoe[fillcolor="#EEE9E9",label=<{<FONT COLOR="blue">pseudoe</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT> ]}}>];
-
-    pseudoc[fillcolor="#EEE9E9",label=<{<FONT COLOR="blue">pseudoc</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="blue">funktion</FONT> \| <FONT COLOR="blue">ident</FONT>) ]}}>];
+    pseudoc[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">pseudoc</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">funktion</FONT> | <FONT COLOR="blue">ident</FONT>) ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     pseudoc->funktion;
 
-    attrib[fillcolor="#EEE9E9",label=<{<FONT COLOR="blue">attrib</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">attrselector</FONT>, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">ident</FONT> \| <FONT COLOR="blue">string</FONT>), <FONT COLOR="red">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>* ]}}>];
+    attrib[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">attrib</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">attrselector</FONT>, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">ident</FONT> | <FONT COLOR="blue">string</FONT>), <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    attrselector[label=<{<FONT COLOR="blue">attrselector</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    nthselector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">nthselector</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, (<FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">unary</FONT> | <FONT COLOR="blue">nth</FONT>)* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    nthselector[fillcolor="#EEE9E9",label=<{<FONT COLOR="blue">nthselector</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, (<FONT COLOR="red">sc</FONT> \| <FONT COLOR="blue">unary</FONT> \| <FONT COLOR="blue">nth</FONT>)* ]}}>];
-    nth[label=<{<FONT COLOR="blue">nth</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-
-    atruler[fillcolor="#E0EEEE",label=<{<FONT COLOR="blue">atruler</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="blue">atrulerq</FONT>, <FONT COLOR="blue">atrulers</FONT> ]}}>];
-    atruleb[fillcolor="#E0EEEE",label=<{<FONT COLOR="blue">atruleb</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="red">tset</FONT>*, <FONT COLOR="blue">block</FONT> ]}}>];
-    atrules[fillcolor="#E0EEEE",label=<{<FONT COLOR="blue">atrules</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="red">tset</FONT>*]}}>];
-
-    atkeyword[label=<{<FONT COLOR="blue">atkeyword</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    atruler[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atruler</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="blue">atrulerq</FONT>, <FONT COLOR="blue">atrulers</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     atruler->atrulerq;
     atruler->atrulers;
+
+    atruleb[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atruleb</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="red">tset</FONT>*, <FONT COLOR="blue">block</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     atruleb->block;
 
-    atrulerq[fillcolor="#E0EEEE",label=<{<FONT COLOR="blue">atrulerq</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">tset</FONT>* ]}}>];
-    atrulers[fillcolor="#E0EEEE",label=<{<FONT COLOR="blue">atrulers</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ruleset</FONT>*, <FONT COLOR="red">sc</FONT>* ]}}>];
+    atrules[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atrules</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="red">tset</FONT>*]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
+    atrulerq[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atrulerq</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">tset</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    atrulers[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atrulers</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ruleset</FONT>*, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     atrulers->ruleset;
 
-    tset[label=<{<FONT COLOR="red">tset</FONT>|{описание}|{<FONT COLOR="blue">vhash</FONT> \| <FONT COLOR="red">any</FONT> \| <FONT COLOR="red">sc</FONT> \| <FONT COLOR="blue">operator</FONT>}}>];
+    tset[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">tset</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD><FONT COLOR="blue">vhash</FONT> | <FONT COLOR="red">any</FONT> | <FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">operator</FONT></TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    any[label=<{<FONT COLOR="red">any</FONT>|{описание}|{ <FONT COLOR="blue">braces</FONT> \| <FONT COLOR="blue">string</FONT> \| <FONT COLOR="blue">percentage</FONT> \| <FONT COLOR="blue">dimension</FONT> \| <FONT COLOR="blue">number</FONT> \| <FONT COLOR="blue">uri</FONT> \| <FONT COLOR="blue">functionExpression</FONT> \| <FONT COLOR="blue">funktion</FONT> \| <FONT COLOR="blue">ident</FONT> \| <FONT COLOR="blue">unary</FONT>    }}>];
+    any[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="red">any</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD><FONT COLOR="blue">braces</FONT> | <FONT COLOR="blue">string</FONT> | <FONT COLOR="blue">percentage</FONT> | <FONT COLOR="blue">dimension</FONT> | <FONT COLOR="blue">number</FONT> | <FONT COLOR="blue">uri</FONT> | <FONT COLOR="blue">functionExpression</FONT> | <FONT COLOR="blue">funktion</FONT> | <FONT COLOR="blue">ident</FONT> | <FONT COLOR="blue">unary</FONT></TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     any->braces;
     any->percentage;
     any->dimension;
     any->uri;
     any->funktion;
 
-    ident[label=<{<FONT COLOR="blue">ident</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    unary[label=<{<FONT COLOR="blue">unary</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    number[label=<{<FONT COLOR="blue">number</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    string[label=<{<FONT COLOR="blue">string</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    vhash[label=<{<FONT COLOR="blue">vhash</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    shash[label=<{<FONT COLOR="blue">shash</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    operator[label=<{<FONT COLOR="blue">operator</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    raw[label=<{<FONT COLOR="blue">raw</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    functionExpression[label=<{<FONT COLOR="blue">functionExpression</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
-    percentage[label=<{<FONT COLOR="blue">percentage</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">number</FONT> ]}}>];
-    dimension[label=<{<FONT COLOR="blue">dimension</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">number</FONT>, <FONT COLOR="blue">ident</FONT> ]}}>];
-    funktion[label=<{<FONT COLOR="blue">funktion</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="blue">functionBody</FONT> ]}}>];
+    percentage[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">percentage</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">number</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    dimension[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">dimension</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">number</FONT>, <FONT COLOR="blue">ident</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    funktion[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">funktion</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="blue">functionBody</FONT> ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
     funktion->functionBody;
-    functionBody[label=<{<FONT COLOR="blue">functionBody</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">tset</FONT>* ]}}>];
-    uri[label=<{<FONT COLOR="blue">uri</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">string</FONT>, <FONT COLOR="red">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">raw</FONT>, <FONT COLOR="red">sc</FONT>* ]}}>];
 
-    sc[label=<{<FONT COLOR="red">sc</FONT>|{описание}|{<FONT COLOR="blue">s</FONT> \| <FONT COLOR="blue">comment</FONT>}}>];
+    functionBody[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">functionBody</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">tset</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 
-    braces[label=<{<FONT COLOR="blue">braces</FONT>|{описание}|{[ &lt;имя&gt;, '(', ')', <FONT COLOR="red">tset</FONT>* ]}|{[ &lt;имя&gt;, '[', ']', <FONT COLOR="red">tset</FONT>* ]}}>];
+    uri[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">uri</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">string</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">raw</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    sc[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">sc</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD><FONT COLOR="blue">s</FONT> | <FONT COLOR="blue">comment</FONT></TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
+
+    braces[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD><FONT COLOR="blue">braces</FONT></TD></TR>
+        <TR><TD>описание</TD></TR>
+        <TR><TD>пример</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, '(', ')', <FONT COLOR="red">tset</FONT>* ]</TD></TR>
+        <TR><TD>[ &lt;имя&gt;, '[', ']', <FONT COLOR="red">tset</FONT>* ]</TD></TR>
+        <TR><TD>пример</TD></TR>
+    </TABLE>>;
 }
