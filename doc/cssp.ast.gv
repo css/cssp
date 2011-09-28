@@ -1,18 +1,50 @@
 digraph G {
-    node[shape=record,fontsize=10.0,fontname="Arial"];
+    node[shape=record,fontsize=10.0,fontname="Arial",style=filled,fillcolor="white"];
+
+    subgraph clusteratom {
+        edge[color=white];
+        label="Атомарные токены";
+        ident;
+        string;
+        number;
+        cdo;
+        cdc;
+        raw;
+        unary;
+        shash;
+        vhash;
+        namespace;
+        combinator;
+        atkeyword;
+        operator;
+        delim;
+        decldelim;
+        nth;
+        attrselector;
+        functionExpression;
+        s;
+        comment;
+        { rank=same; ident; string; number; vhash; shash; }
+        { rank=same; unary; operator; combinator; namespace; atkeyword; }
+        { rank=same; nth; attrselector; functionExpression; raw; comment; }
+        { rank=same; s; cdo; cdc; delim; decldelim; }
+        ident->unary->nth->s;
+        string->operator->attrselector->cdo;
+        number->combinator->functionExpression->cdc;
+        vhash->namespace->raw->delim;
+        shash->atkeyword->comment->decldelim;
+    }
 
     stylesheet[label=<{<FONT COLOR="red">stylesheet</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="red">cdo</FONT> \| <FONT COLOR="red">cdc</FONT> \| <FONT COLOR="green">sc</FONT> \| <FONT COLOR="red">ruleset</FONT> \| <FONT COLOR="red">atruler</FONT> \| <FONT COLOR="red">atruleb</FONT> \| <FONT COLOR="red">atrules</FONT>)* ]    }}>];
-    stylesheet->cdo;
-    stylesheet->cdc;
     stylesheet->ruleset;
     stylesheet->atruler;
     stylesheet->atruleb;
     stylesheet->atrules;
 
-    cdo[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">cdo</FONT>|{описание}|{[ &lt;имя&gt; ]}}>];
-    cdc[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">cdc</FONT>|{описание}|{[ &lt;имя&gt; ]}}>];
-    s[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">s</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    comment[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">comment</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    cdo[fillcolor="#EDEDED",label=<{<FONT COLOR="red">cdo</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
+    cdc[fillcolor="#EDEDED",label=<{<FONT COLOR="red">cdc</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
+    s[fillcolor="#EDEDED",label=<{<FONT COLOR="red">s</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    comment[fillcolor="#EDEDED",label=<{<FONT COLOR="red">comment</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
 
     ruleset[label=<{<FONT COLOR="red">ruleset</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">selector</FONT>*, <FONT COLOR="red">block</FONT> ]}}>];
     ruleset->selector;
@@ -23,24 +55,19 @@ digraph G {
     blockdecl[label=<{<FONT COLOR="green">blockdecl</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, (<FONT COLOR="red">filter</FONT> \| <FONT COLOR="red">declaration</FONT>), <FONT COLOR="red">decldelim</FONT>, <FONT COLOR="green">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, (<FONT COLOR="red">filter</FONT> \| <FONT COLOR="red">declaration</FONT>), <FONT COLOR="green">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">decldelim</FONT>, <FONT COLOR="green">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>+ ]}}>];
     blockdecl->filter;
     blockdecl->declaration;
-    blockdecl->decldelim;
-    decldelim[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">decldelim</FONT>|{описание}|{[ &lt;имя&gt; ]}}>];
+    decldelim[fillcolor="#EDEDED",label=<{<FONT COLOR="red">decldelim</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
 
     declaration[label=<{<FONT COLOR="red">declaration</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">property</FONT>, <FONT COLOR="red">value</FONT> ]}}>];
     declaration->property;
     declaration->value;
 
     property[label=<{<FONT COLOR="red">property</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">ident</FONT>, <FONT COLOR="green">sc</FONT>* ]}}>];
-    property->ident;
 
     value[label=<{<FONT COLOR="red">value</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="green">sc</FONT> \| <FONT COLOR="red">vhash</FONT> \| <FONT COLOR="green">any</FONT> \| <FONT COLOR="red">block</FONT> \| <FONT COLOR="red">atkeyword</FONT> \| <FONT COLOR="red">operator</FONT> \| <FONT COLOR="red">important</FONT>)+ ]}}>];
-    value->vhash;
     value->block;
-    value->atkeyword;
-    value->operator;
     value->important;
 
-    important[label=<{<FONT COLOR="red">important</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>* ]}}>];
+    important[label=<{<FONT COLOR="red">important</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>* ]}|{пример}}>];
 
     filter[label=<{<FONT COLOR="red">filter</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">property</FONT>, <FONT COLOR="red">filterv</FONT> ]}}>];
     filter->property;
@@ -53,58 +80,42 @@ digraph G {
 
     selector[label=<{<FONT COLOR="red">selector</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="red">simpleselector</FONT> \| <FONT COLOR="red">delim</FONT>)+ ]}}>];
     selector->simpleselector;
-    selector->delim;
 
-    delim[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">delim</FONT>|{описание}|{[ &lt;имя&gt; ]}}>];
+    delim[fillcolor="#EDEDED",label=<{<FONT COLOR="red">delim</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
 
     simpleselector[label=<{<FONT COLOR="red">simpleselector</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="red">nthselector</FONT> \| <FONT COLOR="red">combinator</FONT> \| <FONT COLOR="red">attrib</FONT> \| <FONT COLOR="red">pseudoe</FONT> \| <FONT COLOR="red">pseudoc</FONT> \| <FONT COLOR="red">clazz</FONT> \| <FONT COLOR="red">shash</FONT> \| <FONT COLOR="green">any</FONT> \| <FONT COLOR="green">sc</FONT> \| <FONT COLOR="red">namespace</FONT>)+ ]   }}>];
     simpleselector->nthselector;
-    simpleselector->combinator;
     simpleselector->attrib;
     simpleselector->pseudoe;
     simpleselector->pseudoc;
     simpleselector->clazz;
-    simpleselector->shash;
-    simpleselector->namespace;
 
-    namespace[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">namespace</FONT>|{описание}|{[ &lt;имя&gt; ]}}>];
+    namespace[fillcolor="#EDEDED",label=<{<FONT COLOR="red">namespace</FONT>|{описание}|{пример}|{[ &lt;имя&gt; ]}|{пример}}>];
 
-    combinator[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">combinator</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    combinator[fillcolor="#EDEDED",label=<{<FONT COLOR="red">combinator</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
 
     clazz[label=<{<FONT COLOR="red">clazz</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">ident</FONT> ]}}>];
-    clazz->ident;
 
     pseudoe[label=<{<FONT COLOR="red">pseudoe</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">ident</FONT> ]}}>];
-    pseudoe->ident;
 
     pseudoc[label=<{<FONT COLOR="red">pseudoc</FONT>|{описание}|{[ &lt;имя&gt;, (<FONT COLOR="red">funktion</FONT> \| <FONT COLOR="red">ident</FONT>) ]}}>];
     pseudoc->funktion;
-    pseudoc->ident;
 
     attrib[label=<{<FONT COLOR="red">attrib</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">ident</FONT>, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">attrselector</FONT>, <FONT COLOR="green">sc</FONT>*, (<FONT COLOR="red">ident</FONT> \| <FONT COLOR="red">string</FONT>), <FONT COLOR="green">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">ident</FONT>, <FONT COLOR="green">sc</FONT>* ]}}>];
-    attrib->ident;
-    attrib->string;
-    attrib->attrselector;
 
-    attrselector[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">attrselector</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    attrselector[fillcolor="#EDEDED",label=<{<FONT COLOR="red">attrselector</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
 
     nthselector[label=<{<FONT COLOR="red">nthselector</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">ident</FONT>, (<FONT COLOR="green">sc</FONT> \| <FONT COLOR="red">unary</FONT> \| <FONT COLOR="red">nth</FONT>)* ]}}>];
-    nthselector->ident;
-    nthselector->unary;
-    nthselector->nth;
-    nth[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">nth</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    nth[fillcolor="#EDEDED",label=<{<FONT COLOR="red">nth</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
 
     atruler[label=<{<FONT COLOR="red">atruler</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">atkeyword</FONT>, <FONT COLOR="red">atrulerq</FONT>, <FONT COLOR="red">atrulers</FONT> ]}}>];
     atruleb[label=<{<FONT COLOR="red">atruleb</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">atkeyword</FONT>, <FONT COLOR="green">tset</FONT>*, <FONT COLOR="red">block</FONT> ]}}>];
     atrules[label=<{<FONT COLOR="red">atrules</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">atkeyword</FONT>, <FONT COLOR="green">tset</FONT>*]}}>];
 
-    atkeyword[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">atkeyword</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    atruler->atkeyword;
+    atkeyword[fillcolor="#EDEDED",label=<{<FONT COLOR="red">atkeyword</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
     atruler->atrulerq;
     atruler->atrulers;
-    atruleb->atkeyword;
     atruleb->block;
-    atrules->atkeyword;
 
     atrulerq[label=<{<FONT COLOR="red">atrulerq</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">tset</FONT>* ]}}>];
     atrulers[label=<{<FONT COLOR="red">atrulers</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">ruleset</FONT>*, <FONT COLOR="green">sc</FONT>* ]}}>];
@@ -112,46 +123,31 @@ digraph G {
     atrulers->ruleset;
 
     tset[label=<{<FONT COLOR="green">tset</FONT>|{описание}|{<FONT COLOR="red">vhash</FONT> \| <FONT COLOR="green">any</FONT> \| <FONT COLOR="green">sc</FONT> \| <FONT COLOR="red">operator</FONT>}}>];
-    tset->vhash;
-    tset->operator;
 
-    any[label=<{<FONT COLOR="green">any</FONT>|{описание}|{[ <FONT COLOR="red">braces</FONT> \| <FONT COLOR="red">string</FONT> \| <FONT COLOR="red">percentage</FONT> \| <FONT COLOR="red">dimension</FONT> \| <FONT COLOR="red">number</FONT> \| <FONT COLOR="red">uri</FONT> \| <FONT COLOR="red">functionExpression</FONT> \| <FONT COLOR="red">funktion</FONT> \| <FONT COLOR="red">ident</FONT> \| <FONT COLOR="red">unary</FONT> ]    }}>];
+    any[label=<{<FONT COLOR="green">any</FONT>|{описание}|{ <FONT COLOR="red">braces</FONT> \| <FONT COLOR="red">string</FONT> \| <FONT COLOR="red">percentage</FONT> \| <FONT COLOR="red">dimension</FONT> \| <FONT COLOR="red">number</FONT> \| <FONT COLOR="red">uri</FONT> \| <FONT COLOR="red">functionExpression</FONT> \| <FONT COLOR="red">funktion</FONT> \| <FONT COLOR="red">ident</FONT> \| <FONT COLOR="red">unary</FONT>    }}>];
     any->braces;
-    any->string;
     any->percentage;
     any->dimension;
-    any->number;
     any->uri;
-    any->functionExpression;
     any->funktion;
-    any->ident;
-    any->unary;
 
-    ident[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">ident</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    unary[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">unary</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    number[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">number</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    string[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">string</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    vhash[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">vhash</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    shash[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">shash</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    operator[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">operator</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    raw[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">raw</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
-    functionExpression[style=filled,fillcolor="#EDEDED",label=<{<FONT COLOR="red">functionExpression</FONT>|{описание}|{[ &lt;имя&gt;, &lt;значение&gt; ]}}>];
+    ident[fillcolor="#EDEDED",label=<{<FONT COLOR="red">ident</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    unary[fillcolor="#EDEDED",label=<{<FONT COLOR="red">unary</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    number[fillcolor="#EDEDED",label=<{<FONT COLOR="red">number</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    string[fillcolor="#EDEDED",label=<{<FONT COLOR="red">string</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    vhash[fillcolor="#EDEDED",label=<{<FONT COLOR="red">vhash</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    shash[fillcolor="#EDEDED",label=<{<FONT COLOR="red">shash</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    operator[fillcolor="#EDEDED",label=<{<FONT COLOR="red">operator</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    raw[fillcolor="#EDEDED",label=<{<FONT COLOR="red">raw</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
+    functionExpression[fillcolor="#EDEDED",label=<{<FONT COLOR="red">functionExpression</FONT>|{описание}|{пример}|{[ &lt;имя&gt;, &lt;значение&gt; ]}|{пример}}>];
     percentage[label=<{<FONT COLOR="red">percentage</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">number</FONT> ]}}>];
-    percentage->number;
     dimension[label=<{<FONT COLOR="red">dimension</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">number</FONT>, <FONT COLOR="red">ident</FONT> ]}}>];
-    dimension->number;
-    dimension->ident;
     funktion[label=<{<FONT COLOR="red">funktion</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="red">ident</FONT>, <FONT COLOR="red">functionBody</FONT> ]}}>];
-    funktion->ident;
     funktion->functionBody;
     functionBody[label=<{<FONT COLOR="red">functionBody</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">tset</FONT>* ]}}>];
     uri[label=<{<FONT COLOR="red">uri</FONT>|{описание}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">string</FONT>, <FONT COLOR="green">sc</FONT>* ]}|{[ &lt;имя&gt;, <FONT COLOR="green">sc</FONT>*, <FONT COLOR="red">raw</FONT>, <FONT COLOR="green">sc</FONT>* ]}}>];
-    uri->string;
-    uri->raw;
 
     sc[label=<{<FONT COLOR="green">sc</FONT>|{описание}|{<FONT COLOR="red">s</FONT> \| <FONT COLOR="red">comment</FONT>}}>];
-    sc->s;
-    sc->comment;
 
     braces[label=<{<FONT COLOR="red">braces</FONT>|{описание}|{[ &lt;имя&gt;, '(', ')', <FONT COLOR="green">tset</FONT>* ]}|{[ &lt;имя&gt;, '[', ']', <FONT COLOR="green">tset</FONT>* ]}}>];
 }
