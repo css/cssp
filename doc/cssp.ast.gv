@@ -38,7 +38,7 @@ digraph G {
     /* atoms */
     vhash[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">vhash</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Hash except ID selector</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -46,7 +46,7 @@ digraph G {
 
     shash[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">shash</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">ID selector</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -54,7 +54,7 @@ digraph G {
 
     number[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">number</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Number</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -62,7 +62,7 @@ digraph G {
 
     string[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">string</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">String</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -70,7 +70,7 @@ digraph G {
 
     ident[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">ident</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Identifier</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -78,7 +78,7 @@ digraph G {
 
     namespace[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">namespace</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Namespace sign</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -86,7 +86,7 @@ digraph G {
 
     atkeyword[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">atkeyword</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">At-rule keyword</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -94,7 +94,7 @@ digraph G {
 
     combinator[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">combinator</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Combinator</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -102,7 +102,7 @@ digraph G {
 
     operator[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">operator</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Operator</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -110,7 +110,7 @@ digraph G {
 
     unary[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">unary</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Unary</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -118,7 +118,7 @@ digraph G {
 
     raw[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">raw</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Unclassified value</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -126,7 +126,7 @@ digraph G {
 
     comment[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">comment</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Comment</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -134,7 +134,7 @@ digraph G {
 
     functionExpression[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">functionExpression</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">'expression' content container</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -142,7 +142,7 @@ digraph G {
 
     attrselector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">attrselector</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Attribute selector operator</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -150,7 +150,7 @@ digraph G {
 
     nth[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">nth</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Nth-selector units container</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -158,7 +158,7 @@ digraph G {
 
     delim[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">delim</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Selectors delimiter sign</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -166,7 +166,7 @@ digraph G {
 
     decldelim[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">decldelim</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Declarations delimiter sign</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -174,7 +174,7 @@ digraph G {
 
     cdo[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">cdo</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">CDO keyword</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -182,7 +182,7 @@ digraph G {
 
     cdc[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">cdc</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">CDC keyword</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -190,7 +190,7 @@ digraph G {
 
     s[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#D1D1D1"><FONT COLOR="blue">s</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Whitespaces</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, &lt;значение&gt; ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -198,7 +198,7 @@ digraph G {
 
     stylesheet[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">stylesheet</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Root element — whole stylesheet container</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">cdo</FONT> | <FONT COLOR="blue">cdc</FONT> | <FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">ruleset</FONT> | <FONT COLOR="blue">atruler</FONT> | <FONT COLOR="blue">atruleb</FONT> | <FONT COLOR="blue">atrules</FONT>)* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -210,7 +210,7 @@ digraph G {
 
     ruleset[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">ruleset</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Ruleset</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">selector</FONT>*, <FONT COLOR="blue">block</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -220,7 +220,7 @@ digraph G {
 
     block[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">block</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">blockdecl</FONT>* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -229,7 +229,7 @@ digraph G {
 
     blockdecl[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">blockdecl</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">filter</FONT> | <FONT COLOR="blue">declaration</FONT>), <FONT COLOR="blue">decldelim</FONT>, <FONT COLOR="red">sc</FONT>* ]  </TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">filter</FONT> | <FONT COLOR="blue">declaration</FONT>), <FONT COLOR="red">sc</FONT>* ]</TD></TR>
@@ -242,7 +242,7 @@ digraph G {
 
     declaration[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">declaration</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Declaration</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">property</FONT>, <FONT COLOR="blue">value</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -252,7 +252,7 @@ digraph G {
 
     property[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">property</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Property</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -260,7 +260,7 @@ digraph G {
 
     value[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">value</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Value</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">vhash</FONT> | <FONT COLOR="red">any</FONT> | <FONT COLOR="blue">block</FONT> | <FONT COLOR="blue">atkeyword</FONT> | <FONT COLOR="blue">operator</FONT> | <FONT COLOR="blue">important</FONT>)+ ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -270,7 +270,7 @@ digraph G {
 
     important[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">important</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">'!important' keyword</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -278,7 +278,7 @@ digraph G {
 
     filter[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">filter</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">property</FONT>, <FONT COLOR="blue">filterv</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -288,7 +288,7 @@ digraph G {
 
     filterv[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">filterv</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">progid</FONT>+ ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -297,7 +297,7 @@ digraph G {
 
     progid[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#B4EEB4"><FONT COLOR="blue">progid</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">raw</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -305,7 +305,7 @@ digraph G {
 
     selector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">selector</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Group of selectors</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">simpleselector</FONT> | <FONT COLOR="blue">delim</FONT>)+ ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -314,7 +314,7 @@ digraph G {
 
     simpleselector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">simpleselector</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Selector</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">nthselector</FONT> | <FONT COLOR="blue">combinator</FONT> | <FONT COLOR="blue">attrib</FONT> | <FONT COLOR="blue">pseudoe</FONT> | <FONT COLOR="blue">pseudoc</FONT> | <FONT COLOR="blue">clazz</FONT> | <FONT COLOR="blue">shash</FONT> | <FONT COLOR="red">any</FONT> | <FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">namespace</FONT>)+ ]   </TD></TR>
         <TR><TD>пример</TD></TR>
@@ -327,7 +327,7 @@ digraph G {
 
     clazz[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">clazz</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Class selector</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -335,7 +335,7 @@ digraph G {
 
     pseudoe[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">pseudoe</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Pseudo-element</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -343,7 +343,7 @@ digraph G {
 
     pseudoc[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">pseudoc</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Pseudo-class</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, (<FONT COLOR="blue">funktion</FONT> | <FONT COLOR="blue">ident</FONT>) ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -352,7 +352,7 @@ digraph G {
 
     attrib[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">attrib</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Attribute selector</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">attrselector</FONT>, <FONT COLOR="red">sc</FONT>*, (<FONT COLOR="blue">ident</FONT> | <FONT COLOR="blue">string</FONT>), <FONT COLOR="red">sc</FONT>* ]</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
@@ -361,7 +361,7 @@ digraph G {
 
     nthselector[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#EEE9E9"><FONT COLOR="blue">nthselector</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">nth- pseudo-class selector</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, (<FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">unary</FONT> | <FONT COLOR="blue">nth</FONT>)* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -369,7 +369,7 @@ digraph G {
 
     atruler[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atruler</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">At-rule with ruleset</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="blue">atrulerq</FONT>, <FONT COLOR="blue">atrulers</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -379,7 +379,7 @@ digraph G {
 
     atruleb[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atruleb</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">At-rule with block</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="red">tset</FONT>*, <FONT COLOR="blue">block</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -388,7 +388,7 @@ digraph G {
 
     atrules[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atrules</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Single at-rule</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">atkeyword</FONT>, <FONT COLOR="red">tset</FONT>*]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -396,7 +396,7 @@ digraph G {
 
     atrulerq[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atrulerq</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">tset</FONT>* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -404,7 +404,7 @@ digraph G {
 
     atrulers[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD BGCOLOR="#E0EEEE"><FONT COLOR="blue">atrulers</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">ruleset</FONT>*, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -412,8 +412,8 @@ digraph G {
     atrulers->ruleset;
 
     tset[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
-        <TR><TD><FONT COLOR="blue">tset</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD><FONT COLOR="red">tset</FONT></TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD><FONT COLOR="blue">vhash</FONT> | <FONT COLOR="red">any</FONT> | <FONT COLOR="red">sc</FONT> | <FONT COLOR="blue">operator</FONT></TD></TR>
         <TR><TD>пример</TD></TR>
@@ -421,7 +421,7 @@ digraph G {
 
     any[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="red">any</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD><FONT COLOR="blue">braces</FONT> | <FONT COLOR="blue">string</FONT> | <FONT COLOR="blue">percentage</FONT> | <FONT COLOR="blue">dimension</FONT> | <FONT COLOR="blue">number</FONT> | <FONT COLOR="blue">uri</FONT> | <FONT COLOR="blue">functionExpression</FONT> | <FONT COLOR="blue">funktion</FONT> | <FONT COLOR="blue">ident</FONT> | <FONT COLOR="blue">unary</FONT></TD></TR>
         <TR><TD>пример</TD></TR>
@@ -434,7 +434,7 @@ digraph G {
 
     percentage[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">percentage</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Percentage</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">number</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -442,7 +442,7 @@ digraph G {
 
     dimension[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">dimension</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Dimension</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">number</FONT>, <FONT COLOR="blue">ident</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -450,7 +450,7 @@ digraph G {
 
     funktion[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">funktion</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Function container</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="blue">ident</FONT>, <FONT COLOR="blue">functionBody</FONT> ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -459,7 +459,7 @@ digraph G {
 
     functionBody[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">functionBody</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">tset</FONT>* ]</TD></TR>
         <TR><TD>пример</TD></TR>
@@ -467,7 +467,7 @@ digraph G {
 
     uri[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">uri</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">URI</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">string</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
         <TR><TD>[ &lt;имя&gt;, <FONT COLOR="red">sc</FONT>*, <FONT COLOR="blue">raw</FONT>, <FONT COLOR="red">sc</FONT>* ]</TD></TR>
@@ -475,8 +475,8 @@ digraph G {
     </TABLE>>;
 
     sc[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
-        <TR><TD><FONT COLOR="blue">sc</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD><FONT COLOR="red">sc</FONT></TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">описание</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD><FONT COLOR="blue">s</FONT> | <FONT COLOR="blue">comment</FONT></TD></TR>
         <TR><TD>пример</TD></TR>
@@ -484,7 +484,7 @@ digraph G {
 
     braces[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR><TD><FONT COLOR="blue">braces</FONT></TD></TR>
-        <TR><TD>описание</TD></TR>
+        <TR><TD BGCOLOR="#E8E8E8">Braces content container</TD></TR>
         <TR><TD>пример</TD></TR>
         <TR><TD>[ &lt;имя&gt;, '(', ')', <FONT COLOR="red">tset</FONT>* ]</TD></TR>
         <TR><TD>[ &lt;имя&gt;, '[', ']', <FONT COLOR="red">tset</FONT>* ]</TD></TR>
