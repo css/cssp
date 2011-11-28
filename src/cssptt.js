@@ -1,6 +1,6 @@
 var ometajs = require('ometajs'),
     OMeta = ometajs.OMeta;
-var ometajs_ = require('ometajs').globals;var StringBuffer = ometajs_.StringBuffer;
+var ometajs_ = require('ometajs').globals || global;var StringBuffer = ometajs_.StringBuffer;
 var objectThatDelegatesTo = ometajs_.objectThatDelegatesTo;
 var isImmutable = ometajs_.isImmutable;
 var digitValue = ometajs_.digitValue;
@@ -27,7 +27,12 @@ var BSJSIdentity = ometajs_.BSJSIdentity;
 var BSJSTranslator = ometajs_.BSJSTranslator;
 var BSOMetaJSParser = ometajs_.BSOMetaJSParser;
 var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
-{
+if (global === ometajs_) {
+  fail = (function(fail) {
+    return function() { return fail };
+  })(fail);
+  OMeta = require('ometajs').OMeta;
+}{
     var CSSParser = exports.CSSParser = objectThatDelegatesTo(OMeta, {
         m_comment: function() {
             var $elf = this, _fromIdx = this.input.idx, x;
@@ -77,7 +82,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                             return "-" + x + z.join("");
                         }.call(this);
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
             }, function() {
@@ -158,7 +163,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                             return "." + x.join("");
                         }.call(this);
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
             }, function() {
@@ -209,7 +214,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                         return "'" + s.join("") + "'";
                     }.call(this);
                   default:
-                    throw fail;
+                    throw fail();
                 }
             }.call(this);
         },
@@ -228,7 +233,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                       case "\r":
                         return "\r";
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 return x;
@@ -249,7 +254,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                       case "\r":
                         return "\r";
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 return x;
@@ -427,7 +432,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                             return "^=";
                         }.call(this);
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 return [ "attrselector", x ];
@@ -669,7 +674,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                       case "+":
                         return "+";
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 return [ "combinator", x ];
@@ -718,7 +723,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                         }.call(this);
                     });
                   default:
-                    throw fail;
+                    throw fail();
                 }
             }.call(this);
         },
@@ -825,27 +830,27 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                                                                     return "last-child";
                                                                 }.call(this);
                                                               default:
-                                                                throw fail;
+                                                                throw fail();
                                                             }
                                                         }.call(this);
                                                       default:
-                                                        throw fail;
+                                                        throw fail();
                                                     }
                                                 }.call(this);
                                               default:
-                                                throw fail;
+                                                throw fail();
                                             }
                                         }.call(this);
                                       default:
-                                        throw fail;
+                                        throw fail();
                                     }
                                 }.call(this);
                               default:
-                                throw fail;
+                                throw fail();
                             }
                         }.call(this);
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 return x + y;
@@ -864,7 +869,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                                   case "n":
                                     return "n";
                                   default:
-                                    throw fail;
+                                    throw fail();
                                 }
                             }.call(this);
                         });
@@ -889,7 +894,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                                 return "even";
                             }.call(this);
                           default:
-                            throw fail;
+                            throw fail();
                         }
                     }.call(this);
                     return [ "nth", x ];
@@ -1010,7 +1015,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                                     return "-ms-filter";
                                 }.call(this);
                               default:
-                                throw fail;
+                                throw fail();
                             }
                         }.call(this);
                       case "f":
@@ -1033,7 +1038,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                             return "_filter";
                         }.call(this);
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 s0 = this._many(function() {
@@ -1168,7 +1173,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                       case "+":
                         return "+";
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 return [ "unary", x ];
@@ -1188,7 +1193,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                       case ",":
                         return ",";
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
                 return [ "operator", x ];
@@ -1246,19 +1251,19 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                                                 }.call(this);
                                             });
                                           default:
-                                            throw fail;
+                                            throw fail();
                                         }
                                     }.call(this);
                                   default:
-                                    throw fail;
+                                    throw fail();
                                 }
                             }.call(this);
                           default:
-                            throw fail;
+                            throw fail();
                         }
                     }.call(this);
                   default:
-                    throw fail;
+                    throw fail();
                 }
             }.call(this);
         },
@@ -1325,7 +1330,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                         return this.concat([ "braces", "(", ")" ], x);
                     }.call(this);
                   default:
-                    throw fail;
+                    throw fail();
                 }
             }.call(this);
         },
@@ -1338,7 +1343,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                   case "\r":
                     return "\r";
                   default:
-                    throw fail;
+                    throw fail();
                 }
             }.call(this);
         },
@@ -1412,7 +1417,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                         return "'" + x.join("") + "'";
                     }.call(this);
                   default:
-                    throw fail;
+                    throw fail();
                 }
             }.call(this);
         },
@@ -1529,7 +1534,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
                             return "(" + x.join("") + xx.join("") + ")";
                         }.call(this);
                       default:
-                        throw fail;
+                        throw fail();
                     }
                 }.call(this);
             }, function() {
@@ -1635,7 +1640,7 @@ var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
         return /^[ \t\r\n\f]+$/.test(x);
     };
 }
-var ometajs_ = require('ometajs').globals;var StringBuffer = ometajs_.StringBuffer;
+var ometajs_ = require('ometajs').globals || global;var StringBuffer = ometajs_.StringBuffer;
 var objectThatDelegatesTo = ometajs_.objectThatDelegatesTo;
 var isImmutable = ometajs_.isImmutable;
 var digitValue = ometajs_.digitValue;
@@ -1662,7 +1667,12 @@ var BSJSIdentity = ometajs_.BSJSIdentity;
 var BSJSTranslator = ometajs_.BSJSTranslator;
 var BSOMetaJSParser = ometajs_.BSOMetaJSParser;
 var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
-var CSSTransformer = exports.CSSTransformer = objectThatDelegatesTo(OMeta, {
+if (global === ometajs_) {
+  fail = (function(fail) {
+    return function() { return fail };
+  })(fail);
+  OMeta = require('ometajs').OMeta;
+}var CSSTransformer = exports.CSSTransformer = objectThatDelegatesTo(OMeta, {
     anys: function() {
         var $elf = this, _fromIdx = this.input.idx;
         return this._many(function() {
@@ -2354,7 +2364,7 @@ var CSSTransformer = exports.CSSTransformer = objectThatDelegatesTo(OMeta, {
         }.call(this);
     }
 });
-var ometajs_ = require('ometajs').globals;var StringBuffer = ometajs_.StringBuffer;
+var ometajs_ = require('ometajs').globals || global;var StringBuffer = ometajs_.StringBuffer;
 var objectThatDelegatesTo = ometajs_.objectThatDelegatesTo;
 var isImmutable = ometajs_.isImmutable;
 var digitValue = ometajs_.digitValue;
@@ -2381,7 +2391,12 @@ var BSJSIdentity = ometajs_.BSJSIdentity;
 var BSJSTranslator = ometajs_.BSJSTranslator;
 var BSOMetaJSParser = ometajs_.BSOMetaJSParser;
 var BSOMetaJSTranslator = ometajs_.BSOMetaJSTranslator;
-var CSSTranslator = exports.CSSTranslator = objectThatDelegatesTo(OMeta, {
+if (global === ometajs_) {
+  fail = (function(fail) {
+    return function() { return fail };
+  })(fail);
+  OMeta = require('ometajs').OMeta;
+}var CSSTranslator = exports.CSSTranslator = objectThatDelegatesTo(OMeta, {
     anys: function() {
         var $elf = this, _fromIdx = this.input.idx;
         return this._many(function() {
