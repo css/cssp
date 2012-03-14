@@ -409,27 +409,27 @@ if (global === ometajs_) {
             return function() {
                 x = function() {
                     switch (this._apply("anything")) {
-                      case "$":
-                        return function() {
-                            this._applyWithArgs("exactly", "=");
-                            return "$=";
-                        }.call(this);
-                      case "=":
-                        return "=";
-                      case "*":
-                        return function() {
-                            this._applyWithArgs("exactly", "=");
-                            return "*=";
-                        }.call(this);
                       case "~":
                         return function() {
                             this._applyWithArgs("exactly", "=");
                             return "~=";
                         }.call(this);
+                      case "=":
+                        return "=";
+                      case "$":
+                        return function() {
+                            this._applyWithArgs("exactly", "=");
+                            return "$=";
+                        }.call(this);
                       case "^":
                         return function() {
                             this._applyWithArgs("exactly", "=");
                             return "^=";
+                        }.call(this);
+                      case "*":
+                        return function() {
+                            this._applyWithArgs("exactly", "=");
+                            return "*=";
                         }.call(this);
                       default:
                         throw fail();
@@ -669,10 +669,10 @@ if (global === ometajs_) {
                     switch (this._apply("anything")) {
                       case "~":
                         return "~";
-                      case ">":
-                        return ">";
                       case "+":
                         return "+";
+                      case ">":
+                        return ">";
                       default:
                         throw fail();
                     }
@@ -778,24 +778,6 @@ if (global === ometajs_) {
                 }.call(this);
                 y = function() {
                     switch (this._apply("anything")) {
-                      case "o":
-                        return function() {
-                            this._applyWithArgs("exactly", "f");
-                            this._applyWithArgs("exactly", "-");
-                            this._applyWithArgs("exactly", "t");
-                            this._applyWithArgs("exactly", "y");
-                            this._applyWithArgs("exactly", "p");
-                            this._applyWithArgs("exactly", "e");
-                            return "of-type";
-                        }.call(this);
-                      case "c":
-                        return function() {
-                            this._applyWithArgs("exactly", "h");
-                            this._applyWithArgs("exactly", "i");
-                            this._applyWithArgs("exactly", "l");
-                            this._applyWithArgs("exactly", "d");
-                            return "child";
-                        }.call(this);
                       case "l":
                         return function() {
                             switch (this._apply("anything")) {
@@ -849,6 +831,24 @@ if (global === ometajs_) {
                                 throw fail();
                             }
                         }.call(this);
+                      case "o":
+                        return function() {
+                            this._applyWithArgs("exactly", "f");
+                            this._applyWithArgs("exactly", "-");
+                            this._applyWithArgs("exactly", "t");
+                            this._applyWithArgs("exactly", "y");
+                            this._applyWithArgs("exactly", "p");
+                            this._applyWithArgs("exactly", "e");
+                            return "of-type";
+                        }.call(this);
+                      case "c":
+                        return function() {
+                            this._applyWithArgs("exactly", "h");
+                            this._applyWithArgs("exactly", "i");
+                            this._applyWithArgs("exactly", "l");
+                            this._applyWithArgs("exactly", "d");
+                            return "child";
+                        }.call(this);
                       default:
                         throw fail();
                     }
@@ -880,18 +880,18 @@ if (global === ometajs_) {
                 return function() {
                     x = function() {
                         switch (this._apply("anything")) {
-                          case "o":
-                            return function() {
-                                this._applyWithArgs("exactly", "d");
-                                this._applyWithArgs("exactly", "d");
-                                return "odd";
-                            }.call(this);
                           case "e":
                             return function() {
                                 this._applyWithArgs("exactly", "v");
                                 this._applyWithArgs("exactly", "e");
                                 this._applyWithArgs("exactly", "n");
                                 return "even";
+                            }.call(this);
+                          case "o":
+                            return function() {
+                                this._applyWithArgs("exactly", "d");
+                                this._applyWithArgs("exactly", "d");
+                                return "odd";
                             }.call(this);
                           default:
                             throw fail();
@@ -980,44 +980,6 @@ if (global === ometajs_) {
             return function() {
                 t = function() {
                     switch (this._apply("anything")) {
-                      case "*":
-                        return function() {
-                            this._applyWithArgs("exactly", "f");
-                            this._applyWithArgs("exactly", "i");
-                            this._applyWithArgs("exactly", "l");
-                            this._applyWithArgs("exactly", "t");
-                            this._applyWithArgs("exactly", "e");
-                            this._applyWithArgs("exactly", "r");
-                            return "*filter";
-                        }.call(this);
-                      case "-":
-                        return function() {
-                            switch (this._apply("anything")) {
-                              case "f":
-                                return function() {
-                                    this._applyWithArgs("exactly", "i");
-                                    this._applyWithArgs("exactly", "l");
-                                    this._applyWithArgs("exactly", "t");
-                                    this._applyWithArgs("exactly", "e");
-                                    this._applyWithArgs("exactly", "r");
-                                    return "-filter";
-                                }.call(this);
-                              case "m":
-                                return function() {
-                                    this._applyWithArgs("exactly", "s");
-                                    this._applyWithArgs("exactly", "-");
-                                    this._applyWithArgs("exactly", "f");
-                                    this._applyWithArgs("exactly", "i");
-                                    this._applyWithArgs("exactly", "l");
-                                    this._applyWithArgs("exactly", "t");
-                                    this._applyWithArgs("exactly", "e");
-                                    this._applyWithArgs("exactly", "r");
-                                    return "-ms-filter";
-                                }.call(this);
-                              default:
-                                throw fail();
-                            }
-                        }.call(this);
                       case "f":
                         return function() {
                             this._applyWithArgs("exactly", "i");
@@ -1036,6 +998,44 @@ if (global === ometajs_) {
                             this._applyWithArgs("exactly", "e");
                             this._applyWithArgs("exactly", "r");
                             return "_filter";
+                        }.call(this);
+                      case "-":
+                        return function() {
+                            switch (this._apply("anything")) {
+                              case "m":
+                                return function() {
+                                    this._applyWithArgs("exactly", "s");
+                                    this._applyWithArgs("exactly", "-");
+                                    this._applyWithArgs("exactly", "f");
+                                    this._applyWithArgs("exactly", "i");
+                                    this._applyWithArgs("exactly", "l");
+                                    this._applyWithArgs("exactly", "t");
+                                    this._applyWithArgs("exactly", "e");
+                                    this._applyWithArgs("exactly", "r");
+                                    return "-ms-filter";
+                                }.call(this);
+                              case "f":
+                                return function() {
+                                    this._applyWithArgs("exactly", "i");
+                                    this._applyWithArgs("exactly", "l");
+                                    this._applyWithArgs("exactly", "t");
+                                    this._applyWithArgs("exactly", "e");
+                                    this._applyWithArgs("exactly", "r");
+                                    return "-filter";
+                                }.call(this);
+                              default:
+                                throw fail();
+                            }
+                        }.call(this);
+                      case "*":
+                        return function() {
+                            this._applyWithArgs("exactly", "f");
+                            this._applyWithArgs("exactly", "i");
+                            this._applyWithArgs("exactly", "l");
+                            this._applyWithArgs("exactly", "t");
+                            this._applyWithArgs("exactly", "e");
+                            this._applyWithArgs("exactly", "r");
+                            return "*filter";
                         }.call(this);
                       default:
                         throw fail();
@@ -1184,14 +1184,14 @@ if (global === ometajs_) {
             return function() {
                 x = function() {
                     switch (this._apply("anything")) {
-                      case "/":
-                        return "/";
-                      case ":":
-                        return ":";
-                      case "=":
-                        return "=";
                       case ",":
                         return ",";
+                      case ":":
+                        return ":";
+                      case "/":
+                        return "/";
+                      case "=":
+                        return "=";
                       default:
                         throw fail();
                     }
@@ -1304,7 +1304,11 @@ if (global === ometajs_) {
             var $elf = this, _fromIdx = this.input.idx, x;
             return function() {
                 x = this._many(function() {
-                    return this._apply("tset");
+                    return this._or(function() {
+                        return this._apply("tset");
+                    }, function() {
+                        return this._apply("clazz");
+                    });
                 });
                 return [ "functionBody" ].concat(x);
             }.call(this);
