@@ -54,7 +54,7 @@ ometa CSSParser {
 
     s = (:x m_w(x) -> x)+:xx -> [#s, xx.join('')],
 
-    attrselector = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=')):x -> [#attrselector, x],
+    attrselector = (seq('=') | seq('~=') | seq('^=') | seq('$=') | seq('*=') | seq('|=')):x -> [#attrselector, x],
 
     delim = ',' -> [#delim],
 

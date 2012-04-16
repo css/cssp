@@ -223,15 +223,15 @@ if (global === ometajs_) {
             return function() {
                 x = function() {
                     switch (this._apply("anything")) {
+                      case "\n":
+                        return "\n";
+                      case "\r":
+                        return "\r";
                       case "\\":
                         return function() {
                             this._applyWithArgs("exactly", '"');
                             return '\\"';
                         }.call(this);
-                      case "\n":
-                        return "\n";
-                      case "\r":
-                        return "\r";
                       default:
                         throw fail();
                     }
@@ -244,15 +244,15 @@ if (global === ometajs_) {
             return function() {
                 x = function() {
                     switch (this._apply("anything")) {
+                      case "\n":
+                        return "\n";
+                      case "\r":
+                        return "\r";
                       case "\\":
                         return function() {
                             this._applyWithArgs("exactly", "'");
                             return "\\'";
                         }.call(this);
-                      case "\n":
-                        return "\n";
-                      case "\r":
-                        return "\r";
                       default:
                         throw fail();
                     }
@@ -409,6 +409,11 @@ if (global === ometajs_) {
             return function() {
                 x = function() {
                     switch (this._apply("anything")) {
+                      case "^":
+                        return function() {
+                            this._applyWithArgs("exactly", "=");
+                            return "^=";
+                        }.call(this);
                       case "~":
                         return function() {
                             this._applyWithArgs("exactly", "=");
@@ -421,10 +426,10 @@ if (global === ometajs_) {
                             this._applyWithArgs("exactly", "=");
                             return "$=";
                         }.call(this);
-                      case "^":
+                      case "|":
                         return function() {
                             this._applyWithArgs("exactly", "=");
-                            return "^=";
+                            return "|=";
                         }.call(this);
                       case "*":
                         return function() {
@@ -778,6 +783,14 @@ if (global === ometajs_) {
                 }.call(this);
                 y = function() {
                     switch (this._apply("anything")) {
+                      case "c":
+                        return function() {
+                            this._applyWithArgs("exactly", "h");
+                            this._applyWithArgs("exactly", "i");
+                            this._applyWithArgs("exactly", "l");
+                            this._applyWithArgs("exactly", "d");
+                            return "child";
+                        }.call(this);
                       case "l":
                         return function() {
                             switch (this._apply("anything")) {
@@ -793,6 +806,14 @@ if (global === ometajs_) {
                                                       case "-":
                                                         return function() {
                                                             switch (this._apply("anything")) {
+                                                              case "c":
+                                                                return function() {
+                                                                    this._applyWithArgs("exactly", "h");
+                                                                    this._applyWithArgs("exactly", "i");
+                                                                    this._applyWithArgs("exactly", "l");
+                                                                    this._applyWithArgs("exactly", "d");
+                                                                    return "last-child";
+                                                                }.call(this);
                                                               case "o":
                                                                 return function() {
                                                                     this._applyWithArgs("exactly", "f");
@@ -802,14 +823,6 @@ if (global === ometajs_) {
                                                                     this._applyWithArgs("exactly", "p");
                                                                     this._applyWithArgs("exactly", "e");
                                                                     return "last-of-type";
-                                                                }.call(this);
-                                                              case "c":
-                                                                return function() {
-                                                                    this._applyWithArgs("exactly", "h");
-                                                                    this._applyWithArgs("exactly", "i");
-                                                                    this._applyWithArgs("exactly", "l");
-                                                                    this._applyWithArgs("exactly", "d");
-                                                                    return "last-child";
                                                                 }.call(this);
                                                               default:
                                                                 throw fail();
@@ -840,14 +853,6 @@ if (global === ometajs_) {
                             this._applyWithArgs("exactly", "p");
                             this._applyWithArgs("exactly", "e");
                             return "of-type";
-                        }.call(this);
-                      case "c":
-                        return function() {
-                            this._applyWithArgs("exactly", "h");
-                            this._applyWithArgs("exactly", "i");
-                            this._applyWithArgs("exactly", "l");
-                            this._applyWithArgs("exactly", "d");
-                            return "child";
                         }.call(this);
                       default:
                         throw fail();
@@ -980,14 +985,15 @@ if (global === ometajs_) {
             return function() {
                 t = function() {
                     switch (this._apply("anything")) {
-                      case "f":
+                      case "*":
                         return function() {
+                            this._applyWithArgs("exactly", "f");
                             this._applyWithArgs("exactly", "i");
                             this._applyWithArgs("exactly", "l");
                             this._applyWithArgs("exactly", "t");
                             this._applyWithArgs("exactly", "e");
                             this._applyWithArgs("exactly", "r");
-                            return "filter";
+                            return "*filter";
                         }.call(this);
                       case "_":
                         return function() {
@@ -998,6 +1004,15 @@ if (global === ometajs_) {
                             this._applyWithArgs("exactly", "e");
                             this._applyWithArgs("exactly", "r");
                             return "_filter";
+                        }.call(this);
+                      case "f":
+                        return function() {
+                            this._applyWithArgs("exactly", "i");
+                            this._applyWithArgs("exactly", "l");
+                            this._applyWithArgs("exactly", "t");
+                            this._applyWithArgs("exactly", "e");
+                            this._applyWithArgs("exactly", "r");
+                            return "filter";
                         }.call(this);
                       case "-":
                         return function() {
@@ -1026,16 +1041,6 @@ if (global === ometajs_) {
                               default:
                                 throw fail();
                             }
-                        }.call(this);
-                      case "*":
-                        return function() {
-                            this._applyWithArgs("exactly", "f");
-                            this._applyWithArgs("exactly", "i");
-                            this._applyWithArgs("exactly", "l");
-                            this._applyWithArgs("exactly", "t");
-                            this._applyWithArgs("exactly", "e");
-                            this._applyWithArgs("exactly", "r");
-                            return "*filter";
                         }.call(this);
                       default:
                         throw fail();
@@ -1168,10 +1173,10 @@ if (global === ometajs_) {
             return function() {
                 x = function() {
                     switch (this._apply("anything")) {
-                      case "-":
-                        return "-";
                       case "+":
                         return "+";
+                      case "-":
+                        return "-";
                       default:
                         throw fail();
                     }
@@ -1184,14 +1189,14 @@ if (global === ometajs_) {
             return function() {
                 x = function() {
                     switch (this._apply("anything")) {
-                      case ",":
-                        return ",";
+                      case "=":
+                        return "=";
                       case ":":
                         return ":";
                       case "/":
                         return "/";
-                      case "=":
-                        return "=";
+                      case ",":
+                        return ",";
                       default:
                         throw fail();
                     }
