@@ -47,7 +47,10 @@ d_list.forEach(function(rule_dir) {
                         total++;
                         r = (((b = funcs[a](src, rule)) == (c = readFile(path + k + '.' + a).trim())));
                         r && okn++;
-                        if (!r) console.log('FAIL: ' + t + a);
+                        if (!r) {
+                          console.log(b);
+                          console.log('FAIL: ' + t + a);
+                        }
                     }
                 }
             }
