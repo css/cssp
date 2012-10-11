@@ -28,8 +28,8 @@ CSSParser.prototype["m_comment"] = function $m_comment() {
     var x;
     return this._rule("seq", false, [ "/*" ], null, this["seq"]) && this._any(function() {
         return this._atomic(function() {
-            return this._atomic(function() {
-                return !this._rule("seq", false, [ "*/" ], null, this["seq"]);
+            return !this._atomic(function() {
+                return this._rule("seq", false, [ "*/" ], null, this["seq"]);
             }, true) && this._rule("char", false, [], null, this["char"]);
         });
     }) && (x = this._getIntermediate(), true) && this._rule("seq", false, [ "*/" ], null, this["seq"]) && this._exec("/*" + x.join("") + "*/");
@@ -129,8 +129,8 @@ CSSParser.prototype["m_string"] = function $m_string() {
                 return this._atomic(function() {
                     return this._rule("m_string_nl1", false, [], null, this["m_string_nl1"]);
                 }) || this._atomic(function() {
-                    return this._atomic(function() {
-                        return !this._match('"');
+                    return !this._atomic(function() {
+                        return this._match('"');
                     }, true) && this._rule("char", false, [], null, this["char"]);
                 });
             });
@@ -142,8 +142,8 @@ CSSParser.prototype["m_string"] = function $m_string() {
                 return this._atomic(function() {
                     return this._rule("m_string_nl2", false, [], null, this["m_string_nl2"]);
                 }) || this._atomic(function() {
-                    return this._atomic(function() {
-                        return !this._match("'");
+                    return !this._atomic(function() {
+                        return this._match("'");
                     }, true) && this._rule("char", false, [], null, this["char"]);
                 });
             });
@@ -282,8 +282,8 @@ CSSParser.prototype["comment"] = function $comment() {
     var x;
     return this._rule("seq", false, [ "/*" ], null, this["seq"]) && this._any(function() {
         return this._atomic(function() {
-            return this._atomic(function() {
-                return !this._rule("seq", false, [ "*/" ], null, this["seq"]);
+            return !this._atomic(function() {
+                return this._rule("seq", false, [ "*/" ], null, this["seq"]);
             }, true) && this._rule("char", false, [], null, this["char"]);
         });
     }) && (x = this._getIntermediate(), true) && this._rule("seq", false, [ "*/" ], null, this["seq"]) && this._exec([ "comment", x.join("") ]);
@@ -670,8 +670,8 @@ CSSParser.prototype["progid"] = function $progid() {
             }) || this._atomic(function() {
                 return this._rule("m_comment", false, [], null, this["m_comment"]);
             }) || this._atomic(function() {
-                return this._atomic(function() {
-                    return !this._match(")");
+                return !this._atomic(function() {
+                    return this._match(")");
                 }, true) && this._rule("char", false, [], null, this["char"]);
             });
         });
@@ -744,10 +744,10 @@ CSSParser.prototype["uri"] = function $uri() {
             });
         }) && (s0 = this._getIntermediate(), true) && this._any(function() {
             return this._atomic(function() {
-                return this._atomic(function() {
-                    return !this._match(")");
-                }, true) && this._atomic(function() {
-                    return !this._rule("m_w", false, [], null, this["m_w"]);
+                return !this._atomic(function() {
+                    return this._match(")");
+                }, true) && !this._atomic(function() {
+                    return this._rule("m_w", false, [], null, this["m_w"]);
                 }, true) && this._rule("char", false, [], null, this["char"]);
             });
         }) && (x = this._getIntermediate(), true) && this._any(function() {
@@ -831,27 +831,21 @@ CSSParser.prototype["jsComment"] = function $jsComment() {
 
 CSSParser.prototype["jsMLComment"] = function $jsMLComment() {
     var x;
-    return this._atomic(function() {
-        return this._match("/") && this._match("*");
-    }) && this._any(function() {
+    return this._seq("/*") && this._any(function() {
         return this._atomic(function() {
-            return this._atomic(function() {
-                return !(this._match("*") && this._match("/"));
+            return !this._atomic(function() {
+                return this._seq("*/");
             }, true) && this._rule("char", false, [], null, this["char"]);
         });
-    }) && (x = this._getIntermediate(), true) && this._atomic(function() {
-        return this._match("*") && this._match("/");
-    }) && this._exec("/*" + x.join("") + "*/");
+    }) && (x = this._getIntermediate(), true) && this._seq("*/") && this._exec("/*" + x.join("") + "*/");
 };
 
 CSSParser.prototype["jsSLComment"] = function $jsSLComment() {
     var x;
-    return this._atomic(function() {
-        return this._match("/") && this._match("/");
-    }) && this._any(function() {
+    return this._seq("//") && this._any(function() {
         return this._atomic(function() {
-            return this._atomic(function() {
-                return !this._rule("jsLT", false, [], null, this["jsLT"]);
+            return !this._atomic(function() {
+                return this._rule("jsLT", false, [], null, this["jsLT"]);
             }, true) && this._rule("char", false, [], null, this["char"]);
         });
     }) && (x = this._getIntermediate(), true) && this._exec("//" + x.join(""));
@@ -877,12 +871,12 @@ CSSParser.prototype["jsString"] = function $jsString() {
 
 CSSParser.prototype["jsDSChar"] = function $jsDSChar() {
     return this._atomic(function() {
-        return this._atomic(function() {
-            return !this._match('"');
-        }, true) && this._atomic(function() {
-            return !this._match("\\");
-        }, true) && this._atomic(function() {
-            return !this._rule("jsLT", false, [], null, this["jsLT"]);
+        return !this._atomic(function() {
+            return this._match('"');
+        }, true) && !this._atomic(function() {
+            return this._match("\\");
+        }, true) && !this._atomic(function() {
+            return this._rule("jsLT", false, [], null, this["jsLT"]);
         }, true) && this._rule("char", false, [], null, this["char"]);
     }) || this._atomic(function() {
         return this._rule("jsEscapeChar", false, [], null, this["jsEscapeChar"]);
@@ -893,12 +887,12 @@ CSSParser.prototype["jsDSChar"] = function $jsDSChar() {
 
 CSSParser.prototype["jsSSChar"] = function $jsSSChar() {
     return this._atomic(function() {
-        return this._atomic(function() {
-            return !this._match("'");
-        }, true) && this._atomic(function() {
-            return !this._match("\\");
-        }, true) && this._atomic(function() {
-            return !this._rule("jsLT", false, [], null, this["jsLT"]);
+        return !this._atomic(function() {
+            return this._match("'");
+        }, true) && !this._atomic(function() {
+            return this._match("\\");
+        }, true) && !this._atomic(function() {
+            return this._rule("jsLT", false, [], null, this["jsLT"]);
         }, true) && this._rule("char", false, [], null, this["char"]);
     }) || this._atomic(function() {
         return this._rule("jsEscapeChar", false, [], null, this["jsEscapeChar"]);
@@ -923,10 +917,10 @@ CSSParser.prototype["jsEscapeChar"] = function $jsEscapeChar() {
 
 CSSParser.prototype["jsInBraceChar"] = function $jsInBraceChar() {
     var x;
-    return this._atomic(function() {
-        return !this._match("(");
-    }, true) && this._atomic(function() {
-        return !this._match(")");
+    return !this._atomic(function() {
+        return this._match("(");
+    }, true) && !this._atomic(function() {
+        return this._match(")");
     }, true) && this._rule("char", false, [], null, this["char"]) && (x = this._getIntermediate(), true) && this._exec(x);
 };
 
@@ -987,9 +981,7 @@ CSSParser.prototype["functionExpressionBody"] = function $functionExpressionBody
 
 CSSParser.prototype["functionExpression"] = function $functionExpression() {
     var x;
-    return this._atomic(function() {
-        return this._match("e") && this._match("x") && this._match("p") && this._match("r") && this._match("e") && this._match("s") && this._match("s") && this._match("i") && this._match("o") && this._match("n") && this._match("(");
-    }) && this._any(function() {
+    return this._seq("expression(") && this._any(function() {
         return this._atomic(function() {
             return this._rule("functionExpressionBody", false, [], null, this["functionExpressionBody"]);
         });
